@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->id();
+            $table->string('surah')->nullable();
+            $table->string('ayat')->nullable();
+            $table->text('word_topic')->nullable();
+            $table->longText('ayat_summary_des')->nullable();
+            $table->string('inferance_flag')->nullable();
             $table->timestamps();
         });
     }

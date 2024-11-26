@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('hadiths', function (Blueprint $table) {
             $table->id();
+            $table->string('group_name')->nullable();
+            $table->longText('hadith_english')->nullable();
+            $table->longText('hadith_arabic')->nullable();
             $table->timestamps();
         });
     }
