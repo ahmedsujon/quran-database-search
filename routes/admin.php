@@ -8,9 +8,17 @@ use App\Livewire\Admin\DashboardComponent;
 use App\Livewire\Admin\Auth\LoginComponent;
 use App\Livewire\Admin\CaseStudy\AddCaseStudyComponent;
 use App\Livewire\Admin\CaseStudy\CaseStudyComponent;
+use App\Livewire\Admin\Contents\ContentComponent;
+use App\Livewire\Admin\Contents\ContentImportComponent;
 use App\Livewire\Admin\Filesystem\UploadedFilesComponent;
+use App\Livewire\Admin\Hadith\HadithComponent;
+use App\Livewire\Admin\Hadith\HadithImportComponent;
+use App\Livewire\Admin\Quran\QuranComponent;
+use App\Livewire\Admin\Quran\QuranImportComponent;
 use App\Livewire\Admin\Settings\ConsoleComponent;
 use App\Livewire\Admin\Users\UsersComponent;
+use App\Livewire\Admin\Word\WordComponent;
+use App\Livewire\Admin\Word\WordImportComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +40,23 @@ Route::prefix('admin/')->name('admin.')->middleware('auth:admin')->group(functio
     Route::post('logout', [LogoutController::class, 'adminLogout'])->name('logout');
 
     Route::get('dashboard', DashboardComponent::class)->name('dashboard');
+
+    // Quran Routes
+    Route::get('quran/imports', QuranImportComponent::class)->name('quranImports');
+    Route::get('quran/data', QuranComponent::class)->name('quranData');
+
+    // Hadith Routes
+    Route::get('hadith/imports', HadithImportComponent::class)->name('hadithImports');
+    Route::get('hadith/data', HadithComponent::class)->name('hadithData');
+
+    // Word Routes
+    Route::get('word/topics/imports', WordImportComponent::class)->name('wordImports');
+    Route::get('word/topics/data', WordComponent::class)->name('wordTopicsData');
+
+    // Content Routes
+    Route::get('contents/imports', ContentImportComponent::class)->name('contentsImports');
+    Route::get('contents/data', ContentComponent::class)->name('contentsData');
+
 
     // admin routes
     Route::get('all-admins', AdminComponent::class)->name('allAdmins')->middleware('permission:manage_admins');
