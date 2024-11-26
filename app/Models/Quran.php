@@ -19,5 +19,6 @@ class Quran extends Model
         'located',
         'normalized_word',
         'eng_subject_category',
+        'quran_arabic_harkat',
     ];
 }
