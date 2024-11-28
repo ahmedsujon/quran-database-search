@@ -7,15 +7,14 @@ use Maatwebsite\Excel\Concerns\ToModel;
 
 class HadithImport implements ToModel
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
     public function model(array $row)
     {
-        return new Hadith([
-            //
-        ]);
+        dd($row);
+
+        $hadithData = new Hadith();
+        $hadithData->group_name                          = $row['group_name'];
+        $hadithData->hadith_english                      = $row['hadith_english'];
+        $hadithData->hadith_arabic                       = $row['hadith_arabic'];
+        $hadithData->save();
     }
 }

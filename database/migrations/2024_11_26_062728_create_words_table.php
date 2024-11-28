@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('word_topic')->nullable();
             $table->longText('ayat_summary_des')->nullable();
             $table->string('inferance_flag')->nullable();
+            $table->longText('sub_word_topic')->nullable();
             $table->timestamps();
         });
     }

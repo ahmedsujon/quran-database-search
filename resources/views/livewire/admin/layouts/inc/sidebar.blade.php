@@ -74,12 +74,12 @@
                             <ul class="sub-menu" aria-expanded="true">
                                 @if (is_permitted('manage_admins'))
                                     <li>
-                                        <a href="{{ route('admin.wordImports') }}" key="t-level-1-1"
+                                        <a href="{{ route('admin.contentsImports') }}" key="t-level-1-1"
                                             class="{{ request()->is('admin/word/topics/imports') ? 'active_sub_menu' : '' }}">Import
                                             Data</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.wordTopicsData') }}" key="t-level-1-1"
+                                        <a href="{{ route('admin.contentsData') }}" key="t-level-1-1"
                                             class="{{ request()->is('admin/word/topics/data') ? 'active_sub_menu' : '' }}">List
                                             Of
                                             Data</a>
@@ -92,20 +92,20 @@
                     @if (is_permitted('manage_admins'))
                         <li>
                             <a href="javascript: void(0);"
-                                class="has-arrow waves-effect {{ request()->is('admin/contents') || request()->is('admin/contents/*') ? 'active_menu' : '' }}">
+                                class="has-arrow waves-effect {{ request()->is('admin/word/topics/imports') || request()->is('admin/word/topics/imports/*') ? 'active_menu' : '' }}">
                                 <i class="bx bx-group"></i>
                                 <span key="t-multi-level">Word Or Topics</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
                                 @if (is_permitted('manage_admins'))
                                     <li>
-                                        <a href="{{ route('admin.contentsImports') }}" key="t-level-1-1"
-                                            class="{{ request()->is('admin/contents/imports') ? 'active_sub_menu' : '' }}">Import
+                                        <a href="{{ route('admin.wordImports') }}" key="t-level-1-1"
+                                            class="{{ request()->is('admin/word/topics/imports') ? 'active_sub_menu' : '' }}">Import
                                             Data</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.contentsData') }}" key="t-level-1-1"
-                                            class="{{ request()->is('admin/contents/data') ? 'active_sub_menu' : '' }}">List
+                                        <a href="{{ route('admin.wordTopicsData') }}" key="t-level-1-1"
+                                            class="{{ request()->is('admin/word/topics/data') ? 'active_sub_menu' : '' }}">List
                                             Of Data</a>
                                     </li>
                                 @endif
