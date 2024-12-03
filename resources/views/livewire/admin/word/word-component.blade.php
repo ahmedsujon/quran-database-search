@@ -54,8 +54,9 @@
                                     <thead>
                                         <tr>
                                             <th class="align-middle">Sura/Ayat No</th>
-                                            <th class="align-middle">English</th>
-                                            <th class="align-middle">Arabic</th>
+                                            <th class="align-middle">Word/Topic</th>
+                                            <th class="align-middle">Ayat Summary</th>
+                                            <th class="align-middle">Inferance Flag</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -67,8 +68,10 @@
                                             @endphp
                                             @foreach ($word_datas as $word_data)
                                                 <tr>
-                                                    <td>{{ $word_data->quran_english }}</td>
-                                                    <td>{{ $word_data->quran_arabic }}</td>
+                                                    <td>{{ $word_data->surah }}:{{ $word_data->ayat }}</td>
+                                                    <td>{{ $word_data->word_topic }}</td>
+                                                    <td>{{ $word_data->ayat_summary_des }}</td>
+                                                    <td>{{ $word_data->inferance_flag }}</td>
                                                 </tr>
                                             @endforeach
                                         @else

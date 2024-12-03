@@ -68,9 +68,9 @@
                                             @foreach ($hadith_datas as $hadith_data)
                                                 <tr>
                                                     <td>
-                                                        {{ $hadith_data->surah_no }}:{{ $hadith_data->ayat_no }}</td>
-                                                    <td>{{ $hadith_data->quran_english }}</td>
-                                                    <td>{{ $hadith_data->quran_arabic }}</td>
+                                                        {{ $hadith_data->group_name }}</td>
+                                                    <td>{{ $hadith_data->hadith_english }}</td>
+                                                    <td>{{ $hadith_data->hadith_arabic }}</td>
                                                 </tr>
                                             @endforeach
                                         @else

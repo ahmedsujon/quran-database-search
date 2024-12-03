@@ -66,7 +66,6 @@
                                             @endphp
                                             @foreach ($content_datas as $content_data)
                                                 <tr>
-                                                    <td>
                                                     <td>{{ $content_data->topic }}</td>
                                                     <td>{{ $content_data->search_value }}</td>
                                                 </tr>
