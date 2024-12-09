@@ -12,7 +12,7 @@
                 @foreach ($searchValues as $search_value)
                     <tr>
                         <th scope="row">
-                            <a href="#">{{ $search_value->topic }}</a>
+                            <a href="{{ route('') }}?mainValue={{ $search_value->search_value }}&value1={{ $pv1 }}&value2={{ $pv2 }}">{{ $search_value->topic }}</a>
                         </th>
                         <td>
                             <label>
