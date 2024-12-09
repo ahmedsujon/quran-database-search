@@ -9,7 +9,8 @@ class QuerySearchComponent extends Component
 {
     public function render()
     {
-        $search_values = Content::get();
-        return view('livewire.app.queries-search.query-search-component', ['search_values'=>$search_values])->layout('livewire.app.layouts.base');
+        $mainMenu = request('main_menu');
+        $searchValues = Content::where('main_menu', $mainMenu)->get();
+        return view('livewire.app.queries-search.query-search-component', ['searchValues' => $searchValues])->layout('livewire.app.layouts.base');
     }
 }

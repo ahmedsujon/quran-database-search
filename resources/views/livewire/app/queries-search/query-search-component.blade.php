@@ -9,15 +9,28 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($search_values as $search_value)
+                @foreach ($searchValues as $search_value)
                     <tr>
-                        <th scope="row">{{ $search_value->topic }}</th>
-                        <td>yes</td>
-                        <td>no</td>
+                        <th scope="row">
+                            <a href="#">{{ $search_value->topic }}</a>
+                        </th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="response[{{ $search_value->id }}]" value="yes"
+                                    class="response-checkbox">
+                                Yes/No
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="response[{{ $search_value->id }}]" value="no"
+                                    class="response-checkbox">
+                                Yes/No
+                            </label>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 </div>
-
