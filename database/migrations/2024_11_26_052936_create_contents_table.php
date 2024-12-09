@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
+            $table->string('main_menu')->nullable();
             $table->longText('topic')->nullable();
             $table->longText('search_value')->nullable();
             $table->timestamps();
