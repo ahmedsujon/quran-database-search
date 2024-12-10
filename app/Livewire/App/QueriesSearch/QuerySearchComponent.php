@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class QuerySearchComponent extends Component
 {
+    public $checkboxvaluex, $checkboxvaluey;
     public function render()
     {
         $mainMenu = request('main_menu');

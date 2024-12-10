@@ -4,6 +4,7 @@ use App\Livewire\App\ConductSearch\ConductSearchComponent;
 use App\Livewire\App\HomeComponent;
 use App\Livewire\App\QueriesSearch\QueryMenusComponent;
 use App\Livewire\App\QueriesSearch\QuerySearchComponent;
+use App\Livewire\App\QueriesSearch\QuerySearchResultComponent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,7 @@ Route::get('/conduct-search', ConductSearchComponent::class)->name('app.ConductS
 
 Route::get('/query-search-menus', QueryMenusComponent::class)->name('app.QuerySearchMenu');
 Route::get('/query-search', QuerySearchComponent::class)->name('app.QuerySearch');
+Route::get('/quran-search-result', QuerySearchResultComponent::class)->name('app.QuerySearchResult');
 
 //Call Route Files
 require __DIR__ . '/admin.php';

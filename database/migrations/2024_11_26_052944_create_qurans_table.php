@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('surah_no')->nullable();
             $table->string('ayat_no')->nullable();
+            $table->string('surah_ayat')->nullable();
             $table->longText('quran_english')->nullable();
             $table->longText('quran_arabic')->nullable();
             $table->longText('quran_arabic_harkat')->nullable();

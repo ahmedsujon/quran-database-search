@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('surah')->nullable();
             $table->string('ayat')->nullable();
+            $table->string('surah_ayat')->nullable();
             $table->text('word_topic')->nullable();
             $table->longText('ayat_summary_des')->nullable();
             $table->string('inferance_flag')->nullable();
