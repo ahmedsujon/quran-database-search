@@ -61,7 +61,6 @@
                                             <th class="align-middle">Email</th>
                                             <th class="align-middle">Phone</th>
                                             <th class="align-middle text-center">Role</th>
-                                            <th class="align-middle text-center" style="width: 15%;">Status</th>
                                             <th class="align-middle text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -85,17 +84,6 @@
                                                     <td class="align-middle">{{ $admin->phone }}</td>
                                                     <td class="align-middle text-center">
                                                         {{ getRoleName($admin->role_id) }}</td>
-                                                    <td class="align-middle text-center">
-                                                        @if ($admin->status == 0)
-                                                            <button class="btn btn-xs btn-danger"
-                                                                wire:click.prevent='changeStatus({{ $admin->id }}, {{ $admin->status }})'
-                                                                style="font-weight: normal; font-size: 11px; padding: 1px 7px;">{!! loadingStateStatus('changeStatus(' . $admin->id . ', ' . $admin->status . ')', 'In-Active') !!}</button>
-                                                        @else
-                                                            <button class="btn btn-xs btn-success"
-                                                                wire:click.prevent='changeStatus({{ $admin->id }}, {{ $admin->status }})'
-                                                                style="font-weight: normal; font-size: 11px; padding: 1px 7px;">{!! loadingStateStatus('changeStatus(' . $admin->id . ', ' . $admin->status . ')', 'Active') !!}</button>
-                                                        @endif
-                                                    </td>
                                                     <td class="align-middle text-center">
                                                         <button
                                                             class="btn btn-sm btn-soft-primary waves-effect waves-light action-btn edit_btn"
