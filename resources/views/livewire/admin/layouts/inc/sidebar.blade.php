@@ -20,7 +20,7 @@
                         <li>
                             <a href="javascript: void(0);"
                                 class="has-arrow waves-effect {{ request()->is('admin/quran') || request()->is('admin/quran/*') ? 'active_menu' : '' }}">
-                                <i class="bx bx-group"></i>
+                                <i class="bx bxs-data"></i>
                                 <span key="t-multi-level">Quran Data</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
@@ -44,7 +44,7 @@
                         <li>
                             <a href="javascript: void(0);"
                                 class="has-arrow waves-effect {{ request()->is('admin/hadith') || request()->is('admin/hadith/*') ? 'active_menu' : '' }}">
-                                <i class="bx bx-group"></i>
+                                <i class="bx bx-data"></i>
                                 <span key="t-multi-level">Hadith</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
@@ -68,7 +68,7 @@
                         <li>
                             <a href="javascript: void(0);"
                                 class="has-arrow waves-effect {{ request()->is('admin/word/topics') || request()->is('admin/word/topics/*') ? 'active_menu' : '' }}">
-                                <i class="bx bx-group"></i>
+                                <i class="bx bxs-data"></i>
                                 <span key="t-multi-level">Contents</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
@@ -93,7 +93,7 @@
                         <li>
                             <a href="javascript: void(0);"
                                 class="has-arrow waves-effect {{ request()->is('admin/word/topics/imports') || request()->is('admin/word/topics/imports/*') ? 'active_menu' : '' }}">
-                                <i class="bx bx-group"></i>
+                                <i class="bx bx-data"></i>
                                 <span key="t-multi-level">Word Or Topics</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
@@ -141,25 +141,6 @@
                         </li>
                     @endif
 
-                    @if (is_permitted('manage_users'))
-                        <li>
-                            <a href="javascript: void(0);"
-                                class="has-arrow waves-effect {{ request()->is('admin/all-users') || request()->is('admin/all-users/*') ? 'active_menu' : '' }}">
-                                <i class="bx bx-group"></i>
-                                <span key="t-multi-level">Users</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                @if (is_permitted('manage_users'))
-                                    <li>
-                                        <a href="{{ route('admin.allUsers') }}" key="t-level-1-1"
-                                            class="{{ request()->is('admin/all-users') ? 'active_sub_menu' : '' }}">All
-                                            Users</a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </li>
-                    @endif
-
                     @if (is_permitted('manage_settings'))
                         <li>
                             <a href="javascript: void(0);"
@@ -177,39 +158,8 @@
                             </ul>
                         </li>
                     @endif
-
-                    {{-- <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect {{ request()->is('admin/products') || request()->is('admin/products/*') ? 'active_menu' : '' }}">
-                            <i class="bx bx-box"></i>
-                            <span key="t-multi-level">Products</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="{{ route('admin.allProducts') }}" key="t-level-1-1" class="{{ request()->is('admin/products/all') ? 'active_sub_menu' : '' }}">All Products</a></li>
-                            <li><a href="{{ route('admin.categories') }}" key="t-level-1-1" class="{{ request()->is('admin/products/categories') ? 'active_sub_menu' : '' }}">Categories</a></li>
-                        </ul>
-                    </li> --}}
-
-
-                    {{-- <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-share-alt"></i>
-                            <span key="t-multi-level">Multi Level</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="javascript: void(0);" key="t-level-1-1">Level 1.1</a></li>
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow" key="t-level-1-2">Level 1.2</a>
-                                <ul class="sub-menu" aria-expanded="true">
-                                    <li><a href="javascript: void(0);" key="t-level-2-1">Level 2.1</a></li>
-                                    <li><a href="javascript: void(0);" key="t-level-2-2">Level 2.2</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li> --}}
-
                 </ul>
             </div>
-
         </div>
     </div>
 </div>

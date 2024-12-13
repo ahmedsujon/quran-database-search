@@ -17,14 +17,14 @@
                         </th>
                         <td>
                             <label>
-                                <input type="checkbox" name="response[{{ $search_value->id }}]" value="yes"
+                                <input type="checkbox" name="response[{{ $search_value->id }}]" value="yes" checked
                                     class="response-checkbox">
                                 Yes/No
                             </label>
                         </td>
                         <td>
                             <label>
-                                <input type="checkbox" name="response[{{ $search_value->id }}]" value="no"
+                                <input type="checkbox" name="response[{{ $search_value->id }}]" value="no" checked
                                     class="response-checkbox">
                                 Yes/No
                             </label>

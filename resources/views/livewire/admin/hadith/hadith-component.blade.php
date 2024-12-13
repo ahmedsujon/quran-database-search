@@ -53,7 +53,7 @@
                                 <table class="table align-middle table-nowrap table-bordered mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="align-middle">Sura/Ayat No</th>
+                                            <th class="align-middle">Group Name</th>
                                             <th class="align-middle">English</th>
                                             <th class="align-middle">Arabic</th>
                                         </tr>
