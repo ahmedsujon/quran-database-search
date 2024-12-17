@@ -11,19 +11,19 @@
     <table class="table table-striped table-bordered mt-5">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Word Or Category</th>
-                <th scope="col">Summary Description</th>
-                <th scope="col">Verse Description</th>
-                <th scope="col">Inference Flag</th>
+                <th scope="col" style="width: 10%;">Word Or Category</th>
+                <th scope="col" style="width: 30%;">Summary Description</th>
+                <th scope="col" style="width: 50%;">Verse Description</th>
+                <th scope="col" style="width: 10%;">Inference Flag</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($querySearchResults as $item)
                 <tr>
-                    <td scope="row">{{ $item->word_topic }}</td>
-                    <td>{{ $item->ayat_summary_des }}</td>
-                    <td></td>
-                    <td>{{ $item->inferance_flag }}</td>
+                    <td scope="row" style="width: 10%;">{{ $item->word_topic }}</td>
+                    <td style="width: 30%;">{{ $item->ayat_summary_des }}</td>
+                    <td style="width: 50%;">{{ $item->quran_english }}</td>
+                    <td style="width: 10%;">{{ $item->inferance_flag }}</td>
                 </tr>
             @endforeach
         </tbody>

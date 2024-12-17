@@ -14,7 +14,18 @@ class ConductSearchComponent extends Component
 
     public function render()
     {
-        $querySearchResults = Word::where('word_topic', 'like', '%' . $this->searchTerm . '%')->paginate($this->sortingValue);
-        return view('livewire.app.conduct-search.conduct-search-component', ['querySearchResults' => $querySearchResults])->layout('livewire.app.layouts.base');
+        // $querySearchResults = Word::join('qurans', 'words.surah_ayat', '=', 'qurans.surah_ayat')
+        //     ->select('words.word', 'qurans.surah_name', 'qurans.quran_english')
+        //     ->where('words.word_topic', 'like', '%' . $this->searchTerm . '%')
+        //     ->paginate($this->sortingValue);
+
+        $querySearchResults = Word::join('qurans', 'words.surah_ayat', '=', 'qurans.surah_ayat')
+            ->select('words.*', 'qurans.*') // Select columns from both tables (adjust based on what you need)
+            ->where('words.word_topic', 'like', '%' . $this->searchTerm . '%') // Filter based on search term
+            ->paginate($this->sortingValue); // Paginate the results
+
+
+        return view('livewire.app.conduct-search.conduct-search-component', ['querySearchResults' => $querySearchResults])
+            ->layout('livewire.app.layouts.base');
     }
 }
