@@ -14,6 +14,10 @@
         }
 
         body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            /* Make sure the body takes full height */
             font-family: 'Arial', sans-serif;
             background-color: #f9f9f9;
             color: #333;
@@ -37,12 +41,12 @@
             font-weight: 300;
         }
 
-
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 50px 15px;
+            flex-grow: 1;
+            /* Make sure the container takes up available space */
         }
 
         .intro-text,
@@ -122,11 +126,6 @@
             font-size: 1rem;
         }
 
-        footer p {
-            font-size: 1rem;
-        }
-
-
         @media (max-width: 768px) {
             .search-container input[type="text"] {
                 width: 80%;
@@ -168,11 +167,12 @@
         <p>By Abdul Mannan Family</p>
     </header>
 
-    {{ $slot }}
+    <div class="container">
+        {{ $slot }}
+    </div>
+    
+    @livewire('app.layouts.inc.footer')
 
-    <footer>
-        <p>&copy; 2024 Know Your Quran. All rights reserved.</p>
-    </footer>
     @stack('scripts')
 </body>
 
