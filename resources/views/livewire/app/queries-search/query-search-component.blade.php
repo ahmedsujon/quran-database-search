@@ -9,25 +9,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($searchValues as $search_value)
+                @foreach ($searchValues as $item)
                     <tr>
                         <th scope="row">
                             <a
-                                href="{{ route('app.QuerySearchResult') }}?querymainvalue={{ $search_value->search_value }}&checkboxvalue1={{ $checkboxvaluex }}&checkboxvalue2={{ $checkboxvaluey }}">{{ $search_value->topic }}</a>
+                                href="{{ route('app.QuerySearchResult') }}?querymainvalue={{ $item->search_value }}&checkboxvalue1={{ $checkboxvaluex }}&checkboxvalue2={{ $checkboxvaluey }}">{{ $item->topic }}</a>
                         </th>
                         <td>
-                            <label>
-                                <input type="checkbox" name="response[{{ $search_value->id }}]" value="yes" checked
-                                    class="response-checkbox">
-                                Yes/No
-                            </label>
+                            <input type="checkbox" wire:click="selectQuranVerse({{ $item->id }})"
+                                {{ $checkboxvaluex == $item->id ? 'checked' : '' }}>
                         </td>
                         <td>
-                            <label>
-                                <input type="checkbox" name="response[{{ $search_value->id }}]" value="no" checked
-                                    class="response-checkbox">
-                                Yes/No
-                            </label>
+                            <input type="checkbox" wire:click="selectHadith({{ $item->id }})"
+                                {{ $checkboxvaluey == $item->id ? 'checked' : '' }}>
                         </td>
                     </tr>
                 @endforeach
