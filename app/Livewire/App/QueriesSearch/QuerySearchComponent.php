@@ -7,11 +7,26 @@ use Livewire\Component;
 
 class QuerySearchComponent extends Component
 {
-    public $checkboxvaluex, $checkboxvaluey;
+    public $checkboxvaluex = null, $checkboxvaluey = null, $mainMenu;
+
+    public function selectQuranVerse($id)
+    {
+        $this->checkboxvaluex = $id;
+    }
+
+    public function selectHadith($id)
+    {
+        $this->checkboxvaluey = $id;
+    }
+
+    public function mount()
+    {
+        $this->mainMenu = request('main_menu');
+    }
+
     public function render()
     {
-        $mainMenu = request('main_menu');
-        $searchValues = Content::where('main_menu', $mainMenu)->get();
+        $searchValues = Content::where('main_menu', $this->mainMenu)->get();
         return view('livewire.app.queries-search.query-search-component', ['searchValues' => $searchValues])->layout('livewire.app.layouts.base');
     }
 }
