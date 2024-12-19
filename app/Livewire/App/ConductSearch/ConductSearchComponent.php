@@ -14,10 +14,6 @@ class ConductSearchComponent extends Component
 
     public function render()
     {
-        // $querySearchResults = Word::join('qurans', 'words.surah_ayat', '=', 'qurans.surah_ayat')
-        //     ->select('words.word', 'qurans.surah_name', 'qurans.quran_english')
-        //     ->where('words.word_topic', 'like', '%' . $this->searchTerm . '%')
-        //     ->paginate($this->sortingValue);
 
         $querySearchResults = Word::join('qurans', 'words.surah_ayat', '=', 'qurans.surah_ayat')
             ->select('words.*', 'qurans.*') // Select columns from both tables (adjust based on what you need)
