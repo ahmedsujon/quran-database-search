@@ -10,13 +10,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td scope="row">1</td>
-                    <td scope="row">1</td>
-                    <td scope="row">1</td>
-                    <td scope="row">1</td>
-                </tr>
+                @foreach ($final_results as $item)
+                    <tr>
+                        <td scope="row">{{ $item->word_topic }}</td>
+                        <td scope="row">1</td>
+                        <td scope="row">1</td>
+                        <td scope="row">1</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
+        <nav aria-label="Page navigation example">
+            {{ $final_results->links('livewire.app-pagination') }}
+        </nav>
     </div>
 </div>

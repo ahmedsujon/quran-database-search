@@ -18,10 +18,12 @@
                         <td>
                             <input type="checkbox" wire:click="selectQuranVerse({{ $item->id }})"
                                 {{ $checkboxvaluex == $item->id ? 'checked' : '' }}>
+                                <label>Yes/No</label>
                         </td>
                         <td>
                             <input type="checkbox" wire:click="selectHadith({{ $item->id }})"
                                 {{ $checkboxvaluey == $item->id ? 'checked' : '' }}>
+                                <label>Yes/No</label>
                         </td>
                     </tr>
                 @endforeach

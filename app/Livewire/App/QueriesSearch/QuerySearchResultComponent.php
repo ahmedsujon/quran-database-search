@@ -3,13 +3,14 @@
 namespace App\Livewire\App\QueriesSearch;
 
 use App\Models\Content;
+use App\Models\Word;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class QuerySearchResultComponent extends Component
 {
     use WithPagination;
-    public $searchTerm, $sortingValue = 20, $delete_id, $edit_id, $roles;
+    public $searchTerm, $searchValue, $sortingValue = 20, $delete_id, $edit_id, $roles;
 
     public function mount()
     {
@@ -20,7 +21,13 @@ class QuerySearchResultComponent extends Component
 
     public function render()
     {
-        $final_results = Content::where('words.word_topic', 'like', '%' . $this->searchTerm . '%')->paginate($this->sortingValue);
-        return view('livewire.app.queries-search.query-search-result-component', ['final_results'=>$final_results])->layout('livewire.app.layouts.base');
+        // Filter the Content table data based on the search value
+        $final_results = Word::when($this->searchValue, function ($query) {
+            $query->where('word_topic', 'like', '%' . $this->searchValue . '%');
+        })->paginate($this->sortingValue);
+
+        return view('livewire.app.queries-search.query-search-result-component', [
+            'final_results' => $final_results
+        ])->layout('livewire.app.layouts.base');
     }
 }
