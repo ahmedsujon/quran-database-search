@@ -1,14 +1,12 @@
 <div>
     <div class="container mt-4">
-        <!-- Table -->
-        <table class="table table-striped table-bordered mt-5">
+        <table class="table table-striped table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <th class="text-center" scope="col" style="width: 10%;">Word Or Category</th>
-                    <th scope="col" style="width: 30%;">Summary Description</th>
-                    <th scope="col" style="width: 45%;">Verse Description</th>
-                    <th class="text-center" scope="col" style="width: 10%;">Inference Flag</th>
-                    <th class="text-center" scope="col" style="width: 5%;">Hadith Reference</th>
+                    <th scope="col">Word Or Category</th>
+                    <th scope="col">Summary Description</th>
+                    <th scope="col">Verse Description</th>
+                    <th scope="col">Inference Flag</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +17,11 @@
                         <td style="width: 50%;">{{ $item->quran_english }}</td>
                         <td style="width: 10%;">{{ $item->inferance_flag }}</td>
                         <td style="width: 10%;" class="text-center">
+                            {{-- <button class="btn btn-info btn-sm" data-toggle="modal"
+                                data-target="#modal-{{ $item->id }}">
+                                Read
+                            </button> --}}
+
                             <button class="btn btn-info btn-sm" data-toggle="modal"
                                 data-target="#modal-{{ $item->id }}">
                                 Read
@@ -56,9 +59,9 @@
             {{ $final_results->links('livewire.app-pagination') }}
         </nav>
     </div>
-
-    @push('scripts')
-        <!-- Bootstrap JS and dependencies -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    @endpush
+</div>
+@push('scripts')
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+@endpush

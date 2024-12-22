@@ -3,6 +3,7 @@
 namespace App\Livewire\App\QueriesSearch;
 
 use App\Models\Content;
+use App\Models\Hadith;
 use App\Models\Word;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -10,21 +11,30 @@ use Livewire\WithPagination;
 class QuerySearchResultComponent extends Component
 {
     use WithPagination;
-    public $searchTerm, $searchValue, $sortingValue = 20, $delete_id, $edit_id, $roles;
+    public $searchTerm, $searchValue, $checkBoxValueOne, $checkBoxValueTwo, $sortingValue = 20, $delete_id, $edit_id, $roles;
 
     public function mount()
     {
-        $searchValue = request()->get('querymainvalue');
-        $checkBoxValueOne = request()->get('checkboxvalue1');
-        $checkBoxValueTwo = request()->get('checkboxvalue2');
+        $this->searchValue = request()->get('querymainvalue');
+        $this->checkBoxValueOne = request()->get('checkboxvalue1');
+        $this->checkBoxValueTwo = request()->get('checkboxvalue2');
     }
+
+    public function getHadithdata()
+    {
+        $hadith_results = Hadith::when($this->searchValue, function ($query) {
+            $query->where('word_topic', 'like', '%' . $this->searchValue . '%');
+        })->paginate($this->sortingValue);
+    }
+
 
     public function render()
     {
-        // Filter the Content table data based on the search value
-        $final_results = Word::when($this->searchValue, function ($query) {
-            $query->where('word_topic', 'like', '%' . $this->searchValue . '%');
-        })->paginate($this->sortingValue);
+        $final_results = Word::join('qurans', 'words.surah_ayat', '=', 'qurans.surah_ayat')
+            ->join('hadiths', 'words.word_topic', '=', 'hadiths.group_name') // Join the hadiths table based on word_topic
+            ->select('words.*', 'qurans.*', 'hadiths.*') // Select fields from all joined tables
+            ->where('words.word_topic', 'like', '%' . $this->searchValue . '%') // Filter based on the search term
+            ->paginate($this->sortingValue);
 
         return view('livewire.app.queries-search.query-search-result-component', [
             'final_results' => $final_results
