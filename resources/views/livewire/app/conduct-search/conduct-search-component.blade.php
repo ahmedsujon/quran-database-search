@@ -34,11 +34,10 @@
                         <!-- Modal -->
                         <div class="modal fade" id="modal-{{ $item->id }}" tabindex="-1" role="dialog"
                             aria-labelledby="modalLabel-{{ $item->id }}" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modalLabel-{{ $item->id }}">Hadith Information
-                                        </h5>
+                                        <h5 class="modal-title" id="modalLabel-{{ $item->id }}">Hadith Information</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -47,8 +46,7 @@
                                         {{ $item->hadith_english }}
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
