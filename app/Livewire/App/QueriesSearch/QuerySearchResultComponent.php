@@ -11,13 +11,13 @@ use Livewire\WithPagination;
 class QuerySearchResultComponent extends Component
 {
     use WithPagination;
-    public $searchTerm, $searchValue, $checkBoxValueOne, $checkBoxValueTwo, $sortingValue = 20, $delete_id, $edit_id, $roles;
+    public $searchTerm, $searchValue, $checkbox_one, $checkbox_two, $sortingValue = 20, $delete_id, $edit_id, $roles;
 
     public function mount()
     {
         $this->searchValue = request()->get('querymainvalue');
-        $this->checkBoxValueOne = request()->get('checkboxvalue1');
-        $this->checkBoxValueTwo = request()->get('checkboxvalue2');
+        $this->checkbox_one = request()->get('checkbox_one');
+        $this->checkbox_two = request()->get('checkbox_two');
     }
 
     public function getHadithdata()

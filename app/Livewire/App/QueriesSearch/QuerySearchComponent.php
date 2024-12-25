@@ -7,26 +7,45 @@ use Livewire\Component;
 
 class QuerySearchComponent extends Component
 {
-    public $checkboxvaluex = null, $checkboxvaluey = null, $mainMenu;
-
-    public function selectQuranVerse($id)
-    {
-        $this->checkboxvaluex = $id;
-    }
-
-    public function selectHadith($id)
-    {
-        $this->checkboxvaluey = $id;
-    }
+    public $checkboxvaluex = [], $checkboxvaluey = [], $mainMenu;
 
     public function mount()
     {
         $this->mainMenu = request('main_menu');
+        $searchValues = Content::where('main_menu', $this->mainMenu)->get();
+
+        // Load checkbox states from session or initialize them
+        foreach ($searchValues as $key => $sVal) {
+            $this->checkboxvaluey[$sVal->id] = session()->get("checkboxvaluey.{$sVal->id}", true);
+            $this->checkboxvaluex[$sVal->id] = session()->get("checkboxvaluex.{$sVal->id}", true);
+        }
+    }
+
+    public function selectQuranVerse($id)
+    {
+        $this->checkboxvaluex[$id] = !$this->checkboxvaluex[$id];
+        session()->put("checkboxvaluex.{$id}", $this->checkboxvaluex[$id]);
+    }
+
+    public function selectHadith($id)
+    {
+        $this->checkboxvaluey[$id] = !$this->checkboxvaluey[$id];
+        session()->put("checkboxvaluey.{$id}", $this->checkboxvaluey[$id]);
+    }
+
+    public function showData($id, $searchValue)
+    {
+        return redirect()->route('app.QuerySearchResult', [
+            'searchValue' => $searchValue,
+            'checkbox_one' => $this->checkboxvaluex[$id],
+            'checkbox_two' => $this->checkboxvaluey[$id]
+        ]);
     }
 
     public function render()
     {
         $searchValues = Content::where('main_menu', $this->mainMenu)->get();
+
         return view('livewire.app.queries-search.query-search-component', ['searchValues' => $searchValues])->layout('livewire.app.layouts.base');
     }
 }

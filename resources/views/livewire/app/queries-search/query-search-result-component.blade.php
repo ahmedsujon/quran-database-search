@@ -4,8 +4,12 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Word Or Category</th>
-                    <th scope="col">Summary Description</th>
-                    <th scope="col">Verse Description</th>
+                    @if ($checkbox_two)
+                        <th scope="col">Summary Description</th>
+                    @endif
+                    @if ($checkbox_one)
+                        <th scope="col">Verse Description</th>
+                    @endif
                     <th scope="col">Inference Flag</th>
                 </tr>
             </thead>
@@ -13,8 +17,12 @@
                 @foreach ($final_results as $item)
                     <tr>
                         <td scope="row" style="width: 10%;">{{ $item->word_topic }}</td>
-                        <td style="width: 30%;">{{ $item->ayat_summary_des }}</td>
-                        <td style="width: 50%;">{{ $item->quran_english }}</td>
+                        @if ($checkbox_two)
+                            <td style="width: 30%;">{{ $item->ayat_summary_des }}</td>
+                        @endif
+                        @if ($checkbox_one)
+                            <td style="width: 50%;">{{ $item->quran_english }}</td>
+                        @endif
                         <td style="width: 10%;">{{ $item->inferance_flag }}</td>
                         <td style="width: 10%;" class="text-center">
                             {{-- <button class="btn btn-info btn-sm" data-toggle="modal"
