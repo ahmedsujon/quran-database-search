@@ -4,13 +4,14 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Word Or Category</th>
-                    @if ($checkbox_two)
-                        <th scope="col">Summary Description</th>
-                    @endif
+                    <th scope="col">Summary Description</th>
                     @if ($checkbox_one)
                         <th scope="col">Verse Description</th>
                     @endif
                     <th scope="col">Inference Flag</th>
+                    @if ($checkbox_two)
+                        <th scope="col">Associated Hadith</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -25,11 +26,6 @@
                         @endif
                         <td style="width: 10%;">{{ $item->inferance_flag }}</td>
                         <td style="width: 10%;" class="text-center">
-                            {{-- <button class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#modal-{{ $item->id }}">
-                                Read
-                            </button> --}}
-
                             <button class="btn btn-info btn-sm" data-toggle="modal"
                                 data-target="#modal-{{ $item->id }}">
                                 Read
