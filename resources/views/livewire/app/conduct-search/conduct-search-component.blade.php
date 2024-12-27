@@ -1,9 +1,10 @@
 <div class="container mt-4">
-    <div class="row mb-4">
-        <div class="col-12">
-            <input type="text" class="form-control form-control-lg" id="searchQuery" placeholder="Search for a query..."
-                aria-label="Search for a query" style="height: 40px;" wire:model.live="searchTerm"
-                wire:keyup='resetPage' />
+    <h4 class="mb-3 text-center">Explore Quranic Verses and Insights - Search by Words, Categories, or Topics</h4>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-md-12 col-lg-12">
+            <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4"
+                id="searchQuery" placeholder="Search for a query..." aria-label="Search for a query" style="height: 50px;"
+                wire:model.live="searchTerm" wire:keyup='resetPage' autofocus />
         </div>
     </div>
 
@@ -37,7 +38,8 @@
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modalLabel-{{ $item->id }}">Hadith Information</h5>
+                                        <h5 class="modal-title" id="modalLabel-{{ $item->id }}">Hadith Information
+                                        </h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -46,7 +48,8 @@
                                         {{ $item->hadith_english }}
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
