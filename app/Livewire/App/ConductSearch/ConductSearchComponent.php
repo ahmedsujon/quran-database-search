@@ -2,6 +2,7 @@
 
 namespace App\Livewire\App\ConductSearch;
 
+use App\Models\Hadith;
 use App\Models\Word;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -10,7 +11,15 @@ class ConductSearchComponent extends Component
 {
 
     use WithPagination;
-    public $searchTerm, $sortingValue = 20, $delete_id, $edit_id, $roles;
+    public $searchTerm, $sortingValue = 20, $delete_id, $edit_id, $roles, $hadiths;
+
+    public function showAllHadiths($word)
+    {
+        $hadiths = Hadith::where('group_name', $word)->get();
+        $this->hadiths = $hadiths;
+
+        $this->dispatch('showHadithsModal');
+    }
 
     public function render()
     {
