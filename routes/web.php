@@ -22,7 +22,7 @@ Route::get('/', HomeComponent::class)->name('app.home');
 Route::get('/conduct-search', ConductSearchComponent::class)->name('app.ConductSearch');
 
 Route::get('/query-search-menus', QueryMenusComponent::class)->name('app.QuerySearchMenu');
-Route::get('/query-search', QuerySearchComponent::class)->name('app.QuerySearch');
+Route::get('/query-search/{id}', QuerySearchComponent::class)->name('app.QuerySearch');
 Route::get('/quran-search-result', QuerySearchResultComponent::class)->name('app.QuerySearchResult');
 
 //Call Route Files

@@ -11,8 +11,8 @@ class QuerySearchComponent extends Component
 
     public function mount()
     {
-        $this->mainMenu = request('main_menu');
-        $searchValues = Content::where('main_menu', $this->mainMenu)->get();
+        $this->mainMenu = request('id');
+        $searchValues = Content::where('id', $this->mainMenu)->get();
 
         // Load checkbox states from session or initialize them
         foreach ($searchValues as $key => $sVal) {
@@ -44,7 +44,11 @@ class QuerySearchComponent extends Component
 
     public function render()
     {
-        $searchValues = Content::where('main_menu', $this->mainMenu)->get();
+        $menu_name = request()->menu_name;
+        if ($menu_name) {
+            session(['menu_name' => $menu_name]);
+        }
+        $searchValues = Content::where('main_menu_id', $this->mainMenu)->get();
 
         return view('livewire.app.queries-search.query-search-component', ['searchValues' => $searchValues])->layout('livewire.app.layouts.base');
     }

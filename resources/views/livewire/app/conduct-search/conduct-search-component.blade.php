@@ -27,7 +27,8 @@
                     <td style="width: 50%;">{{ $item->quran_english }}</td>
                     <td style="width: 10%;">{{ $item->inferance_flag }}</td>
                     <td style="width: 10%;" class="text-center">
-                        <button class="btn btn-info btn-sm" wire:click.prevent='showAllHadiths("{{ $item->word_topic }}")'>
+                        <button class="btn btn-info btn-sm"
+                            wire:click.prevent='showAllHadiths("{{ $item->word_topic }}")'>
                             Read
                         </button>
 
@@ -47,7 +48,8 @@
                                         @if ($hadiths)
                                             @foreach ($hadiths as $hadith)
                                                 <div class="row mb-3">
-                                                    <div class="col-md-12 text-start">
+                                                    <div class="col-md-12 text-start"
+                                                        style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
                                                         <p>{{ $hadith->hadith_english }}</p>
                                                     </div>
                                                 </div>

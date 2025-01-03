@@ -5,13 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Content extends Model
+class MainMenu extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'topic',
-        'search_value',
-        'reporting',
-    ];
+    protected $table = 'main_menus';
 }
