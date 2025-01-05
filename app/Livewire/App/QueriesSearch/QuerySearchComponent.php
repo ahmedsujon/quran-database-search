@@ -9,10 +9,10 @@ class QuerySearchComponent extends Component
 {
     public $checkboxvaluex = [], $checkboxvaluey = [], $mainMenu;
 
-    public function mount()
+    public function mount($id)
     {
-        $this->mainMenu = request('id');
-        $searchValues = Content::where('id', $this->mainMenu)->get();
+        $this->mainMenu = $id;
+        $searchValues = Content::where('main_menu_id', $this->mainMenu)->get();
 
         // Load checkbox states from session or initialize them
         foreach ($searchValues as $key => $sVal) {
