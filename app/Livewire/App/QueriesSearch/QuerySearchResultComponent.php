@@ -11,7 +11,7 @@ use Livewire\WithPagination;
 class QuerySearchResultComponent extends Component
 {
     use WithPagination;
-    public $searchTerm, $searchValue, $checkbox_one, $checkbox_two, $sortingValue = 20, $delete_id, $edit_id, $roles;
+    public $searchTerm, $searchValue, $checkbox_one, $checkbox_two, $sortingValue = 20, $delete_id, $edit_id, $roles, $hadiths;
 
     public function mount()
     {
@@ -25,6 +25,13 @@ class QuerySearchResultComponent extends Component
         $hadith_results = Hadith::when($this->searchValue, function ($query) {
             $query->where('word_topic', 'like', '%' . $this->searchValue . '%');
         })->paginate($this->sortingValue);
+    }
+
+    public function showAllHadiths($word)
+    {
+        $hadiths = Hadith::where('group_name', $word)->get();
+        $this->hadiths = $hadiths;
+        $this->dispatch('showHadithsModal');
     }
 
 
