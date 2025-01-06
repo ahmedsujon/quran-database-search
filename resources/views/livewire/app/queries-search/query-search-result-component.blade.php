@@ -8,14 +8,16 @@
                     </a>
                 </li>
                 @if (session('menu_name'))
-                    <li class="breadcrumb-item active text-dark fw-semibold text-truncate" aria-current="page"
-                        style="max-width: 200px;" title="{{ session('menu_name') }}">
-                        {{ session('menu_name') }}
+                    <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page"
+                        title="{{ session('menu_name') }}">
+                        <a href="{{ url()->previous() }}" style="text-decoration: none;">
+                            {{ session('menu_name') }}
+                        </a>
                     </li>
                 @endif
                 @if (session()->has('content_topic'))
-                    <li class="breadcrumb-item active text-dark fw-semibold text-truncate" aria-current="page"
-                        style="max-width: 200px;" title="{{ session('content_topic') }}">
+                    <li class="breadcrumb-item active text-dark fw-semibold " aria-current="page"
+                        title="{{ session('content_topic') }}">
                         {{ session('content_topic') }}
                     </li>
                 @endif

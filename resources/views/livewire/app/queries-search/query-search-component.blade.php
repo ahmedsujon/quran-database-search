@@ -8,8 +8,7 @@
                     </a>
                 </li>
                 @if (session('menu_name'))
-                    <li class="breadcrumb-item active text-dark fw-semibold text-truncate" aria-current="page"
-                        style="max-width: 200px;" title="{{ session('menu_name') }}">
+                    <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page" title="{{ session('menu_name') }}">
                         {{ session('menu_name') }}
                     </li>
                 @endif
