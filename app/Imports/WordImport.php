@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+
 use App\Models\Word;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -17,7 +18,7 @@ class WordImport implements ToModel, WithHeadingRow
         $hadithData->surah_ayat = $hadithData->surah && $hadithData->ayat
             ? $hadithData->surah . '.' . $hadithData->ayat
             : null;
-            
+
         $hadithData->word_topic                     = isset($row['word_topic']) ? $row['word_topic'] : null;
         $hadithData->ayat_summary_des               = isset($row['ayat_summary_des']) ? $row['ayat_summary_des'] : null;
         $hadithData->inferance_flag                 = isset($row['inferance_flag']) ? $row['inferance_flag'] : null;
