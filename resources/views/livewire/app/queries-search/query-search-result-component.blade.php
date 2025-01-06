@@ -13,6 +13,12 @@
                         {{ session('menu_name') }}
                     </li>
                 @endif
+                @if (session()->has('content_topic'))
+                    <li class="breadcrumb-item active text-dark fw-semibold text-truncate" aria-current="page"
+                        style="max-width: 200px;" title="{{ session('content_topic') }}">
+                        {{ session('content_topic') }}
+                    </li>
+                @endif
             </ol>
         </nav>
 
