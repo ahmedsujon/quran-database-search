@@ -5,6 +5,7 @@ namespace App\Livewire\App\QueriesSearch;
 use App\Models\Content;
 use App\Models\Hadith;
 use App\Models\Word;
+use App\Models\WordTopic;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -39,10 +40,10 @@ class QuerySearchResultComponent extends Component
     {
         $selectedTopic = session('selected_topic');
 
-        $final_results = Word::join('qurans', 'words.surah_ayat', '=', 'qurans.surah_ayat')
-            ->join('hadiths', 'words.word_topic', '=', 'hadiths.group_name') // Join the hadiths table based on word_topic
-            ->select('words.*', 'qurans.*', 'hadiths.*') // Select fields from all joined tables
-            ->where('words.word_topic', 'like', '%' . $this->searchValue . '%') // Filter based on the search term
+        $final_results = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+            ->join('hadiths', 'word_topics.word_topic', '=', 'hadiths.group_name') // Join the hadiths table based on word_topic
+            ->select('word_topics.*', 'qurans.*', 'hadiths.*') // Select fields from all joined tables
+            ->where('word_topics.word_topic', 'like', '%' . $this->searchValue . '%') // Filter based on the search term
             ->paginate($this->sortingValue);
 
         return view('livewire.app.queries-search.query-search-result-component', [

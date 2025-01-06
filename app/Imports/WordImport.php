@@ -5,13 +5,13 @@ namespace App\Imports;
 
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use App\Models\Word;
+use App\Models\WordTopic;
 
 class WordImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        $hadithData = new Word();
+        $hadithData = new WordTopic();
         $hadithData->surah                          = isset($row['surah']) ? $row['surah'] : null;
         $hadithData->ayat                           = isset($row['ayat']) ? $row['ayat'] : null;
         // Create the surah_ayat by concatenating surah_no and ayat_no with a dot (.)
