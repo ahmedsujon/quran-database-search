@@ -3,9 +3,9 @@
 namespace App\Imports;
 
 
-use App\Models\Word;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use App\Models\Word;
 
 class WordImport implements ToModel, WithHeadingRow
 {
