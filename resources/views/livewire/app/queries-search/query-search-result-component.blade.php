@@ -13,13 +13,6 @@
                         {{ session('menu_name') }}
                     </li>
                 @endif
-
-                @if ($selectedTopic)
-                    <li class="breadcrumb-item active text-dark fw-semibold text-truncate" aria-current="page"
-                        style="max-width: 200px;">
-                        {{ $selectedTopic }}
-                    </li>
-                @endif
             </ol>
         </nav>
 
