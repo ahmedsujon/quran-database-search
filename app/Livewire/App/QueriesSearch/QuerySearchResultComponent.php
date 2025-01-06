@@ -37,6 +37,8 @@ class QuerySearchResultComponent extends Component
 
     public function render()
     {
+        $selectedTopic = session('selected_topic');
+
         $final_results = Word::join('qurans', 'words.surah_ayat', '=', 'qurans.surah_ayat')
             ->join('hadiths', 'words.word_topic', '=', 'hadiths.group_name') // Join the hadiths table based on word_topic
             ->select('words.*', 'qurans.*', 'hadiths.*') // Select fields from all joined tables
@@ -44,7 +46,7 @@ class QuerySearchResultComponent extends Component
             ->paginate($this->sortingValue);
 
         return view('livewire.app.queries-search.query-search-result-component', [
-            'final_results' => $final_results
+            'final_results' => $final_results, 'selectedTopic' => $selectedTopic
         ])->layout('livewire.app.layouts.base');
     }
 }

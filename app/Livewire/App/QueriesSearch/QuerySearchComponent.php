@@ -40,6 +40,19 @@ class QuerySearchComponent extends Component
             'checkbox_one' => $this->checkboxvaluex[$id],
             'checkbox_two' => $this->checkboxvaluey[$id]
         ]);
+
+        $menu_name = request()->menu_name;
+
+        if ($menu_name) {
+            session(['menu_name' => $menu_name]);
+        }
+
+        $item = collect($this->searchValues)->firstWhere('id', $id);
+
+        if ($item) {
+            // Store the topic in the session
+            session()->put('selected_topic', $item['topic']);
+        }
     }
 
     public function render()
@@ -48,8 +61,8 @@ class QuerySearchComponent extends Component
         if ($menu_name) {
             session(['menu_name' => $menu_name]);
         }
-        $searchValues = Content::where('main_menu_id', $this->mainMenu)->get();
 
+        $searchValues = Content::where('main_menu_id', $this->mainMenu)->get();
         return view('livewire.app.queries-search.query-search-component', ['searchValues' => $searchValues])->layout('livewire.app.layouts.base');
     }
 }

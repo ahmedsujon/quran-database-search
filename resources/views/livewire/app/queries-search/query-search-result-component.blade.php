@@ -8,29 +8,21 @@
                     </a>
                 </li>
                 @if (session('menu_name'))
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('app.QuerySearchMenu') }}" class="text-decoration-none text-primary">
-                            <i class="bi bi-house-door-fill"></i> {{ session('menu_name') }}
-                        </a>
+                    <li class="breadcrumb-item active text-dark fw-semibold text-truncate" aria-current="page"
+                        style="max-width: 200px;" title="{{ session('menu_name') }}">
+                        {{ session('menu_name') }}
+                    </li>
+                @endif
+
+                @if ($selectedTopic)
+                    <li class="breadcrumb-item active text-dark fw-semibold text-truncate" aria-current="page"
+                        style="max-width: 200px;">
+                        {{ $selectedTopic }}
                     </li>
                 @endif
             </ol>
         </nav>
-        <nav aria-label="breadcrumb" class="mb-4">
-            <ol class="breadcrumb bg-light rounded shadow-sm px-4 py-3">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('app.QuerySearchMenu') }}" class="text-decoration-none text-primary">
-                        <i class="bi bi-house-door-fill"></i> Main Menu
-                    </a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{{ route('app.QuerySearchMenu') }}" class="text-decoration-none text-primary">
-                        <i class="bi bi-house-door-fill"></i> Name of Query
-                    </a>
-                </li>
-                <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Search Results</li>
-            </ol>
-        </nav>
+
         <table class="table table-striped table-bordered">
             <thead class="thead-dark">
                 <tr>
@@ -57,7 +49,8 @@
                         @endif
                         <td style="width: 10%;">{{ $item->inferance_flag }}</td>
                         <td style="width: 10%;" class="text-center">
-                            <button class="btn btn-info btn-sm" wire:click.prevent='showAllHadiths("{{ $item->word_topic }}")'>
+                            <button class="btn btn-info btn-sm"
+                                wire:click.prevent='showAllHadiths("{{ $item->word_topic }}")'>
                                 Read
                             </button>
 
