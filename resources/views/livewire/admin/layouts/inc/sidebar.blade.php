@@ -67,7 +67,7 @@
                     @if (is_permitted('manage_admins'))
                         <li>
                             <a href="javascript: void(0);"
-                                class="has-arrow waves-effect {{ request()->is('admin/word/topics') || request()->is('admin/word/topics/*') ? 'active_menu' : '' }}">
+                                class="has-arrow waves-effect {{ request()->is('admin/contents/data') || request()->is('admin/contents/data/*') ? 'active_menu' : '' }}">
                                 <i class="bx bxs-data"></i>
                                 <span key="t-multi-level">Main Menu</span>
                             </a>
