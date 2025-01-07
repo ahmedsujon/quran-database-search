@@ -69,20 +69,20 @@
                             <a href="javascript: void(0);"
                                 class="has-arrow waves-effect {{ request()->is('admin/contents/data') || request()->is('admin/contents/data/*') ? 'active_menu' : '' }}">
                                 <i class="bx bxs-data"></i>
-                                <span key="t-multi-level">Main Menu</span>
+                                <span key="t-multi-level">Contents</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
                                 @if (is_permitted('manage_admins'))
-                                    {{-- <li>
+                                    <li>
                                         <a href="{{ route('admin.contentsImports') }}" key="t-level-1-1"
                                             class="{{ request()->is('admin/word/topics/imports') ? 'active_sub_menu' : '' }}">Import
                                             Data</a>
-                                    </li> --}}
+                                    </li>
                                     <li>
                                         <a href="{{ route('admin.contentsData') }}" key="t-level-1-1"
                                             class="{{ request()->is('admin/word/topics/data') ? 'active_sub_menu' : '' }}">List
                                             Of
-                                            Menu</a>
+                                            Contents</a>
                                     </li>
                                 @endif
                             </ul>
