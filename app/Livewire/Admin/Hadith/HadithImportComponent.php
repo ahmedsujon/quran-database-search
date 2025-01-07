@@ -16,7 +16,7 @@ class HadithImportComponent extends Component
     public function uploaHadithExcel()
     {
         $this->validate([
-            'excel' => 'required',
+            'excel' => 'required|file|mimes:csv,xlsx,txt|max:2048',
         ]);
 
         Excel::import(new HadithImport, $this->excel);

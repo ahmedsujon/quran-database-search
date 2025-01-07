@@ -16,7 +16,7 @@ class QuranImportComponent extends Component
     public function uploaSuradExcel()
     {
         $this->validate([
-            'excel' => 'required',
+            'excel' => 'required|file|mimes:csv,xlsx,txt|max:2048',
         ]);
 
         Excel::import(new QuranImport, $this->excel);

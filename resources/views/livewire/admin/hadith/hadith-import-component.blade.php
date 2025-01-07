@@ -27,17 +27,31 @@
                             <div class="col-md-12">
                                 <label for="password" class="form-label">Hadith Data CSV</label>
                                 <input type="file" wire:model='excel' class="form-control">
-                                @error('excelfile')
+                                @error('excel')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
+
+                                <!-- Progress Bar -->
+                                <div wire:loading wire:target="excel" class="mt-2">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                            role="progressbar" style="width: 100%;">
+                                            Uploading...
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer mt-2">
-                        <button type="submit" class="btn btn-primary">{!! loadingStateWithText('uploaHadithExcel', 'Submit') !!}</button>
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled" wire:target="excel">
+                            {!! loadingStateWithText('uploaHadithExcel', 'Submit') !!}
+                        </button>
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 </div>

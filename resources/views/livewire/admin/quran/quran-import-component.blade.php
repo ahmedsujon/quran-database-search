@@ -30,11 +30,21 @@
                                 @error('excelfile')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
+                                <div wire:loading wire:target="excel" class="mt-2">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                            role="progressbar" style="width: 100%;">
+                                            Uploading...
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer mt-2">
-                        <button type="submit" class="btn btn-primary">{!! loadingStateWithText('uploaSuradExcel', 'Submit') !!}</button>
+                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled" wire:target="excel">
+                            {!! loadingStateWithText('uploaSuradExcel', 'Submit') !!}
+                        </button>
                     </div>
                 </form>
             </div>
