@@ -4,11 +4,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">Contents Data</h4>
+                        <h4 class="mb-sm-0 font-size-18">Main Menu</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Contents Data</li>
+                                <li class="breadcrumb-item active">Main Menu</li>
                             </ol>
                         </div>
                     </div>
@@ -19,7 +19,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header bg-white" style="border-bottom: 1px solid #e2e2e7;">
-                            <h4 class="card-title" style="float: left;">All Contents Data</h4>
+                            <h4 class="card-title" style="float: left;">All Main Menu</h4>
                         </div>
                         <div class="card-body">
                             <div class="row mb-3">
@@ -53,8 +53,7 @@
                                 <table class="table align-middle table-nowrap table-bordered mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="align-middle">Word Or Topic</th>
-                                            <th class="align-middle">Search Value</th>
+                                            <th class="align-middle">Main Menu</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -66,8 +65,7 @@
                                             @endphp
                                             @foreach ($content_datas as $content_data)
                                                 <tr>
-                                                    <td>{{ $content_data->topic }}</td>
-                                                    <td>{{ $content_data->search_value }}</td>
+                                                    <td>{{ $content_data->menu_name }}</td>
                                                 </tr>
                                             @endforeach
                                         @else
