@@ -33,9 +33,8 @@
                                 <div wire:loading wire:target="excel" class="mt-2">
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                            role="progressbar" style="width: 100%;">
-                                            Uploading...
-                                        </div>
+                                            role="progressbar" style="width: 100%; height: 20px; padding: 150px;">
+                                            Uploading...</div>
                                     </div>
                                 </div>
                             </div>
