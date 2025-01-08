@@ -1,4 +1,9 @@
 <div>
+    <style>
+        .hadith-border-bottom {
+            border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
+        }
+    </style>
     <div class="container mt-4">
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb bg-light rounded shadow-sm px-4 py-3">
@@ -72,7 +77,7 @@
                                             @if ($hadiths)
                                                 @foreach ($hadiths as $hadith)
                                                     <div class="row mb-3">
-                                                        <div class="col-md-12 text-start">
+                                                        <div class="col-md-12 text-start hadith-border-bottom">
                                                             <p>{{ $hadith->hadith_english }}</p>
                                                         </div>
                                                     </div>

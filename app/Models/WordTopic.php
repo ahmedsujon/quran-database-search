@@ -19,5 +19,6 @@ class WordTopic extends Model
         'ayat_summary_des',
         'inferance_flag',
         'sub_word_topic',
+        'reporting',
     ];
 }

@@ -25,6 +25,7 @@ class WordImport implements ToModel, WithHeadingRow
         $wordTopicData->ayat_summary_des               = isset($row['ayat_summary_des']) ? $row['ayat_summary_des'] : null;
         $wordTopicData->inferance_flag                 = isset($row['inferance_flag']) ? $row['inferance_flag'] : null;
         $wordTopicData->sub_word_topic                 = isset($row['sub_word_topic']) ? $row['sub_word_topic'] : null;
+        $wordTopicData->reporting                      = isset($row['reporting']) ? $row['reporting'] : null;
         $wordTopicData->save();
     }
 }
