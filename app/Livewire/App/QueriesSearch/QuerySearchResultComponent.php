@@ -37,9 +37,9 @@ class QuerySearchResultComponent extends Component
 
     public function render()
     {
-        $final_results = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
-            ->join('hadiths', 'word_topics.word_topic', '=', 'hadiths.group_name')
-            ->select('word_topics.*', 'qurans.*', 'hadiths.*')
+        $final_results = WordTopic::leftJoin('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+            ->leftJoin('hadiths', 'word_topics.word_topic', '=', 'hadiths.group_name')
+            ->select('word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english', 'hadiths.hadith_english')
             ->where('word_topics.word_topic', 'like', '%' . $this->searchValue . '%')
             ->paginate($this->sortingValue);
 

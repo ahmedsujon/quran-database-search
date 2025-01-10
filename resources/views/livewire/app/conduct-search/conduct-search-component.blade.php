@@ -46,6 +46,7 @@
                             <button class="btn btn-info btn-sm"
                                 wire:click.prevent='showAllHadiths("{{ $item->word_topic }}")'>
                                 Read
+                                {{-- {!! loadingStateWithText('showAllHadiths', 'Read') !!} --}}
                             </button>
 
                             <!-- Modal -->

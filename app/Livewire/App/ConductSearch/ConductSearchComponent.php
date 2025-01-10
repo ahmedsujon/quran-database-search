@@ -23,11 +23,18 @@ class ConductSearchComponent extends Component
 
     public function render()
     {
-        $querySearchResults = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
-            ->join('hadiths', 'word_topics.word_topic', '=', 'hadiths.group_name')
-            ->select('word_topics.*', 'qurans.*', 'hadiths.*')
+        $querySearchResults = WordTopic::leftJoin('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+            ->leftJoin('hadiths', 'word_topics.word_topic', '=', 'hadiths.group_name')
+            ->select('word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english', 'hadiths.hadith_english')
             ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
             ->paginate($this->sortingValue);
+
+
+        // $querySearchResults = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+        //     ->join('hadiths', 'word_topics.word_topic', '=', 'hadiths.group_name')
+        //     ->select('word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english', 'hadiths.hadith_english')
+        //     ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
+        //     ->paginate($this->sortingValue);
 
         return view('livewire.app.conduct-search.conduct-search-component', ['querySearchResults' => $querySearchResults])
             ->layout('livewire.app.layouts.base');

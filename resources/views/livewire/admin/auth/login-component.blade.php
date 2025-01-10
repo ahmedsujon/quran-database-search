@@ -1,4 +1,6 @@
-@section('page_title') Admin Login @endsection
+@section('page_title')
+    Admin Login
+@endsection
 <div>
     <div class="account-pages my-5 pt-sm-5">
         <div class="container mt-5">
@@ -14,7 +16,8 @@
                                     </div>
                                 </div>
                                 <div class="col-5 align-self-end">
-                                    <img src="{{ asset('assets/admin/images/profile-img.png') }}" alt="" class="img-fluid">
+                                    <img src="{{ asset('assets/admin/images/profile-img.png') }}" alt=""
+                                        class="img-fluid">
                                 </div>
                             </div>
                         </div>
@@ -26,7 +29,8 @@
                                 <form class="form-horizontal" wire:submit.prevent='adminLogin'>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="text" class="form-control" id="email" wire:model.blur='email' placeholder="Enter email">
+                                        <input type="text" class="form-control" id="email"
+                                            wire:model.blur='email' placeholder="Enter email">
                                         @error('email')
                                             <span class="text-danger" style="font-size: 12px;">{{ $message }}</span>
                                         @enderror
@@ -35,8 +39,11 @@
                                     <div class="mb-3">
                                         <label class="form-label">Password</label>
                                         <div class="input-group auth-pass-inputgroup">
-                                            <input type="password" class="form-control" wire:model.blur='password' placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
-                                            <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                                            <input type="password" class="form-control" wire:model.blur='password'
+                                                placeholder="Enter password" aria-label="Password"
+                                                aria-describedby="password-addon">
+                                            <button class="btn btn-light " type="button" id="password-addon"><i
+                                                    class="mdi mdi-eye-outline"></i></button>
                                         </div>
                                         @error('password')
                                             <span class="text-danger" style="font-size: 12px;">{{ $message }}</span>
@@ -44,7 +51,8 @@
                                     </div>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" wire:model.live="remember_me" id="remember-check">
+                                        <input class="form-check-input" type="checkbox" wire:model.live="remember_me"
+                                            id="remember-check">
                                         <label class="form-check-label" for="remember-check">
                                             Remember me
                                         </label>
@@ -56,7 +64,8 @@
                                                 <i class="bx bx-check-circle" style="font-size: 17px;"></i>
                                             </button>
                                         @else
-                                            <button class="btn btn-primary waves-effect waves-light login_btn" {!! disabledOn('adminLogin') !!} type="submit">
+                                            <button class="btn btn-primary waves-effect waves-light login_btn"
+                                                {!! disabledOn('adminLogin') !!} type="submit">
                                                 {!! loadingStateWithText('adminLogin', 'Log In') !!}
                                             </button>
                                         @endif
