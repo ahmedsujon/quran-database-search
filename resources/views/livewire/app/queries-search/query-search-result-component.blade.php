@@ -29,68 +29,29 @@
             </ol>
         </nav>
 
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered mt-5">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Word Or Category</th>
-                    <th scope="col">Summary Description</th>
-                    @if ($checkbox_one)
-                        <th scope="col">Verse Description</th>
-                    @endif
-                    <th scope="col">Inference Flag</th>
-                    @if ($checkbox_two)
-                        <th scope="col">Associated Hadith</th>
-                    @endif
+                    <th class="text-center" scope="col" style="width: 10%;">Word Or Category</th>
+                    <th scope="col" style="width: 30%;">Summary Description</th>
+                    <th scope="col" style="width: 45%;">Verse Description</th>
+                    <th class="text-center" scope="col" style="width: 10%;">Inference Flag</th>
+                    <th class="text-center" scope="col" style="width: 5%;">Hadith Reference</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($final_results as $item)
                     <tr>
                         <td scope="row" style="width: 10%;">{{ $item->word_topic }}</td>
-                        @if ($checkbox_two)
-                            <td style="width: 30%;">{{ $item->ayat_summary_des }}</td>
-                        @endif
-                        @if ($checkbox_one)
-                            <td style="width: 50%;">{{ $item->quran_english }}</td>
-                        @endif
+                        <td style="width: 30%;">{{ $item->ayat_summary_des }}</td>
+                        <td style="width: 50%;">{{ $item->quran_english }}</td>
                         <td style="width: 10%;">{{ $item->inferance_flag }}</td>
                         <td style="width: 10%;" class="text-center">
                             <button class="btn btn-info btn-sm"
-                                wire:click.prevent='showAllHadiths("{{ $item->word_topic }}")'>
-                                Read
+                                wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
+                                {{-- Read --}}
+                                {!! loadingStateWithText('showAllHadiths('.$item->w_id.')', 'Read') !!}
                             </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog"
-                                aria-labelledby="modalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="modalLabel">Hadith
-                                                Information</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            @if ($hadiths)
-                                                @foreach ($hadiths as $hadith)
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-12 text-start hadith-border-bottom">
-                                                            <p>{{ $hadith->hadith_english }}</p>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </td>
                     </tr>
                 @endforeach
@@ -99,6 +60,38 @@
         <nav aria-label="Page navigation example">
             {{ $final_results->links('livewire.app-pagination') }}
         </nav>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog"
+    aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Hadith Information
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @if ($hadiths)
+                        @foreach ($hadiths as $hadith)
+                            <div class="row mb-3">
+                                <div class="col-md-12 text-start hadith-border-bottom"
+                                    style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
+                                    <p>{{ $hadith->hadith_english }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @push('scripts')
