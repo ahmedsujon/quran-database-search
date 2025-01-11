@@ -44,43 +44,10 @@
                         <td style="width: 10%;">{{ $item->inferance_flag }}</td>
                         <td style="width: 10%;" class="text-center">
                             <button class="btn btn-info btn-sm"
-                                wire:click.prevent='showAllHadiths("{{ $item->word_topic }}")'>
-                                Read
-                                {{-- {!! loadingStateWithText('showAllHadiths', 'Read') !!} --}}
+                                wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
+                                {{-- Read --}}
+                                {!! loadingStateWithText('showAllHadiths('.$item->w_id.')', 'Read') !!}
                             </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog"
-                                aria-labelledby="modalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="modalLabel">Hadith Information
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            @if ($hadiths)
-                                                @foreach ($hadiths as $hadith)
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-12 text-start hadith-border-bottom"
-                                                            style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
-                                                            <p>{{ $hadith->hadith_english }}</p>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </td>
                     </tr>
                 @endforeach
@@ -89,6 +56,39 @@
         <nav aria-label="Page navigation example">
             {{ $querySearchResults->links('livewire.app-pagination') }}
         </nav>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog"
+    aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Hadith Information
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @if ($hadiths)
+                        @foreach ($hadiths as $hadith)
+                            <div class="row mb-3">
+                                <div class="col-md-12 text-start hadith-border-bottom"
+                                    style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
+                                    <p>{{ $hadith->hadith_english }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
