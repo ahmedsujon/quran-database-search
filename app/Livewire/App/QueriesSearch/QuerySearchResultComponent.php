@@ -17,7 +17,7 @@ class QuerySearchResultComponent extends Component
 
     public function mount()
     {
-        $this->searchValue = request()->get('querymainvalue');
+        $this->searchValue = request()->get('searchValue');
         $this->checkbox_one = request()->get('checkbox_one');
         $this->checkbox_two = request()->get('checkbox_two');
     }
@@ -52,9 +52,9 @@ class QuerySearchResultComponent extends Component
         //     ->where('word_topics.word_topic', 'like', '%' . $this->searchValue . '%')
         //     ->paginate($this->sortingValue);
 
-        $final_results = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+        $final_results = WordTopic::join('qurans', 'word_topics.surah_ayat', 'qurans.surah_ayat')
             ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english')
-            ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
+            ->where('word_topics.word_topic', $this->searchValue)
             ->paginate($this->sortingValue);
 
         return view('livewire.app.queries-search.query-search-result-component', [
