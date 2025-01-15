@@ -27,7 +27,7 @@
                     <tr>
                         <th scope="row">
                             <a href="javascript:void(0)"
-                                wire:click.prevent='showData({{ $item->id }}, "{{ $item->search_value }}", "{{ $item->topic }}")'>
+                                wire:click.prevent='showData({{ $item->id }})'>
                                 {{ $item->topic }}
                             </a>
                         </th>

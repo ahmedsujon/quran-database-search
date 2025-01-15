@@ -33,13 +33,13 @@ class QuerySearchComponent extends Component
         session()->put("checkboxvaluey.{$id}", $this->checkboxvaluey[$id]);
     }
 
-    public function showData($id, $searchValue, $topic)
+    public function showData($id)
     {
-        session()->put('content_topic', $topic);
+        $data = Content::find($id);
+
+        session()->put('content_topic', $data->topic);
         return redirect()->route('app.QuerySearchResult', [
-            'searchValue' => $searchValue,
-            'checkbox_one' => $this->checkboxvaluex[$id],
-            'checkbox_two' => $this->checkboxvaluey[$id]
+            'searchValue' => $data->search_value
         ]);
     }
 
