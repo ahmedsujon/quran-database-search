@@ -5,7 +5,13 @@
         }
     </style>
     <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ route('app.home') }}" class="btn btn-secondary btn-sm mb-3 text-right" style="background-color: #004d00; float:right" >Back To Home</a>
+            </div>
+        </div>
         <h4 class="mb-3 text-center">Explore Quranic Verses and Insights - Search by Words, Categories, or Topics</h4>
+
         <div class="row justify-content-center mb-4">
             <div class="col-12 col-md-12 col-lg-12">
                 <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4"
@@ -46,7 +52,7 @@
                             <button class="btn btn-info btn-sm"
                                 wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
                                 {{-- Read --}}
-                                {!! loadingStateWithText('showAllHadiths('.$item->w_id.')', 'Read') !!}
+                                {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read') !!}
                             </button>
                         </td>
                     </tr>
@@ -59,15 +65,14 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog"
-    aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalLabel">Hadith Information
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -84,8 +89,7 @@
                     @endif
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
