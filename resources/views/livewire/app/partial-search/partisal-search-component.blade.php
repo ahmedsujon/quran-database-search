@@ -61,7 +61,9 @@
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="7" class="text-center pt-5 pb-5">No exact data available!</td>
+                        <td colspan="7" class="text-center pt-5 pb-5">No exact data available! <a
+                                href="javascript:void(0)" style="text-decoration: none;">Go with
+                                partial Search</a></td>
                     </tr>
                 @endif
             </tbody>

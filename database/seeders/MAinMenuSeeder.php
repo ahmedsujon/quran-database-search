@@ -14,7 +14,7 @@ class MAinMenuSeeder extends Seeder
             ['id' => 1, 'menu_name' => "Topics on Allah, Topics include Allah’s Will, Face of Allah, Mercy of Allah, Allah’s Forgiveness, Allah’s Greatest Names, Allah's Light, and more."],
             ['id' => 2, 'menu_name' => "Other Topics Directly Related to Allah, Including Allah's Actions Against Disbelievers, Friends of Allah, Whom Allah Loves, Not Love, His Curse, Who He Guides, Does not Guide, Etc."],
             ['id' => 3, 'menu_name' => "Verses on Prophets SAW, his Companions and General Information on Other Prophets. Note that the Prophetic Stories are in a Separate Menu below."],
-            ['id' => 4, 'menu_name' => "Quran Study: Abrogation of Verses, Prohibitions in Quran, Learning and Teachings of Quran, Its Unique Verses, Benefits of Quran Verses and Surahs, and How Quran Used Various Words to Describe, Emphasize, or articulate its Message"],
+            ['id' => 4, 'menu_name' => "Quran Study: Abrogation of Verses, Prohibitions in Quran, Learning and Teachings of Quran, Its Unique Verses, Benefits of Quran Verses and Surahs."],
             ['id' => 5, 'menu_name' => "Quran Verses on the Pillars of Islam, i.e., Faith, Prayer, Zakat, Fasting, Hajj, Etc."],
             ['id' => 6, 'menu_name' => "Marriage, Divorce, Mahr, Husband's Right over Women, Being Kind to Wife, Husband and Wife's Responsibility, Discrimination Between Male and Females, Law of Equality, Law of Inheritance, Etc"],
             ['id' => 7, 'menu_name' => "Activities in Our Daily Life"],
@@ -32,7 +32,8 @@ class MAinMenuSeeder extends Seeder
             ['id' => 19, 'menu_name' => "Verses on the Various Prophet Stories Mentioned in the Quran, i.e., Story of Moses and Pharoah, Story of Joseph, etc"],
             ['id' => 20, 'menu_name' => "Verses on the Various Non Prophet Stories Mentioned in the Quran, i.e., Necklace of Aisha, Story of Habil and Qabil, Companion of Cave, etc"],
             ['id' => 21, 'menu_name' => "Verses on whom the Quran were addressed to, i.e., Addressed to believers, Addressed to Mankind, Addressed to Prophet, etc."],
-            ['id' => 22, 'menu_name' => "Miscellenous"]
+            ['id' => 22, 'menu_name' => "Miscellenous"],
+            ['id' => 23, 'menu_name' => "How Quran Used Various Words to Describe, Emphasize, or articulate its Message."]
         ];
 
         DB::table('main_menus')->insert($menuItems);

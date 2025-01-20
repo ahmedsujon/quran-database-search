@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Livewire\App\QueriesSearch;
+namespace App\Livewire\App\PartialSearch;
 
-use App\Models\Word;
 use App\Models\Hadith;
-use App\Models\Content;
 use Livewire\Component;
 use App\Models\WordTopic;
-use Illuminate\Http\Request;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
-class QuerySearchResultComponent extends Component
+class PartisalSearchComponent extends Component
 {
     use WithPagination;
     public $searchTerm, $searchValue, $sortingValue = 20, $delete_id, $edit_id, $roles, $hadiths;
@@ -40,11 +37,9 @@ class QuerySearchResultComponent extends Component
     {
         $final_results = WordTopic::join('qurans', 'word_topics.surah_ayat', 'qurans.surah_ayat')
             ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english')
-            ->where('word_topics.word_topic', $this->searchValue)
+            // ->where('word_topics.word_topic', $this->searchValue)
+            ->where('word_topics.word_topic', 'like', '%' . $this->searchValue . '%')
             ->paginate($this->sortingValue);
-
-        return view('livewire.app.queries-search.query-search-result-component', [
-            'final_results' => $final_results
-        ])->layout('livewire.app.layouts.base');
+        return view('livewire.app.partial-search.partisal-search-component', ['final_results' => $final_results])->layout('livewire.app.layouts.base');
     }
 }

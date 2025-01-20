@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire\App\QueriesSearch;
+namespace App\Livewire\App\PartialSearch;
 
 use App\Models\Content;
 use Livewire\Component;
 
-class QuerySearchComponent extends Component
+class PartisalQSearchComponent extends Component
 {
     public $checkboxvaluex = [], $checkboxvaluey = [], $mainMenu;
 
@@ -20,7 +20,7 @@ class QuerySearchComponent extends Component
         $data = Content::find($id);
 
         session()->put('content_topic', $data->topic);
-        return redirect()->route('app.QuerySearchResult', [
+        return redirect()->route('app.QuerySearchResultPartial', [
             'searchValue' => $data->search_value
         ]);
     }
@@ -33,6 +33,6 @@ class QuerySearchComponent extends Component
         }
 
         $searchValues = Content::where('main_menu_id', $this->mainMenu)->get();
-        return view('livewire.app.queries-search.query-search-component', ['searchValues' => $searchValues])->layout('livewire.app.layouts.base');
+        return view('livewire.app.partial-search.partisal-q-search-component', ['searchValues'=>$searchValues])->layout('livewire.app.layouts.base');
     }
 }
