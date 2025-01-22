@@ -12,6 +12,12 @@ class ContentComponent extends Component
     use WithPagination;
     public $searchTerm, $sortingValue = 50, $delete_id, $edit_id;
 
+    public function deleteAll()
+    {
+        Content::truncate();
+        session()->flash('message', 'All content has been deleted successfully.');
+    }
+    
     public function render()
     {
         $content_datas = Content::where('topic', 'like', '%' . $this->searchTerm . '%')->orderBy('id', 'DESC')->paginate($this->sortingValue);

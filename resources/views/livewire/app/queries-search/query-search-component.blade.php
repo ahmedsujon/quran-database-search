@@ -8,7 +8,8 @@
                     </a>
                 </li>
                 @if (session('menu_name'))
-                    <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page" title="{{ session('menu_name') }}">
+                    <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page"
+                        title="{{ session('menu_name') }}">
                         {{ session('menu_name') }}
                     </li>
                 @endif
@@ -26,13 +27,20 @@
                 @foreach ($searchValues as $item)
                     <tr>
                         <th scope="row">
-                            <a href="javascript:void(0)"
-                                wire:click.prevent='showData({{ $item->id }})'>
-                                {{ $item->topic }}
-                            </a>
+                            @if (str_contains($item->topic, 'See Menu on Special Search'))
+                                <a
+                                    href="{{ route('app.QuerySearchPartial', ['id' => 23, 'menu_name' => 'How Quran Used Various Words to Describe, Emphasize, or articulate its Message']) }}">
+                                    {{ $item->topic }}
+                                </a>
+                            @else
+                                <a href="javascript:void(0)" wire:click.prevent='showData({{ $item->id }})'>
+                                    {{ $item->topic }}
+                                </a>
+                            @endif
                         </th>
                     </tr>
                 @endforeach
+
             </tbody>
         </table>
     </div>

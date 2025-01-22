@@ -33,7 +33,6 @@ class MAinMenuSeeder extends Seeder
             ['id' => 20, 'menu_name' => "Verses on the Various Non Prophet Stories Mentioned in the Quran, i.e., Necklace of Aisha, Story of Habil and Qabil, Companion of Cave, etc"],
             ['id' => 21, 'menu_name' => "Verses on whom the Quran were addressed to, i.e., Addressed to believers, Addressed to Mankind, Addressed to Prophet, etc."],
             ['id' => 22, 'menu_name' => "Miscellenous"],
-            ['id' => 23, 'menu_name' => "How Quran Used Various Words to Describe, Emphasize, or articulate its Message."]
         ];
 
         DB::table('main_menus')->insert($menuItems);
