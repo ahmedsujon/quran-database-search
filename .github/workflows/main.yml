@@ -3,7 +3,7 @@ name: Laravel Auto Deployment
 on:
   push:
     branches:
-      - main
+      - staiging
 
 jobs:
   deploy:
