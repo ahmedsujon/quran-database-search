@@ -26,7 +26,7 @@
                 </a>
             </div>
         @endforeach
-        <div class="col-md-3 mb-3">
+        {{-- <div class="col-md-3 mb-3">
             <a href="{{ route('app.QuerySearchPartial', ['id' => 23, 'menu_name' => 'How Quran Used Various Words to Describe, Emphasize, or articulate its Message']) }}"
                 class="text-decoration-none">
                 <div class="btn btn-outline-success d-flex flex-column justify-content-between text-start py-3"
@@ -36,6 +36,6 @@
                     </small>
                 </div>
             </a>
-        </div>
+        </div> --}}
     </div>
 </div>
