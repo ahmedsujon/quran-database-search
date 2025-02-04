@@ -10,7 +10,7 @@
                 <a href="{{ route('app.home') }}" class="btn btn-secondary btn-sm mb-3 text-right" style="background-color: #004d00; float:right" >Back To Home</a>
             </div>
         </div>
-        <h4 class="mb-3 text-center">Explore Quranic Verses and Insights - Search by Words, Categories, or Topics</h4>
+        <h4 class="mb-3 text-center">Explore Quranic Verses and Insights - Search by Theme, Subject or Topic</h4>
 
         <div class="row justify-content-center mb-4">
             <div class="col-12 col-md-12 col-lg-12">
