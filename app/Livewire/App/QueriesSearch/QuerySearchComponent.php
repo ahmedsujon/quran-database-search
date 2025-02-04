@@ -21,7 +21,8 @@ class QuerySearchComponent extends Component
 
         session()->put('content_topic', $data->topic);
         return redirect()->route('app.QuerySearchResult', [
-            'searchValue' => $data->search_value
+            'searchValue' => $data->search_value,
+            'reporting' => $data->reporting,
         ]);
     }
 
