@@ -1,4 +1,9 @@
 <div>
+    <style>
+        .name-of-query{
+        color: #111 !important;
+    }
+    </style>
     <div class="container mt-4">
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb bg-light rounded shadow-sm px-4 py-3">
@@ -8,8 +13,7 @@
                     </a>
                 </li>
                 @if (session('menu_name'))
-                    <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page"
-                        title="{{ session('menu_name') }}">
+                    <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page" title="{{ session('menu_name') }}">
                         {{ session('menu_name') }}
                     </li>
                 @endif
@@ -27,13 +31,12 @@
                 @foreach ($searchValues as $item)
                     <tr>
                         <th scope="row">
-                            <a href="javascript:void(0)" wire:click.prevent='showData({{ $item->id }})'>
+                            <a href="javascript:void(0)" wire:click.prevent='showData({{ $item->id }})' class="name-of-query">
                                 {{ $item->topic }}
                             </a>
                         </th>
                     </tr>
                 @endforeach
-
             </tbody>
         </table>
     </div>

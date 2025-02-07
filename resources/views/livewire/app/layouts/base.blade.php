@@ -25,7 +25,7 @@
         }
 
         header {
-            background-color: #004d00;
+            background-color: #008866;
             color: #fff;
             text-align: center;
             padding: 40px 20px;
@@ -100,7 +100,7 @@
 
         .search-container input[type="submit"] {
             padding: 12px 25px;
-            background-color: #004d00;
+            background-color: #008866;
             color: #fff;
             font-size: 1.1rem;
             border: none;
@@ -142,7 +142,7 @@
 
         /* Style for the Start Search Button */
         .start-search-button {
-            background-color: #004d00;
+            background-color: #008866;
             color: white;
             font-size: 1.2rem;
             padding: 12px 30px;
@@ -154,7 +154,7 @@
         }
 
         .start-search-button:hover {
-            background-color: #003d00;
+            background-color: #008866;
         }
     </style>
     <link href="{{ asset('assets/app/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -163,14 +163,14 @@
 <body>
 
     <header>
-        <h1>Know Your Quran – A Unique Search Engine</h1>
-        <p>By Abdul Mannan Family</p>
+        <h1>Know Your Quran – A Unique Search Engine on Quran with Over 500 Curated
+            Queries</h1>
     </header>
 
     <div class="container">
         {{ $slot }}
     </div>
-    
+
     @livewire('app.layouts.inc.footer')
 
     @stack('scripts')

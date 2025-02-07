@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('main_menus', function (Blueprint $table) {
             $table->id();
-            $table->string('menu_name');
+            $table->longText('menu_name');
             $table->timestamps();
         });
     }

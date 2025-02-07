@@ -31,53 +31,46 @@
     <section>
         <div class="container">
             <div class="intro-text">
-                <h2>Welcome to Know Your Quran</h2>
-                <p>Know Your Quran is a unique search engine and tool designed to help you better understand the Quran
-                    and its many themes. The platform offers:</p>
+                <h2>Welcome to Know Your Quran - A Unique Search Engine</h2>
+                <p>Know Your Quran is a unique search engine and tool to help you better understand the Quran and its many
+                    themes. Know Your Quran helps do this through:</p>
                 <ul>
-                    <li>A comprehensive search of English words, with surrounding verse context and connected
-                        themes/narratives.</li>
-                    <li>Pre-built queries to bring a connected perspective throughout the Quran.</li>
-                    <li>Contextualization through relevant hadith to provide a holistic understanding of specific verses
-                        and terms.</li>
+                    <li>Comprehensive search of English words, surfacing the context surrounding the verse as well as
+                        connected themes / narratives</li>
+                    <li>Over 500 pre-built queries that help bring a connected perspective throughout the entirety of the
+                        Quran</li>
+                    <li>Further contextualization through the inclusion of relevant hadith, offering a holistic viewpoint and
+                        understanding of specific verses and terms</li>
                 </ul>
-                <p>Unlike other search tools, Know Your Quran's pre-built queries are crafted after careful examination
-                    of the Quran and Hadith, surfacing themes that are difficult to search for in a standard manner
-                    (e.g., "the ones who Allah loves").</p>
-                <p>The database has been built with deep reverence and love for our Creator. We strive to provide
-                    accurate information, but if you notice any mistakes, we humbly request your feedback at
-                    <strong> <a href="mailto:Knowyourquran@gmail.com">Knowyourquran@gmail.com</a></strong>.
+                <p>Know Your Quran is different than other search tools because its 500 plus pre-built queries were handcrafted
+                    after careful examination/review of the Quran and Hadith, surfacing themes that are impossible to search for in
+                    a standard manner (e.g., Whom Allah loves, How to Receive Allah’s Mercy, etc.)</p>
+                <p>Know Your Quran was created solely out of love and deference to our Lord and Creator. As we are simply
+                    human, we ask forgiveness for any mistakes that may be present in this database, despite thorough efforts to
+                    review. If you have any corrections, please email us at
+                    <strong> <a href="mailto:Admin@knowyourquran.com">Admin@knowyourquran.com</a></strong>.
                 </p>
-                <h3>Search Capabilities and Key Nuances</h3>
+                <h3>Search capabilities and key nuances</h3>
                 <ul>
-                    <li>Please note that Translations used for specific words include: <strong>Zalemoon</strong> (Wrong
-                        Doers), <strong>Muttaqeen</strong> (God Conscious), <strong>Mujremeen</strong>
-                        (Criminals/Sinners), <strong>Fasad</strong> (Mischief Makers) Etc.</li>
-                    <li>The search provides explanation and interpretation of each word used in the Quran. In many cases
-                        the explanation includes the contents of the previous verse or the subsequent verse, as they are
-                        related to the same subject.</li>
-                    <li>The Search provides capability of Inferring words, i.e., it will display verse 2:2 when you
-                        search for
-                        the word “Quran” even though verse 2:2 does not have the word Quran. Similarly, it will infer
-                        and
-                        display words or subjects that are directly not mentioned in the verse but are connected, and or
-                        related to words or subjects discussed in the previous verses</li>
-                    <li>The database has been built, to the extent possible, to recognize synonymous words, or names,
-                        i.e.,
-                        the Arabic word “Ureed” is often translated into desire, intend, want, or wish, and the search
-                        will
-                        recognize it. Similarly, Moses is also spelled as Musa or Moosa, and the search will recognize
-                        it.</li>
-                    <li>While the search engine provides capability of doing individual search on words or topics, we
-                        have
-                        included hundred of canned searches</li>
-                    <li>Associated hadiths related to the Quran topic is also provided. However, this information is
-                        provided
-                        at the end of the Quran search. Please remember that the hadith list is not comprehensive, and
-                        it
-                        only lists key hadiths. Please consult an Ulema for any questions.</li>
-                    <li>If you wish to contribute, or make any comments, please send your request to <a
-                            href="mailto:Knowyourquran@gmail.com">Knowyourquran@gmail.com</a>.
+                    <li>Please note that the following translations were used for some specific words that is used throughout the Quran:
+                        Zalemoon = Wrong Doers; Muttaqeen = God Conscious, God Fearing, Mujremeen = Criminal, Sinners; Fasad =
+                        Corruption Spreader, Mischief Makers; Faseqeen = Troublemaker, Disobedient, Rebel, Wicked, Etc.</li>
+
+                    <li>The search provides an explanation and interpretation of each word used in the Quran. In many cases the
+                        explanation includes the contents of the previous verse or the subsequent verse, as they are related to the
+                        same subject.</li>
+                    <li>The Search provides capability of Inferring words, i.e., it will display verse 2:2 when you search for the word
+                        “Quran” even though verse 2:2 does not have the word Quran. Similarly, it will infer and display words or
+                        subjects that are directly not mentioned in the verse but are connected, and or related to words or subjects
+                        discussed in the previous or later verses</li>
+                    <li>The database has been built, to the extent possible, to recognize synonymous words, or names, i.e., the Arabic
+                        word “Ureed” is often translated into desire, intend, want, or wish, and the search will recognize it.</li>
+                    <li>While the search engine provides the capability of doing individual search on theme or subject, we have
+                        included over 500 hundreds of curated searches</li>
+                    <li>Associated hadiths from the Sahih Sittah deemed Sahih or Hasan and related to the Quran topic is also
+                        provided. Please remember that the hadith list is not comprehensive, and it only lists key hadiths. Please
+                        consult Ulema for any questions.</li>
+                    <li>If you wish to contribute, report an error on the search, or make any comments, please send your request to <a href="mailto:Knowyourquran@gmail.com">Knowyourquran@gmail.com</a>.
                         <ul>
                             <li>If you want to see a new canned search included, please mention the topic, and if you
                                 know the
@@ -92,12 +85,12 @@
             <div class="search-capabilities">
                 <div class="search-button-container">
                     <a href="{{ route('app.ConductSearch') }}" class="start-search-button">
-                        Conduct Search by Entering the Word or Topic from the Quran here
+                        Conduct Quran Search
                     </a>
-                    <h5 class="separator-text">OR</h5>
+                    {{-- <h5 class="separator-text">OR</h5>
                     <a href="{{ route('app.QuerySearchMenu') }}" class="start-search-button">
                         Select from Any of the Following Canned Queries
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>

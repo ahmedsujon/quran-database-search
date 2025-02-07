@@ -6,7 +6,7 @@
             <div class="col-md-4">
                 <!-- Back button -->
                 <a href="{{ route('app.home') }}" class="btn btn-secondary btn-sm position-absolute"
-                    style="top: 10px; right: 10px; background-color: #004d00";>
+                    style="top: 10px; right: 10px; background-color: #008866";>
                     Back To Home
                 </a>
             </div>

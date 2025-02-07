@@ -3,6 +3,11 @@
         .hadith-border-bottom {
             border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
         }
+        .hadith-btn-style {
+            background: #008866;
+            border: none;
+            color: #fff;
+        }
     </style>
     <div class="container mt-4">
         <nav aria-label="breadcrumb" class="mb-4">
@@ -15,7 +20,7 @@
                 @if (session('menu_name'))
                     <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page"
                         title="{{ session('menu_name') }}">
-                        <a href="{{ url()->previous() }}" style="text-decoration: none;">
+                        <a href="{{ url()->previous() }}" style="text-decoration: none; color: #008866">
                             {{ session('menu_name') }}
                         </a>
                     </li>
@@ -52,7 +57,7 @@
                             <td style="width: 50%;">{{ $item->quran_english }}</td>
                             <td style="width: 10%;">{{ $item->inferance_flag }}</td>
                             <td style="width: 10%;" class="text-center">
-                                <button class="btn btn-info btn-sm"
+                                <button class="btn btn-info btn-sm hadith-btn-style"
                                     wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
                                     {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read') !!}
                                 </button>
