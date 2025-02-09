@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-
+use App\Models\Quran;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Models\WordTopic;
@@ -27,5 +27,14 @@ class WordImport implements ToModel, WithHeadingRow
         $wordTopicData->sub_word_topic                 = isset($row['sub_word_topic']) ? $row['sub_word_topic'] : null;
         $wordTopicData->reporting                      = isset($row['reporting']) ? $row['reporting'] : null;
         $wordTopicData->save();
+
+        $sura = Quran::where('surah_no', $row['surah_number'])->where('ayat_no', $row['ayat_number'])->first();
+        if($sura->eng_subject_category == null){
+            $sura->eng_subject_category = $row['word_topic'];
+        }
+        else{
+            $sura->eng_subject_category = $sura->eng_subject_category . ',' . $row['word_topic'];
+        }
+        $sura->save();
     }
 }
