@@ -11,6 +11,12 @@ class HadithComponent extends Component
     use WithPagination;
     public $searchTerm, $sortingValue = 50, $delete_id, $edit_id;
 
+    public function deleteAll()
+    {
+        Hadith::truncate();
+        session()->flash('message', 'All content has been deleted successfully.');
+    }
+
     public function render()
     {
         $hadith_datas = Hadith::where('group_name', 'like', '%' . $this->searchTerm . '%')->orderBy('id', 'DESC')->paginate($this->sortingValue);
