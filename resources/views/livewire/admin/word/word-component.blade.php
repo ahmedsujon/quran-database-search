@@ -20,6 +20,7 @@
                     <div class="card">
                         <div class="card-header bg-white" style="border-bottom: 1px solid #e2e2e7;">
                             <h4 class="card-title" style="float: left;">All Word or Topic Data</h4>
+                            <button wire:click="deleteAll" class="btn btn-danger">Delete All</button>
                         </div>
                         <div class="card-body">
                             <div class="row mb-3">
@@ -68,7 +69,7 @@
                                             @endphp
                                             @foreach ($word_datas as $word_data)
                                                 <tr>
-                                                    <td>{{ $word_data->surah }}:{{ $word_data->ayat }}</td>
+                                                    <td>{{ $word_data->surah_no }}:{{ $word_data->ayat_no }}</td>
                                                     <td>{{ $word_data->word_topic }}</td>
                                                     <td>{{ $word_data->ayat_summary_des }}</td>
                                                     <td>{{ $word_data->inferance_flag }}</td>

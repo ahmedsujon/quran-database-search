@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('word_topics', function (Blueprint $table) {
             $table->id();
-            $table->string('surah')->nullable();
-            $table->string('ayat')->nullable();
+            $table->string('surah_no')->nullable();
+            $table->string('ayat_no')->nullable();
             $table->string('surah_ayat')->nullable();
             $table->longText('arabic_normalize_word')->nullable();
             $table->longText('arabic_normalize_word_without_harkat')->nullable();

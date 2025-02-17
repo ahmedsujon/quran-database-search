@@ -12,12 +12,14 @@ class WordImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         $wordTopicData = new WordTopic();
-        $wordTopicData->surah                          = isset($row['surah']) ? $row['surah'] : null;
-        $wordTopicData->ayat                           = isset($row['ayat']) ? $row['ayat'] : null;
-        // Create the surah_ayat by concatenating surah_no and ayat_no with a dot (.)
-        $wordTopicData->surah_ayat = $wordTopicData->surah && $wordTopicData->ayat
-            ? $wordTopicData->surah . '.' . $wordTopicData->ayat
-            : null;
+        $wordTopicData->surah_no = isset($row['surah_no']) ? $row['surah_no'] : null;
+        $wordTopicData->ayat_no = isset($row['ayat_no']) ? $row['ayat_no'] : null;
+
+        if ($wordTopicData->surah_no !== null && $wordTopicData->ayat_no !== null) {
+            $wordTopicData->surah_ayat = $wordTopicData->surah_no . '.' . $wordTopicData->ayat_no;
+        } else {
+            $wordTopicData->surah_ayat = null;
+        }
 
         $wordTopicData->word_topic                     = isset($row['word_topic']) ? $row['word_topic'] : null;
         $wordTopicData->arabic_normalize_word                = isset($row['arabic_normalize_word']) ? $row['arabic_normalize_word'] : null;
@@ -28,13 +30,12 @@ class WordImport implements ToModel, WithHeadingRow
         $wordTopicData->reporting                      = isset($row['reporting']) ? $row['reporting'] : null;
         $wordTopicData->save();
 
-        $sura = Quran::where('surah_no', $row['surah_number'])->where('ayat_no', $row['ayat_number'])->first();
-        if($sura->eng_subject_category == null){
-            $sura->eng_subject_category = $row['word_topic'];
-        }
-        else{
-            $sura->eng_subject_category = $sura->eng_subject_category . ',' . $row['word_topic'];
-        }
-        $sura->save();
+        // $sura = Quran::where('surah_no', $row['surah_no'])->where('ayat_no', $row['ayat_no'])->first();
+        // if ($sura->eng_subject_category == null) {
+        //     $sura->eng_subject_category = $row['word_topic'];
+        // } else {
+        //     $sura->eng_subject_category = $sura->eng_subject_category . ',' . $row['word_topic'];
+        // }
+        // $sura->save();
     }
 }

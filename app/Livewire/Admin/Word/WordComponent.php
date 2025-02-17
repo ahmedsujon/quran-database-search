@@ -12,6 +12,12 @@ class WordComponent extends Component
     use WithPagination;
     public $searchTerm, $sortingValue = 50, $delete_id, $edit_id;
 
+    public function deleteAll()
+    {
+        WordTopic::truncate();
+        session()->flash('message', 'All content has been deleted successfully.');
+    }
+
     public function render()
     {
         $word_datas = WordTopic::where('word_topic', 'like', '%' . $this->searchTerm . '%')->orderBy('id', 'DESC')->paginate($this->sortingValue);

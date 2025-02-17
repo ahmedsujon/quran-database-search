@@ -10,8 +10,8 @@ class WordTopic extends Model
     use HasFactory;
 
     protected $fillable = [
-        'surah',
-        'ayat',
+        'surah_no',
+        'ayat_no',
         'surah_ayat',
         'arabic_normalize_word',
         'arabic_normalize_word_without_harkat',
