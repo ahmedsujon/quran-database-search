@@ -30,12 +30,12 @@ class WordImport implements ToModel, WithHeadingRow
         $wordTopicData->reporting                      = isset($row['reporting']) ? $row['reporting'] : null;
         $wordTopicData->save();
 
-        // $sura = Quran::where('surah_no', $row['surah_no'])->where('ayat_no', $row['ayat_no'])->first();
-        // if ($sura->eng_subject_category == null) {
-        //     $sura->eng_subject_category = $row['word_topic'];
-        // } else {
-        //     $sura->eng_subject_category = $sura->eng_subject_category . ',' . $row['word_topic'];
-        // }
-        // $sura->save();
+        $sura = Quran::where('surah_no', $row['surah_no'])->where('ayat_no', $row['ayat_no'])->first();
+        if ($sura->eng_subject_category == null) {
+            $sura->eng_subject_category = $row['word_topic'];
+        } else {
+            $sura->eng_subject_category = $sura->eng_subject_category . ',' . $row['word_topic'];
+        }
+        $sura->save();
     }
 }
