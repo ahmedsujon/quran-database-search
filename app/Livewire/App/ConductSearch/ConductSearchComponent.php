@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Cache;
 class ConductSearchComponent extends Component
 {
     use WithPagination;
-    public $searchTerm, $sortingValue = 10, $hadiths;
+    public $searchTerm, $sortingValue = 15, $hadiths;
 
     public function showAllHadiths($w_id)
     {
