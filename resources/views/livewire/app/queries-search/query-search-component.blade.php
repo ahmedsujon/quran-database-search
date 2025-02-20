@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb bg-light rounded shadow-sm px-4 py-3">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('app.QuerySearchMenu') }}" class="text-decoration-none text-primary">
+                    <a href="{{ route('app.ConductSearch') }}" class="text-decoration-none text-primary">
                         <i class="bi bi-house-door-fill"></i> Main Menu
                     </a>
                 </li>
