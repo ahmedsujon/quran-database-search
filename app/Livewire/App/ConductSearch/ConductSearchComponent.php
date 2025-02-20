@@ -31,11 +31,6 @@ class ConductSearchComponent extends Component
 
         $main_menus = MainMenu::all();
 
-        // $querySearchResults = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
-        //     ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english')
-        //     ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
-        //     ->paginate($this->sortingValue);
-
         // First, try searching in the word_topics table
         $querySearchResults = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
             ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english')
@@ -48,7 +43,6 @@ class ConductSearchComponent extends Component
                 ->where('qurans.quran_english', 'like', '%' . $this->searchTerm . '%')
                 ->paginate($this->sortingValue);
         }
-
 
         return view('livewire.app.conduct-search.conduct-search-component', ['querySearchResults' => $querySearchResults, 'main_menus' => $main_menus])
             ->layout('livewire.app.layouts.base');

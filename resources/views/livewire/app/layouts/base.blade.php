@@ -167,7 +167,7 @@
             Queries</h1>
     </header>
 
-    <div class="container">
+    <div class="container-fluid" style="padding-left: 60px; padding-right: 60px;">
         {{ $slot }}
     </div>
 
