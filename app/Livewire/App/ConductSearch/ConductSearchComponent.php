@@ -8,6 +8,7 @@ use App\Models\MainMenu;
 use App\Models\WordTopic;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class ConductSearchComponent extends Component
 {
@@ -17,7 +18,13 @@ class ConductSearchComponent extends Component
     public function showAllHadiths($w_id)
     {
         $word = DB::table('word_topics')->where('id', $w_id)->first()->word_topic;
-        $hadiths = DB::table('hadiths')->select('hadith_english')->where('group_name', $word)->get();
+        $cacheKey = 'hadiths_for_word:' . md5($word);
+        $hadiths = Cache::remember($cacheKey, 60, function () use ($word) {
+            return DB::table('hadiths')
+                ->select('hadith_english')
+                ->where('group_name', $word)
+                ->get();
+        });
         $this->hadiths = $hadiths;
         $this->dispatch('showHadithsModal');
     }
@@ -31,20 +38,30 @@ class ConductSearchComponent extends Component
 
         $main_menus = MainMenu::all();
 
-        // First, try searching in the word_topics table
-        $querySearchResults = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
-            ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english')
-            ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
-            ->paginate($this->sortingValue);
+        // Generate a cache key based on the search term and pagination value
+        $cacheKey = 'search_results:' . md5($this->searchTerm . ':' . $this->sortingValue);
 
-        // If no results are found, perform the search in the qurans table
-        if ($querySearchResults->isEmpty()) {
-            $querySearchResults = Quran::select('qurans.id as q_id', 'qurans.quran_english', 'qurans.surah_no', 'qurans.ayat_no')
-                ->where('qurans.quran_english', 'like', '%' . $this->searchTerm . '%')
+        // Use Cache::remember to either get the cache or query the database and store it in Redis for 60 minutes
+        $querySearchResults = Cache::remember($cacheKey, 600, function () {
+            // First, try searching in the word_topics table
+            $results = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+                ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english')
+                ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
                 ->paginate($this->sortingValue);
-        }
 
-        return view('livewire.app.conduct-search.conduct-search-component', ['querySearchResults' => $querySearchResults, 'main_menus' => $main_menus])
-            ->layout('livewire.app.layouts.base');
+            // If no results are found, perform the search in the qurans table
+            if ($results->isEmpty()) {
+                $results = Quran::select('qurans.id as q_id', 'qurans.quran_english', 'qurans.surah_no', 'qurans.ayat_no')
+                    ->where('qurans.quran_english', 'like', '%' . $this->searchTerm . '%')
+                    ->paginate($this->sortingValue);
+            }
+
+            return $results;
+        });
+
+        return view('livewire.app.conduct-search.conduct-search-component', [
+            'querySearchResults' => $querySearchResults,
+            'main_menus' => $main_menus
+        ])->layout('livewire.app.layouts.base');
     }
 }
