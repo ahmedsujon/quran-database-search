@@ -70,7 +70,7 @@ class QuerySearchResultComponent extends Component
         $final_results = Cache::remember($cacheKey, 60, function () {
             // Start building the query
             $final_results = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
-                ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english');
+                ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english', 'qurans.quran_arabic',);
 
             // Apply the search condition based on 'reporting' value
             if ($this->reporting == 'Yes') {
