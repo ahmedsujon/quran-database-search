@@ -26,8 +26,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6 col-sm-12 mb-2 sort_cont">
                                     <label class="font-weight-normal" style="">Show</label>
-                                    <select name="sortuserresults" class="sinput" id=""
-                                        wire:model.blur="sortingValue" wire:change='resetPage'>
+                                    <select name="sortuserresults" class="sinput" id="" wire:model.blur="sortingValue" wire:change='resetPage'>
                                         <option value="10">10</option>
                                         <option value="25">25</option>
                                         <option value="50">50</option>
@@ -36,17 +35,13 @@
                                     <label class="font-weight-normal" style="">entries</label>
                                 </div>
 
-                                <div style="position: absolute; text-align: center;" wire:loading
-                                    wire:target='searchTerm,sortingValue,previousPage,gotoPage,nextPage'>
-                                    <span class="bg-light" style="padding: 5px 15px; border-radius: 2px;"><span
-                                            class="spinner-border spinner-border-xs align-middle" role="status"
-                                            aria-hidden="true"></span> Processing</span>
+                                <div style="position: absolute; text-align: center;" wire:loading wire:target='searchTerm,sortingValue,previousPage,gotoPage,nextPage'>
+                                    <span class="bg-light" style="padding: 5px 15px; border-radius: 2px;"><span class="spinner-border spinner-border-xs align-middle" role="status" aria-hidden="true"></span> Processing</span>
                                 </div>
 
                                 <div class="col-md-6 col-sm-12 mb-2 search_cont">
                                     <label class="font-weight-normal mr-2">Search:</label>
-                                    <input type="search" class="sinput" placeholder="Search..."
-                                        wire:model.live="searchTerm" wire:keyup='resetPage' />
+                                    <input type="search" class="sinput" placeholder="Search..." wire:model.live="searchTerm" wire:keyup='resetPage' />
                                 </div>
                             </div>
 
@@ -62,9 +57,7 @@
                                     <tbody>
                                         @if ($hadith_datas->count() > 0)
                                             @php
-                                                $sl =
-                                                    $hadith_datas->perPage() * $hadith_datas->currentPage() -
-                                                    ($hadith_datas->perPage() - 1);
+                                                $sl = $hadith_datas->perPage() * $hadith_datas->currentPage() - ($hadith_datas->perPage() - 1);
                                             @endphp
                                             @foreach ($hadith_datas as $hadith_data)
                                                 <tr>
@@ -93,8 +86,7 @@
     </div>
 
     <!-- Delete Modal -->
-    <div wire:ignore.self class="modal fade" id="deleteDataModal" tabindex="-1" role="dialog"
-        aria-labelledby="modelTitleId">
+    <div wire:ignore.self class="modal fade" id="deleteDataModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId">
         <div class="modal-dialog modal-dialog-centered modal-dialog-zoom modal-md" role="document">
             <div class="modal-content p-5 bg-transparent border-0">
                 <div class="modal-body pt-4 pb-4 bg-white" style="border-radius: 10px;">
@@ -106,12 +98,10 @@
                             <h2>Are you sure?</h2>
                             <p class="mb-4">You won't be able to revert this!</p>
 
-                            <button type="button" class="btn btn-sm btn-success waves-effect waves-light"
-                                wire:click.prevent='deleteData' wire:loading.attr='disabled'>
+                            <button type="button" class="btn btn-sm btn-success waves-effect waves-light" wire:click.prevent='deleteData' wire:loading.attr='disabled'>
                                 {!! loadingStateWithText('deleteData', 'Yes, Delete.') !!}
                             </button>
-                            <button type="button" class="btn btn-sm btn-danger waves-effect waves-light"
-                                data-bs-dismiss="modal">No, Cancel.</button>
+                            <button type="button" class="btn btn-sm btn-danger waves-effect waves-light" data-bs-dismiss="modal">No, Cancel.</button>
                         </div>
                     </div>
                 </div>

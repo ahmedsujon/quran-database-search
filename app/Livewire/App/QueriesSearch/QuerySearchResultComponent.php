@@ -25,7 +25,6 @@ class QuerySearchResultComponent extends Component
         $this->reporting = request()->get('reporting');
     }
 
-
     public function showQuranArabic($w_id)
     {
         $item = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
@@ -56,36 +55,31 @@ class QuerySearchResultComponent extends Component
         if (!$wordTopic || empty($wordTopic->hadit_reference)) {
             return;
         }
-
-        $cacheKey = 'hadiths_for_word:' . md5($wordTopic->hadit_reference);
-        $hadiths = Cache::remember($cacheKey, 60, function () use ($wordTopic) {
-            return DB::table('hadiths')
-                ->select('hadith_english')
-                ->where('group_name', $wordTopic->hadit_reference)
-                ->get();
-        });
-
-        $this->hadiths = $hadiths;
+        $this->hadiths = DB::table('hadiths')
+            ->select('hadith_english')
+            ->where('group_name', $wordTopic->hadit_reference)
+            ->get();
         $this->dispatch('showHadithsModal');
     }
 
     public function render()
     {
-        $cacheKey = 'query_results:' . md5($this->searchValue . ':' . $this->sortingValue . ':' . $this->reporting);
+        $final_results = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+            ->select(
+                'word_topics.id as w_id',
+                'word_topics.word_topic',
+                'word_topics.ayat_summary_des',
+                'word_topics.inferance_flag',
+                'qurans.quran_english',
+                'qurans.quran_arabic'
+            );
 
-        $final_results = Cache::remember($cacheKey, 60, function () {
-            $final_results = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
-                ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english', 'qurans.quran_arabic',);
-
-            if ($this->reporting == 'Yes') {
-                $final_results = $final_results->where('word_topics.word_topic', 'like', '%' . $this->searchValue . '%');
-            } else {
-                $final_results = $final_results->where('word_topics.word_topic', $this->searchValue);
-            }
-            $final_results = $final_results->paginate($this->sortingValue);
-
-            return $final_results;
-        });
+        if ($this->reporting == 'Yes') {
+            $final_results = $final_results->where('word_topics.word_topic', 'like', '%' . $this->searchValue . '%');
+        } else {
+            $final_results = $final_results->where('word_topics.word_topic', $this->searchValue);
+        }
+        $final_results = $final_results->paginate($this->sortingValue);
 
         return view('livewire.app.queries-search.query-search-result-component', [
             'final_results' => $final_results
