@@ -22,19 +22,18 @@ class ConductSearchComponent extends Component
 
     public function showQuranArabic($w_id)
     {
-        $querySearchResults = Cache::get('search_results:' . md5($this->searchTerm . ':' . $this->sortingValue));
-        if ($querySearchResults) {
-            $item = collect($querySearchResults->items())->firstWhere('w_id', $w_id);
-            if ($item) {
-                $this->quran_arabic = $item->quran_arabic ?? 'No Arabic text available';
-            }
-        } else {
-            $this->quran_arabic = 'No Arabic text available';
+        $item = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+            ->select('word_topics.id as w_id', 'qurans.quran_arabic')
+            ->where('word_topics.id', $w_id)
+            ->first();
+        if (!$item) {
+            $item = Quran::select('id as q_id', 'quran_arabic')
+                ->where('id', $w_id)
+                ->first();
         }
+        $this->quran_arabic = $item->quran_arabic ?? 'No Arabic text available';
         $this->dispatch('showQuranArabicModal');
     }
-
-
 
     public function showAllHadiths($w_id)
     {
@@ -59,20 +58,6 @@ class ConductSearchComponent extends Component
         $this->dispatch('showHadithsModal');
     }
 
-
-    // public function showAllHadiths($w_id)
-    // {
-    //     $word = DB::table('word_topics')->where('id', $w_id)->first()->word_topic;
-    //     $cacheKey = 'hadiths_for_word:' . md5($word);
-    //     $hadiths = Cache::remember($cacheKey, 60, function () use ($word) {
-    //         return DB::table('hadiths')
-    //             ->select('hadith_english')
-    //             ->where('group_name', $word)
-    //             ->get();
-    //     });
-    //     $this->hadiths = $hadiths;
-    //     $this->dispatch('showHadithsModal');
-    // }
 
     public function render()
     {
