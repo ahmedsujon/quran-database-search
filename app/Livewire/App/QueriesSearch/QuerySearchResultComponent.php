@@ -40,14 +40,23 @@ class QuerySearchResultComponent extends Component
 
     public function showAllHadiths($w_id)
     {
-        $word = DB::table('word_topics')->where('id', $w_id)->first()->word_topic;
-        $cacheKey = 'hadiths_for_word:' . md5($word);
-        $hadiths = Cache::remember($cacheKey, 60, function () use ($word) {
+        // Retrieve the hadit_reference from the word_topics table
+        $wordTopic = DB::table('word_topics')->where('id', $w_id)->first();
+
+        if (!$wordTopic || empty($wordTopic->hadit_reference)) {
+            return; // Exit if no valid hadit_reference is found
+        }
+
+        $cacheKey = 'hadiths_for_word:' . md5($wordTopic->hadit_reference);
+
+        // Retrieve hadiths using caching for optimization
+        $hadiths = Cache::remember($cacheKey, 60, function () use ($wordTopic) {
             return DB::table('hadiths')
                 ->select('hadith_english')
-                ->where('group_name', $word)
+                ->where('group_name', $wordTopic->hadit_reference) // Match group_name with hadit_reference
                 ->get();
         });
+
         $this->hadiths = $hadiths;
         $this->dispatch('showHadithsModal');
     }
@@ -81,21 +90,4 @@ class QuerySearchResultComponent extends Component
             'final_results' => $final_results
         ])->layout('livewire.app.layouts.base');
     }
-
-    // public function render()
-    // {
-    //     $final_results = WordTopic::join('qurans', 'word_topics.surah_ayat', 'qurans.surah_ayat')
-    //         ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english');
-
-    //     if ($this->reporting == 'Yes') {
-    //         $final_results = $final_results->where('word_topics.word_topic',  'like', '%' .  $this->searchValue . '%');
-    //     } else {
-    //         $final_results = $final_results->where('word_topics.word_topic', $this->searchValue);
-    //     }
-    //     $final_results = $final_results->paginate($this->sortingValue);
-
-    //     return view('livewire.app.queries-search.query-search-result-component', [
-    //         'final_results' => $final_results
-    //     ])->layout('livewire.app.layouts.base');
-    // }
 }

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('inferance_flag')->nullable();
             $table->longText('sub_word_topic')->nullable();
             $table->string('reporting')->nullable();
+            $table->text('hadit_reference')->nullable();
             $table->timestamps();
         });
     }

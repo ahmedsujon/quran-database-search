@@ -28,6 +28,8 @@ class WordImport implements ToModel, WithHeadingRow
         $wordTopicData->inferance_flag                 = isset($row['inferance_flag']) ? $row['inferance_flag'] : null;
         $wordTopicData->sub_word_topic                 = isset($row['sub_word_topic']) ? $row['sub_word_topic'] : null;
         $wordTopicData->reporting                      = isset($row['reporting']) ? $row['reporting'] : null;
+        $wordTopicData->hadit_reference                      = isset($row['hadit_reference']) ? $row['hadit_reference'] : null;
+
         $wordTopicData->save();
 
         $sura = Quran::where('surah_no', $row['surah_no'])->where('ayat_no', $row['ayat_no'])->first();

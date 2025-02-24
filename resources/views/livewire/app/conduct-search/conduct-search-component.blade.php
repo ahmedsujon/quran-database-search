@@ -72,6 +72,7 @@
                                 <th scope="col" style="width: 30%;">Summary Description</th>
                                 <th scope="col" style="width: 45%;">Verse Description</th>
                                 <th class="text-center" scope="col" style="width: 10%;">Inference Flag</th>
+                                <th class="text-center" scope="col" style="width: 5%;">Arabic Description</th>
                                 <th class="text-center" scope="col" style="width: 5%;">Hadith Reference</th>
                             </tr>
                         </thead>
@@ -82,6 +83,12 @@
                                     <td style="width: 30%;">{{ $item->ayat_summary_des }}</td>
                                     <td style="width: 45%;">{{ $item->quran_english }}</td>
                                     <td style="width: 10%;">{{ $item->inferance_flag }}</td>
+                                    <td style="width: 10%;" class="text-center">
+                                        <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent="showQuranArabic({{ $item->w_id }})">
+                                            {!! loadingStateWithText('showQuranArabic(' . $item->w_id . ')', 'Display Arabic') !!}
+                                        </button>
+                                    </td>
+
                                     <td style="width: 10%;" class="text-center">
                                         <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
                                             {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read') !!}
@@ -100,6 +107,33 @@
             </div>
         </div>
     </div>
+
+    <!-- Read Arabic Description -->
+    <div class="modal fade" id="showQuranArabicModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Quran Arabic Description</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-12 text-start hadith-border-bottom" style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
+                            <p>{{ $quran_arabic }}</p> <!-- Show Quran Arabic Text Dynamically -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <!-- Modal -->
     <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -138,6 +172,13 @@
     <script>
         window.addEventListener('showHadithsModal', event => {
             $('#showHadithsModal').modal('show');
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Livewire.on('showQuranArabicModal', () => {
+                $('#showQuranArabicModal').modal('show');
+            });
         });
     </script>
 @endpush

@@ -15,19 +15,64 @@ class ConductSearchComponent extends Component
     use WithPagination;
     public $searchTerm, $sortingValue = 15, $hadiths;
 
+
+    public $quran_english;
+
+    public $quran_arabic;
+
+    public function showQuranArabic($w_id)
+    {
+        $querySearchResults = Cache::get('search_results:' . md5($this->searchTerm . ':' . $this->sortingValue));
+        if ($querySearchResults) {
+            $item = collect($querySearchResults->items())->firstWhere('w_id', $w_id);
+            if ($item) {
+                $this->quran_arabic = $item->quran_arabic ?? 'No Arabic text available';
+            }
+        } else {
+            $this->quran_arabic = 'No Arabic text available';
+        }
+        $this->dispatch('showQuranArabicModal');
+    }
+
+
+
     public function showAllHadiths($w_id)
     {
-        $word = DB::table('word_topics')->where('id', $w_id)->first()->word_topic;
-        $cacheKey = 'hadiths_for_word:' . md5($word);
-        $hadiths = Cache::remember($cacheKey, 60, function () use ($word) {
+        // Retrieve the hadit_reference from the word_topics table
+        $wordTopic = DB::table('word_topics')->where('id', $w_id)->first();
+
+        if (!$wordTopic || empty($wordTopic->hadit_reference)) {
+            return; // Exit if no valid hadit_reference is found
+        }
+
+        $cacheKey = 'hadiths_for_word:' . md5($wordTopic->hadit_reference);
+
+        // Retrieve hadiths using caching for optimization
+        $hadiths = Cache::remember($cacheKey, 60, function () use ($wordTopic) {
             return DB::table('hadiths')
                 ->select('hadith_english')
-                ->where('group_name', $word)
+                ->where('group_name', $wordTopic->hadit_reference) // Match group_name with hadit_reference
                 ->get();
         });
+
         $this->hadiths = $hadiths;
         $this->dispatch('showHadithsModal');
     }
+
+
+    // public function showAllHadiths($w_id)
+    // {
+    //     $word = DB::table('word_topics')->where('id', $w_id)->first()->word_topic;
+    //     $cacheKey = 'hadiths_for_word:' . md5($word);
+    //     $hadiths = Cache::remember($cacheKey, 60, function () use ($word) {
+    //         return DB::table('hadiths')
+    //             ->select('hadith_english')
+    //             ->where('group_name', $word)
+    //             ->get();
+    //     });
+    //     $this->hadiths = $hadiths;
+    //     $this->dispatch('showHadithsModal');
+    // }
 
     public function render()
     {
@@ -51,7 +96,7 @@ class ConductSearchComponent extends Component
 
             // If no results are found, perform the search in the qurans table
             if ($results->isEmpty()) {
-                $results = Quran::select('qurans.id as q_id', 'qurans.quran_english', 'qurans.surah_no', 'qurans.ayat_no')
+                $results = Quran::select('qurans.id as q_id', 'qurans.quran_english', 'qurans.quran_arabic', 'qurans.surah_no', 'qurans.ayat_no')
                     ->where('qurans.quran_english', 'like', '%' . $this->searchTerm . '%')
                     ->paginate($this->sortingValue);
             }

@@ -3,6 +3,7 @@
         .hadith-border-bottom {
             border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
         }
+
         .hadith-btn-style {
             background: #008866;
             border: none;
@@ -18,16 +19,14 @@
                     </a>
                 </li>
                 @if (session('menu_name'))
-                    <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page"
-                        title="{{ session('menu_name') }}">
+                    <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page" title="{{ session('menu_name') }}">
                         <a href="{{ url()->previous() }}" style="text-decoration: none; color: #008866">
                             {{ session('menu_name') }}
                         </a>
                     </li>
                 @endif
                 @if (session()->has('content_topic'))
-                    <li class="breadcrumb-item active text-dark fw-semibold " aria-current="page"
-                        title="{{ session('content_topic') }}">
+                    <li class="breadcrumb-item active text-dark fw-semibold " aria-current="page" title="{{ session('content_topic') }}">
                         {{ session('content_topic') }}
                     </li>
                 @endif
@@ -39,16 +38,16 @@
                 <tr>
                     <th class="text-center" scope="col" style="width: 10%;">Word Or Category</th>
                     <th scope="col" style="width: 30%;">Summary Description</th>
-                    <th scope="col" style="width: 45%;">Verse Description</th>
+                    <th scope="col" style="width: 40%;">Verse Description</th>
                     <th class="text-center" scope="col" style="width: 10%;">Inference Flag</th>
+                    <th class="text-center" scope="col" style="width: 5%;">Arabic Description</th>
                     <th class="text-center" scope="col" style="width: 5%;">Hadith Reference</th>
                 </tr>
             </thead>
             <tbody>
                 @if ($final_results->count() > 0)
                     @php
-                        $sl =
-                            $final_results->perPage() * $final_results->currentPage() - ($final_results->perPage() - 1);
+                        $sl = $final_results->perPage() * $final_results->currentPage() - ($final_results->perPage() - 1);
                     @endphp
                     @foreach ($final_results as $item)
                         <tr>
@@ -57,8 +56,12 @@
                             <td style="width: 50%;">{{ $item->quran_english }}</td>
                             <td style="width: 10%;">{{ $item->inferance_flag }}</td>
                             <td style="width: 10%;" class="text-center">
-                                <button class="btn btn-info btn-sm hadith-btn-style"
-                                    wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
+                                <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent='showArabicDescription({{ $item->w_id }})'>
+                                    {!! loadingStateWithText('showArabicDescription(' . $item->w_id . ')', 'Display Arabic') !!}
+                                </button>
+                            </td>
+                            <td style="width: 10%;" class="text-center">
+                                <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
                                     {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read') !!}
                                 </button>
                             </td>
@@ -76,8 +79,7 @@
         </nav>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -91,8 +93,7 @@
                     @if ($hadiths)
                         @foreach ($hadiths as $hadith)
                             <div class="row mb-3">
-                                <div class="col-md-12 text-start hadith-border-bottom"
-                                    style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
+                                <div class="col-md-12 text-start hadith-border-bottom" style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
                                     <p>{{ $hadith->hadith_english }}</p>
                                 </div>
                             </div>

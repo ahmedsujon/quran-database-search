@@ -20,5 +20,6 @@ class WordTopic extends Model
         'inferance_flag',
         'sub_word_topic',
         'reporting',
+        'hadit_reference',
     ];
 }
