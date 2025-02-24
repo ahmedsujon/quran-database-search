@@ -23,6 +23,22 @@ class QuerySearchResultComponent extends Component
         $this->reporting = request()->get('reporting');
     }
 
+    public $quran_arabic;
+
+    public function showQuranArabic($w_id)
+    {
+        $querySearchResults = Cache::get('search_results:' . md5($this->searchTerm . ':' . $this->sortingValue));
+        if ($querySearchResults) {
+            $item = collect($querySearchResults->items())->firstWhere('w_id', $w_id);
+            if ($item) {
+                $this->quran_arabic = $item->quran_arabic ?? 'No Arabic text available';
+            }
+        } else {
+            $this->quran_arabic = 'No Arabic text available';
+        }
+        $this->dispatch('showQuranArabicModal');
+    }
+
     public function getHadithdata()
     {
         $hadith_results = Hadith::when($this->searchValue, function ($query) {
