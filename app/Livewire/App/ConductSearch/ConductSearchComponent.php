@@ -69,6 +69,7 @@ class ConductSearchComponent extends Component
 
         $main_menus = MainMenu::all();
 
+        // Query for WordTopic and join with Qurans table, sorted alphabetically by word_topic
         $querySearchResults = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
             ->select(
                 'word_topics.id as w_id',
@@ -79,8 +80,10 @@ class ConductSearchComponent extends Component
                 'qurans.quran_arabic'
             )
             ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
+            ->orderBy('word_topics.surah_no', 'desc')
             ->paginate($this->sortingValue);
 
+        // If no results in WordTopic, fallback to Quran search
         if ($querySearchResults->isEmpty()) {
             $querySearchResults = Quran::select(
                 'id as q_id',
@@ -89,8 +92,9 @@ class ConductSearchComponent extends Component
                 'surah_no',
                 'ayat_no'
             )
-                ->where('quran_english', 'like', '%' . $this->searchTerm . '%')
-                ->paginate($this->sortingValue);
+            ->where('quran_english', 'like', '%' . $this->searchTerm . '%')
+            ->orderBy('quran_english', 'asc')
+            ->paginate($this->sortingValue);
         }
 
         return view('livewire.app.conduct-search.conduct-search-component', [
@@ -98,4 +102,5 @@ class ConductSearchComponent extends Component
             'main_menus' => $main_menus
         ])->layout('livewire.app.layouts.base');
     }
+
 }

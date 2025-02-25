@@ -80,11 +80,10 @@
                             @foreach ($querySearchResults as $item)
                                 <tr>
                                     <td scope="row" style="width: 15%;">
-                                        <button class="btn btn-link" wire:click.prevent="updateSearchTerm('{{ $item->word_topic }}')">
+                                        <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm('{{ $item->word_topic }}')">
                                             {{ $item->word_topic }}
                                         </button>
                                     </td>
-
                                     <td style="width: 30%;">{{ $item->ayat_summary_des }}</td>
                                     <td style="width: 45%;">{{ $item->quran_english }}</td>
                                     <td style="width: 10%;">{{ $item->inferance_flag }}</td>
