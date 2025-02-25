@@ -80,7 +80,6 @@ class ConductSearchComponent extends Component
                 'qurans.quran_arabic'
             )
             ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
-            ->orderBy('word_topics.surah_no', 'desc')
             ->paginate($this->sortingValue);
 
         // If no results in WordTopic, fallback to Quran search
