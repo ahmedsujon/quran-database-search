@@ -11,6 +11,12 @@ class QuranComponent extends Component
     use WithPagination;
     public $searchTerm, $sortingValue = 50, $delete_id, $edit_id;
 
+    public function deleteAll()
+    {
+        Quran::truncate();
+        session()->flash('message', 'All content has been deleted successfully.');
+    }
+
     public function render()
     {
         $quran_datas = Quran::where('quran_english', 'like', '%' . $this->searchTerm . '%')->orderBy('id', 'DESC')->paginate($this->sortingValue);

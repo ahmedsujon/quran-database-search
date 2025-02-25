@@ -13,12 +13,22 @@ use Illuminate\Support\Facades\Cache;
 class ConductSearchComponent extends Component
 {
     use WithPagination;
-    public $searchTerm, $sortingValue = 15, $hadiths;
+    public $sortingValue = 15, $hadiths;
 
 
     public $quran_english;
 
     public $quran_arabic;
+
+    public $searchTerm = '';
+
+    public function updateSearchTerm($wordTopic)
+    {
+        $this->searchTerm = $wordTopic;
+        $this->resetPage();
+        $this->render();
+    }
+
 
     public function showQuranArabic($w_id)
     {

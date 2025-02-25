@@ -20,6 +20,7 @@
                     <div class="card">
                         <div class="card-header bg-white" style="border-bottom: 1px solid #e2e2e7;">
                             <h4 class="card-title" style="float: left;">All Quran Data</h4>
+                            <button wire:click="deleteAll" class="btn btn-danger">Delete All</button>
                         </div>
                         <div class="card-body">
                             <div class="row mb-3">
