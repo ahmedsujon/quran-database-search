@@ -93,7 +93,7 @@ class ConductSearchComponent extends Component
                 'ayat_no'
             )
             ->where('quran_english', 'like', '%' . $this->searchTerm . '%')
-            ->orderBy('quran_english', 'desc')
+            ->orderBy('quran_english', 'asc')
             ->paginate($this->sortingValue);
         }
 
