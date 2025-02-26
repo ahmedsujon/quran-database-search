@@ -59,7 +59,6 @@ class ConductSearchComponent extends Component
         $this->dispatch('showHadithsModal');
     }
 
-
     public function render()
     {
         $menu_name = request()->menu_name;
@@ -68,6 +67,9 @@ class ConductSearchComponent extends Component
         }
 
         $main_menus = MainMenu::all();
+
+        // Split search term into words for better search matching
+        $searchWords = explode(' ', $this->searchTerm);
 
         // Query for WordTopic and join with Qurans table, sorted alphabetically by word_topic
         $querySearchResults = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
@@ -78,32 +80,39 @@ class ConductSearchComponent extends Component
                 'word_topics.inferance_flag',
                 'qurans.quran_english',
                 'qurans.quran_arabic'
-            )
-            ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
+            );
+
+        // Apply search filtering for each word
+        foreach ($searchWords as $word) {
+            $querySearchResults->where('word_topics.word_topic', 'like', '%' . $word . '%');
+        }
+
+        $querySearchResults = $querySearchResults->orderBy('word_topics.word_topic', 'asc')
             ->paginate($this->sortingValue);
 
         // If no results in WordTopic, fallback to Quran search
-        $searchWords = explode(' ', $this->searchTerm); // Split words by space
+        if ($querySearchResults->isEmpty()) {
+            $querySearchResults = Quran::select(
+                'id as q_id',
+                'quran_english',
+                'quran_arabic',
+                'surah_no',
+                'ayat_no'
+            );
 
-        $querySearchResults = Quran::select(
-            'id as q_id',
-            'quran_english',
-            'quran_arabic',
-            'surah_no',
-            'ayat_no'
-        );
+            // Apply search filtering for each word in `eng_subject_category`
+            foreach ($searchWords as $word) {
+                $querySearchResults->where('eng_subject_category', 'like', '%' . $word . '%');
+            }
 
-        foreach ($searchWords as $word) {
-            $querySearchResults->where('eng_subject_category', 'like', '%' . $word . '%');
+            $querySearchResults = $querySearchResults->orderBy('quran_english', 'asc')
+                ->paginate($this->sortingValue);
         }
-
-        $querySearchResults = $querySearchResults->orderBy('quran_english', 'asc')
-            ->paginate($this->sortingValue);
-
 
         return view('livewire.app.conduct-search.conduct-search-component', [
             'querySearchResults' => $querySearchResults,
             'main_menus' => $main_menus
         ])->layout('livewire.app.layouts.base');
     }
+
 }
