@@ -32,49 +32,55 @@
                 @endif
             </ol>
         </nav>
-
-        <table class="table table-striped table-bordered mt-5">
-            <thead class="thead-dark">
-                <tr>
-                    <th class="text-center" scope="col" style="width: 10%;">Word Or Category</th>
-                    <th scope="col" style="width: 30%;">Summary Description</th>
-                    <th scope="col" style="width: 40%;">Verse Description</th>
-                    <th class="text-center" scope="col" style="width: 10%;">Inference Flag</th>
-                    <th class="text-center" scope="col" style="width: 5%;">Arabic Description</th>
-                    <th class="text-center" scope="col" style="width: 5%;">Hadith Reference</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if ($final_results->count() > 0)
-                    @php
-                        $sl = $final_results->perPage() * $final_results->currentPage() - ($final_results->perPage() - 1);
-                    @endphp
-                    @foreach ($final_results as $item)
-                        <tr>
-                            <td scope="row" style="width: 10%;">{{ $item->word_topic }}</td>
-                            <td style="width: 30%;">{{ $item->ayat_summary_des }}</td>
-                            <td style="width: 50%;">{{ $item->quran_english }}</td>
-                            <td style="width: 10%;">{{ $item->inferance_flag }}</td>
-                            <td style="width: 10%;" class="text-center">
-                                <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent="showQuranArabic({{ $item->w_id }})">
-                                    {!! loadingStateWithText('showQuranArabic(' . $item->w_id . ')', 'Display Arabic') !!}
-                                </button>
-                            </td>
-                            <td style="width: 10%;" class="text-center">
-                                <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
-                                    {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read') !!}
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
-                @else
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered mt-5">
+                <thead class="thead-dark">
                     <tr>
-                        <td colspan="7" class="text-center pt-5 pb-5">No exact data available!</td>
+                        <th class="text-center" scope="col" style="width: 10%;">Word Or Category</th>
+                        <th scope="col" style="width: 30%;">Summary Description</th>
+                        <th scope="col" style="width: 40%;">Verse Description</th>
+                        <th class="text-center" scope="col" style="width: 10%;">
+                            Inference Flag
+                            <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">
+                            </i>
+                        </th>
+                        <th class="text-center" scope="col" style="width: 5%;">Arabic Description</th>
+                        <th class="text-center" scope="col" style="width: 5%;">Hadith Reference</th>
                     </tr>
-                @endif
-            </tbody>
-        </table>
-        <nav aria-label="Page navigation example">
+                </thead>
+                <tbody>
+                    @if ($final_results->count() > 0)
+                        @php
+                            $sl = $final_results->perPage() * $final_results->currentPage() - ($final_results->perPage() - 1);
+                        @endphp
+                        @foreach ($final_results as $item)
+                            <tr>
+                                <td scope="row" style="width: 10%;">{{ $item->word_topic }}</td>
+                                <td style="width: 30%;">{{ $item->ayat_summary_des }}</td>
+                                <td style="width: 50%;">{{ $item->quran_english }}</td>
+                                <td style="width: 10%;">{{ $item->inferance_flag }}</td>
+                                <td style="width: 10%;" class="text-center">
+                                    <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent="showQuranArabic({{ $item->w_id }})">
+                                        {!! loadingStateWithText('showQuranArabic(' . $item->w_id . ')', 'Display Arabic') !!}
+                                    </button>
+                                </td>
+                                <td style="width: 10%;" class="text-center">
+                                    <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
+                                        {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read') !!}
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="7" class="text-center pt-5 pb-5">No exact data available!</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination -->
+        <nav aria-label="Page navigation example" class="mt-4">
             {{ $final_results->links('livewire.app-pagination') }}
         </nav>
     </div>
@@ -137,6 +143,8 @@
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
     <script>
         window.addEventListener('showHadithsModal', event => {
             $('#showHadithsModal').modal('show');
@@ -147,6 +155,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             Livewire.on('showQuranArabicModal', () => {
                 $('#showQuranArabicModal').modal('show');
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
             });
         });
     </script>

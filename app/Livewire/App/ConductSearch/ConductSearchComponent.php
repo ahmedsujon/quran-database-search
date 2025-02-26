@@ -91,9 +91,9 @@ class ConductSearchComponent extends Component
                 'surah_no',
                 'ayat_no'
             )
-            ->where('quran_english', 'like', '%' . $this->searchTerm . '%')
-            ->orderBy('quran_english', 'asc')
-            ->paginate($this->sortingValue);
+                ->where('eng_subject_category', 'like', '%' . $this->searchTerm . '%')
+                ->orderBy('quran_english', 'asc')
+                ->paginate($this->sortingValue);
         }
 
         return view('livewire.app.conduct-search.conduct-search-component', [
@@ -101,5 +101,4 @@ class ConductSearchComponent extends Component
             'main_menus' => $main_menus
         ])->layout('livewire.app.layouts.base');
     }
-
 }

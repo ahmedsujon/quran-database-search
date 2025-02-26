@@ -71,7 +71,12 @@
                                 <th class="text-center" scope="col" style="width: 10%;">Theme, Subject or Topic</th>
                                 <th scope="col" style="width: 30%;">Summary Description</th>
                                 <th scope="col" style="width: 45%;">Verse Description</th>
-                                <th class="text-center" scope="col" style="width: 10%;">Inference Flag</th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    Inference Flag
+                                    <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">
+                                    </i>
+                                </th>
                                 <th class="text-center" scope="col" style="width: 5%;">Arabic Description</th>
                                 <th class="text-center" scope="col" style="width: 5%;">Hadith Reference</th>
                             </tr>
@@ -173,6 +178,8 @@
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
     <script>
         window.addEventListener('showHadithsModal', event => {
             $('#showHadithsModal').modal('show');
@@ -182,6 +189,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             Livewire.on('showQuranArabicModal', () => {
                 $('#showQuranArabicModal').modal('show');
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
             });
         });
     </script>
