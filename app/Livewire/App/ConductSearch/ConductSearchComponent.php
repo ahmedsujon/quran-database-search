@@ -83,18 +83,23 @@ class ConductSearchComponent extends Component
             ->paginate($this->sortingValue);
 
         // If no results in WordTopic, fallback to Quran search
-        if ($querySearchResults->isEmpty()) {
-            $querySearchResults = Quran::select(
-                'id as q_id',
-                'quran_english',
-                'quran_arabic',
-                'surah_no',
-                'ayat_no'
-            )
-                ->where('eng_subject_category', 'like', '%' . $this->searchTerm . '%')
-                ->orderBy('quran_english', 'asc')
-                ->paginate($this->sortingValue);
+        $searchWords = explode(' ', $this->searchTerm); // Split words by space
+
+        $querySearchResults = Quran::select(
+            'id as q_id',
+            'quran_english',
+            'quran_arabic',
+            'surah_no',
+            'ayat_no'
+        );
+
+        foreach ($searchWords as $word) {
+            $querySearchResults->where('eng_subject_category', 'like', '%' . $word . '%');
         }
+
+        $querySearchResults = $querySearchResults->orderBy('quran_english', 'asc')
+            ->paginate($this->sortingValue);
+
 
         return view('livewire.app.conduct-search.conduct-search-component', [
             'querySearchResults' => $querySearchResults,
