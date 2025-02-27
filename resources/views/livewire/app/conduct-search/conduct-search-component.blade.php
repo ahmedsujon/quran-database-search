@@ -73,8 +73,7 @@
                                 <th scope="col" style="width: 45%;">Verse Description</th>
                                 <th class="text-center" scope="col" style="width: 10%;">
                                     Inference Flag
-                                    <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
-                                       title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">
+                                    <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">
                                     </i>
                                 </th>
                                 <th class="text-center" scope="col" style="width: 5%;">Arabic Description</th>
@@ -98,11 +97,14 @@
                                         </button>
                                     </td>
 
-                                    <td style="width: 10%;" class="text-center">
-                                        <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
-                                            {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read') !!}
-                                        </button>
-                                    </td>
+                                    @if ($queryNumber == 1)
+                                        <td style="width: 10%;" class="text-center">
+                                            <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
+                                                {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read') !!}
+                                            </button>
+                                        </td>
+                                    @endif
+
                                 </tr>
                             @endforeach
                         </tbody>
@@ -193,9 +195,9 @@
         });
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
         });
