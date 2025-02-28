@@ -77,7 +77,9 @@
                                     </i>
                                 </th>
                                 <th class="text-center" scope="col" style="width: 5%;">Arabic Description</th>
+                                @if ($queryNumber == 1)
                                 <th class="text-center" scope="col" style="width: 5%;">Hadith Reference</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
