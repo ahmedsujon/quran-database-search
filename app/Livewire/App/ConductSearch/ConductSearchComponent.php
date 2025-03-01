@@ -1,20 +1,17 @@
 <?php
-
 namespace App\Livewire\App\ConductSearch;
 
-use App\Models\Quran;
-use Livewire\Component;
 use App\Models\MainMenu;
+use App\Models\Quran;
 use App\Models\WordTopic;
-use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class ConductSearchComponent extends Component
 {
     use WithPagination;
     public $sortingValue = 15, $hadiths;
-
 
     public $quran_english;
 
@@ -29,14 +26,14 @@ class ConductSearchComponent extends Component
         $this->render();
     }
 
-
     public function showQuranArabic($w_id)
     {
-        $item = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
-            ->select('word_topics.id as w_id', 'qurans.quran_arabic')
-            ->where('word_topics.id', $w_id)
-            ->first();
-        if (!$item) {
+        if ($this->queryNumber == 1) {
+            $item = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+                ->select('word_topics.id as w_id', 'qurans.quran_arabic')
+                ->where('word_topics.id', $w_id)
+                ->first();
+        } else {
             $item = Quran::select('id as q_id', 'quran_arabic')
                 ->where('id', $w_id)
                 ->first();
@@ -49,7 +46,7 @@ class ConductSearchComponent extends Component
     {
         $wordTopic = DB::table('word_topics')->where('id', $w_id)->first();
 
-        if (!$wordTopic || empty($wordTopic->hadit_reference)) {
+        if (! $wordTopic || empty($wordTopic->hadit_reference)) {
             return;
         }
         $this->hadiths = DB::table('hadiths')
@@ -103,7 +100,7 @@ class ConductSearchComponent extends Component
 
             // Apply search filtering for each word in `eng_subject_category`
             foreach ($searchWords as $word) {
-                $querySecondSearchResults->where('eng_subject_category', 'like', '%' . $word . '%');
+                $querySecondSearchResults->where('quran_english', 'like', '%' . $word . '%');
             }
 
             $querySecondSearchResults = $querySecondSearchResults->orderBy('quran_english', 'asc')
@@ -114,12 +111,12 @@ class ConductSearchComponent extends Component
             $this->queryNumber = 2;
         } else {
             $querySearchResults = $queryFirstSearchResults;
-            $this->queryNumber = 1;
+            $this->queryNumber  = 1;
         }
 
         return view('livewire.app.conduct-search.conduct-search-component', [
             'querySearchResults' => $querySearchResults,
-            'main_menus' => $main_menus
+            'main_menus'         => $main_menus,
         ])->layout('livewire.app.layouts.base');
     }
 
