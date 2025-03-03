@@ -10,7 +10,7 @@
             color: #fff;
         }
     </style>
-    <div class="container mt-4" wire:ignore>
+    <div class="container mt-4">
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb bg-light rounded shadow-sm px-4 py-3">
                 <li class="breadcrumb-item">
