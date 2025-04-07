@@ -17,7 +17,7 @@
             <div class="col-12 col-md-3 mb-3" style="max-height: 120vh; overflow-y: auto;">
                 <!-- Fixed Title at the top of the left column -->
                 <h4 class="mb-3 text-center" style="position: sticky; top: 0; background-color: #fff; z-index: 10; padding-top: 10px;">
-                    Select Any of the Following Canned Queries
+                    Select from any of the Following 500 Canned Queries
                 </h4>
 
                 <!-- Menu Items -->
