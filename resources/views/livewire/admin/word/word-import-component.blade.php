@@ -27,7 +27,7 @@
                             <div class="col-md-12">
                                 <label for="password" class="form-label">Word or Topic Data CSV</label>
                                 <input type="file" wire:model='excel' class="form-control">
-                                @error('excelfile')
+                                @error('excel')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                                 <div wire:loading wire:target="excel" class="mt-2">
