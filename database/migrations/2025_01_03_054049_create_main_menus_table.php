@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('main_menus', function (Blueprint $table) {
             $table->id();
             $table->longText('menu_name');
+            $table->longText('menu_name_arabic');
             $table->timestamps();
         });
     }
