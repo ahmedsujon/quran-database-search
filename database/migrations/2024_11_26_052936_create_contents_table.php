@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('main_menu_id')->nullable();
             $table->longText('topic')->nullable();
+            $table->longText('topic_arabic')->nullable();
             $table->longText('search_value')->nullable();
             $table->string('reporting')->nullable();
             $table->timestamps();

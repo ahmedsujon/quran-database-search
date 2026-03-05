@@ -13,6 +13,7 @@ class ContentImport implements ToModel, WithHeadingRow
         $hadithData = new Content();
         $hadithData->main_menu_id                           = isset($row['main_menu_id'])?$row['main_menu_id'] : null;
         $hadithData->topic                                  = isset($row['topic'])?$row['topic'] : null;
+        $hadithData->topic_arabic                           = isset($row['topic_arabic'])?$row['topic_arabic'] : null;
         $hadithData->search_value                           = isset($row['search_value'])?$row['search_value'] : null;
         $hadithData->reporting                              = isset($row['reporting'])?$row['reporting'] : null;
         $hadithData->save();

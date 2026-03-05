@@ -9,6 +9,32 @@
             border: none;
             color: #fff;
         }
+
+        .actions-cell {
+            min-width: 120px;
+            vertical-align: middle !important;
+        }
+
+        .actions-cell-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .inference-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .actions-cell .btn {
+            max-width: 100px;
+            font-size: 0.8rem;
+        }
     </style>
 
     <div class="container-fluid mt-4" style="margin-top: 70px !important;">
@@ -23,7 +49,7 @@
                 <!-- Menu Items -->
                 @foreach ($main_menus as $item)
                     <div class="menu-card mb-2">
-                        <a href="{{ route('app.QuerySearch', ['id' => $item->id, 'menu_name_arabic' => $item->menu_name_arabic]) }}" class="text-decoration-none">
+                        <a href="{{ route('app.ArabicQuerySearch', ['id' => $item->id, 'menu_name_arabic' => $item->menu_name_arabic]) }}" class="text-decoration-none">
                             <div class="btn btn-outline-success d-flex flex-column justify-content-between text-start py-3" style="min-height: 150px;">
                                 <small>{{ $item->menu_name_arabic }}</small>
                             </div>
@@ -70,34 +96,30 @@
                             <tr>
                                 <th class="text-center" scope="col" style="width: 10%;">Theme, Subject or Topic</th>
                                 <th scope="col" style="width: 45%;">Verse Description</th>
-                                <th class="text-center" scope="col" style="width: 10%;">
-                                    Inference Flag
-                                    <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">
-                                    </i>
+                                <th class="text-center" scope="col" style="width: 12%;">
+                                    Actions
+                                    <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Inference: theme inferred from context. Use button to view Hadith."></i>
                                 </th>
-                                @if ($queryNumber == 1)
-                                    <th class="text-center" scope="col" style="width: 5%;">Hadith Reference</th>
-                                @endif
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($querySearchResults as $item)
                                 <tr>
                                     <td scope="row" style="width: 15%;">
-                                        <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm('{{ $item->word_topic }}')">
-                                            {{ $item->word_topic }}
+                                        <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm('{{ $item->topic_arabic }}')">
+                                            {{ $item->topic_arabic }}
                                         </button>
                                     </td>
-                                    <td style="width: 45%;">{{ $item->quran_english }}</td>
-                                    <td style="width: 10%;">{{ $item->inferance_flag }}</td>
-
-                                    @if ($queryNumber == 1)
-                                        <td style="width: 10%;" class="text-center">
-                                            <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
-                                                {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read') !!}
-                                            </button>
-                                        </td>
-                                    @endif
+                                    <td style="width: 45%;">{{ $item->quran_arabic }}</td>
+                                    <td class="text-center actions-cell" style="width: 12%;">
+                                        <div class="actions-cell-inner">
+                                            @if ($queryNumber == 1)
+                                                <button class="btn btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
+                                                    {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read Hadiths') !!}
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </td>
 
                                 </tr>
                             @endforeach

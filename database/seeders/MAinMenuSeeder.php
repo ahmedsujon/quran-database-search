@@ -8,8 +8,11 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class MAinMenuSeeder extends Seeder
 {
+
     public function run()
     {
+        DB::table('main_menus')->truncate();
+
         $menuItems = [
             ['id' => 1, 'menu_name' => "1. Topics on Allah, i.e., Allah's Will, Face of Allah, Mercy of Allah, Allah's Forgiveness, Allah's Greatest Names, Allah's Light, etc.", 'menu_name_arabic' => "مواضيع عن الله  عز وجل  إرادة الله , مغفرة الله , نور الله, أسماء الله الحسنى(31 موضوعا)"],
 

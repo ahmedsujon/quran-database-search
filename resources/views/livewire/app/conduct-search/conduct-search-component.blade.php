@@ -9,6 +9,45 @@
             border: none;
             color: #fff;
         }
+
+        .actions-cell {
+            min-width: 140px;
+            vertical-align: middle !important;
+        }
+
+        .actions-cell-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .inference-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .actions-cell .btn {
+            width: 100%;
+            max-width: 120px;
+            font-size: 0.8rem;
+        }
+
+        .actions-cell .btn-display-arabic {
+            background: #00695c;
+            border: none;
+            color: #fff;
+        }
+
+        .actions-cell .btn-read {
+            background: #008866;
+            border: none;
+            color: #fff;
+        }
     </style>
 
     <div class="container-fluid mt-4" style="margin-top: 70px !important;">
@@ -17,7 +56,7 @@
             <div class="col-12 col-md-3 mb-3" style="max-height: 120vh; overflow-y: auto;">
                 <!-- Fixed Title at the top of the left column -->
                 <h4 class="mb-3 text-center" style="position: sticky; top: 0; background-color: #fff; z-index: 10; padding-top: 10px;">
-                    Select from any of the Following 500 Canned Queries
+                    Select from any of the Following 570 Canned Queries
                 </h4>
 
                 <!-- Menu Items -->
@@ -71,15 +110,10 @@
                                 <th class="text-center" scope="col" style="width: 10%;">Theme, Subject or Topic</th>
                                 <th scope="col" style="width: 30%;">Summary Description</th>
                                 <th scope="col" style="width: 45%;">Verse Description</th>
-                                <th class="text-center" scope="col" style="width: 10%;">
-                                    Inference Flag
-                                    <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">
-                                    </i>
+                                <th class="text-center" scope="col" style="width: 14%;">
+                                    Actions
+                                    <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Inference: theme/subject inferred from context. Use buttons to view Arabic or Hadith."></i>
                                 </th>
-                                <th class="text-center" scope="col" style="width: 5%;">Arabic Description</th>
-                                @if ($queryNumber == 1)
-                                <th class="text-center" scope="col" style="width: 5%;">Hadith Reference</th>
-                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -87,26 +121,26 @@
                                 <tr>
                                     <td scope="row" style="width: 15%;">
                                         <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm('{{ $item->word_topic }}')">
-                                            {{ $item->word_topic }}
+                                            {{ $item->topic }}
                                         </button>
                                     </td>
                                     <td style="width: 30%;">{{ $item->ayat_summary_des }}</td>
                                     <td style="width: 45%;">{{ $item->quran_english }}</td>
-                                    <td style="width: 10%;">{{ $item->inferance_flag }}</td>
-                                    <td style="width: 10%;" class="text-center">
-                                        <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent="showQuranArabic({{ $item->w_id }})">
-                                            {!! loadingStateWithText('showQuranArabic(' . $item->w_id . ')', 'Display Arabic') !!}
-                                        </button>
-                                    </td>
-
-                                    @if ($queryNumber == 1)
-                                        <td style="width: 10%;" class="text-center">
-                                            <button class="btn btn-info btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
-                                                {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read') !!}
+                                    <td class="text-center actions-cell" style="width: 14%;">
+                                        <div class="actions-cell-inner">
+                                            @if ($item->inferance_flag)
+                                                <span class="inference-badge" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">Inferred</span>
+                                            @endif
+                                            <button class="btn btn-sm btn-display-arabic" wire:click.prevent="showQuranArabic({{ $item->w_id }})">
+                                                {!! loadingStateWithText('showQuranArabic(' . $item->w_id . ')', 'Display Arabic') !!}
                                             </button>
-                                        </td>
-                                    @endif
-
+                                            @if ($queryNumber == 1)
+                                                <button class="btn btn-sm btn-read" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
+                                                    {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read Hadiths') !!}
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

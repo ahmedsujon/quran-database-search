@@ -1,8 +1,6 @@
 <?php
-
 namespace App\Livewire\App\ConductSearch;
 
-use App\Models\Content;
 use App\Models\MainMenu;
 use App\Models\Quran;
 use App\Models\WordTopic;
@@ -68,15 +66,58 @@ class ConductSearchComponent extends Component
 
         $main_menus = MainMenu::all();
 
+        // Split search term into words for better search matching
+        $searchWords = explode(' ', $this->searchTerm);
 
-        $querySearchResults = Content::where('topic', 'like', '%' . $this->searchTerm . '%')
-            ->orWhere('topic_arabic', 'like', '%' . $this->searchTerm . '%')
-            ->orWhere('search_value', 'like', '%' . $this->searchTerm . '%')
+        // Query for WordTopic and join with Qurans table, sorted alphabetically by word_topic
+        $queryFirstSearchResults = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+            ->select(
+                'word_topics.id as w_id',
+                'word_topics.word_topic',
+                'word_topics.ayat_summary_des',
+                'word_topics.inferance_flag',
+                'qurans.quran_english',
+                'qurans.quran_arabic'
+            );
+
+        // Apply search filtering for each word
+        foreach ($searchWords as $word) {
+            $queryFirstSearchResults->where('word_topics.word_topic', 'like', '%' . $word . '%');
+        }
+
+        $queryFirstSearchResults = $queryFirstSearchResults->orderBy('word_topics.word_topic', 'asc')
             ->paginate($this->sortingValue);
+
+        // If no results in WordTopic, fallback to Quran search
+        if ($queryFirstSearchResults->isEmpty()) {
+            $querySecondSearchResults = Quran::select(
+                'id as w_id',
+                'quran_english',
+                'quran_arabic',
+                'surah_no',
+                'ayat_no'
+            );
+
+            // Apply search filtering for each word in `eng_subject_category`
+            foreach ($searchWords as $word) {
+                $querySecondSearchResults->where('quran_english', 'like', '%' . $word . '%');
+            }
+
+            $querySecondSearchResults = $querySecondSearchResults->orderBy('quran_english', 'asc')
+                ->paginate($this->sortingValue);
+
+            $querySearchResults = $querySecondSearchResults;
+
+            $this->queryNumber = 2;
+        } else {
+            $querySearchResults = $queryFirstSearchResults;
+            $this->queryNumber  = 1;
+        }
 
         return view('livewire.app.conduct-search.conduct-search-component', [
             'querySearchResults' => $querySearchResults,
             'main_menus'         => $main_menus,
         ])->layout('livewire.app.layouts.base');
     }
+
 }
