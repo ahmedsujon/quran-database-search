@@ -103,7 +103,7 @@
                 </div>
 
                 <!-- Table -->
-                <div class="table-responsive">
+                <div class="table-responsive" wire:loading.class='opacity-75'>
                     <table class="table table-striped table-bordered mt-5">
                         <thead class="thead-dark">
                             <tr>
@@ -118,25 +118,28 @@
                         </thead>
                         <tbody>
                             @foreach ($querySearchResults as $item)
+                                {{-- <pre>{{ json_encode($item, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}</pre> --}}
                                 <tr>
                                     <td scope="row" style="width: 15%;">
-                                        <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm('{{ $item->word_topic }}')">
-                                            {{ $item->topic }}
+                                        <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm('{{ $item['topic'] }}')">
+                                            {{ $item['topic'] }}
                                         </button>
                                     </td>
-                                    <td style="width: 30%;">{{ $item->ayat_summary_des }}</td>
-                                    <td style="width: 45%;">{{ $item->quran_english }}</td>
+                                    <td style="width: 30%;">{{ $item['summary_description'] ?? '---' }}</td>
+                                    <td style="width: 45%;">{{ $item['verse_description'] ?? '---' }}</td>
                                     <td class="text-center actions-cell" style="width: 14%;">
                                         <div class="actions-cell-inner">
-                                            @if ($item->inferance_flag)
+                                            @if ($item['inferance_flag'])
                                                 <span class="inference-badge" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">Inferred</span>
                                             @endif
-                                            <button class="btn btn-sm btn-display-arabic" wire:click.prevent="showQuranArabic({{ $item->w_id }})">
-                                                {!! loadingStateWithText('showQuranArabic(' . $item->w_id . ')', 'Display Arabic') !!}
+                                            <button class="btn btn-sm btn-display-arabic" wire:click.prevent='showQuranArabic({{ $item['id'] }}, "{{ $item['source_table'] }}")' wire:loading.attr='disabled'>
+                                                <span wire:loading wire:target='showQuranArabic({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="spinner-border spinner-border-sm me-1 align-middle text-white" role="status" aria-hidden="true"></span>
+                                                <span wire:loading.remove wire:target='showQuranArabic({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="text-white">Display Arabic</span>
                                             </button>
-                                            @if ($queryNumber == 1)
-                                                <button class="btn btn-sm btn-read" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
-                                                    {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read Hadiths') !!}
+                                            @if ($item['source_table'] == 'word_topic')
+                                                <button class="btn btn-sm btn-read" wire:click.prevent='showAllHadiths({{ $item['id'] }}, "{{ $item['source_table'] }}")' wire:loading.attr='disabled'>
+                                                    <span wire:loading wire:target='showAllHadiths({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="spinner-border spinner-border-sm me-1 align-middle text-white" role="status" aria-hidden="true"></span>
+                                                    <span wire:loading.remove wire:target='showAllHadiths({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="text-white">Read Hadiths</span>
                                                 </button>
                                             @endif
                                         </div>
@@ -156,24 +159,23 @@
     </div>
 
     <!-- Read Arabic Description -->
-    <div class="modal fade" id="showQuranArabicModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="quranArabicModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalLabel">Quran Arabic Description</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="col-md-12 text-start hadith-border-bottom" style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
-                            <p>{{ $quran_arabic }}</p> <!-- Show Quran Arabic Text Dynamically -->
+                            <p>{{ $quran_arabic }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -183,14 +185,13 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal fade" id="hadithsModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalLabel">Hadith Information
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body">
@@ -205,7 +206,7 @@
                     @endif
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

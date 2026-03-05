@@ -3,6 +3,7 @@
 namespace App\Livewire\App\ConductSearch;
 
 use App\Models\Content;
+use App\Models\Hadith;
 use App\Models\MainMenu;
 use App\Models\Quran;
 use App\Models\WordTopic;
@@ -19,7 +20,7 @@ class ConductSearchComponent extends Component
 
     public $quran_arabic;
 
-    public $searchTerm = '';
+    public $searchTerm = 'test';
 
     public function updateSearchTerm($wordTopic)
     {
@@ -28,34 +29,30 @@ class ConductSearchComponent extends Component
         $this->render();
     }
 
-    public function showQuranArabic($w_id)
+    public function showQuranArabic($id, $source_table)
     {
-        if ($this->queryNumber == 1) {
-            $item = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
-                ->select('word_topics.id as w_id', 'qurans.quran_arabic')
-                ->where('word_topics.id', $w_id)
-                ->first();
+        if ($source_table == 'word_topic') {
+            $surahAyat = WordTopic::where('id', $id)->value('surah_ayat') ?? null;
         } else {
-            $item = Quran::select('id as q_id', 'quran_arabic')
-                ->where('id', $w_id)
-                ->first();
+            $surahAyat = Content::where('id', $id)->value('surah_ayat') ?? null;
         }
-        $this->quran_arabic = $item->quran_arabic ?? 'No Arabic text available';
-        $this->dispatch('showQuranArabicModal');
+
+        $quran = Quran::where('surah_ayat', $surahAyat)->value('quran_arabic') ?? null;
+
+        $this->quran_arabic = $quran ?? 'No Arabic text available';
+        $this->js('$("#quranArabicModal").modal("show");');
     }
 
-    public function showAllHadiths($w_id)
+    public function showAllHadiths($id, $source_table)
     {
-        $wordTopic = DB::table('word_topics')->where('id', $w_id)->first();
-
-        if (! $wordTopic || empty($wordTopic->hadit_reference)) {
-            return;
+        if ($source_table == 'word_topic') {
+            $haditReference = DB::table('word_topics')->where('id', $id)->value('hadit_reference') ?? null;
+        } else {
+            $haditReference = DB::table('contents')->where('id', $id)->value('hadit_reference') ?? null;
         }
-        $this->hadiths = DB::table('hadiths')
-            ->select('hadith_english')
-            ->where('group_name', $wordTopic->hadit_reference)
-            ->get();
-        $this->dispatch('showHadithsModal');
+
+        $this->hadiths = Hadith::where('group_name', $haditReference)->get();
+        $this->js('$("#hadithsModal").modal("show");');
     }
 
     public $queryNumber = 1;
@@ -68,14 +65,39 @@ class ConductSearchComponent extends Component
 
         $main_menus = MainMenu::all();
 
-
         $querySearchResults = Content::where('topic', 'like', '%' . $this->searchTerm . '%')
-            ->orWhere('topic_arabic', 'like', '%' . $this->searchTerm . '%')
-            ->orWhere('search_value', 'like', '%' . $this->searchTerm . '%')
-            ->paginate($this->sortingValue);
+            ->get()
+            ->map(function ($item) {
+                $itemArray = [
+                    'id'                  => $item->id,
+                    'topic'               => $item->topic,
+                    'summary_description' => null,
+                    'verse_description'   => null,
+                    'inferance_flag'      => 0,
+                    'source_table'        => 'contents',
+                ];
+                return $itemArray;
+            });
+        $querySearchResults2 = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+            ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english')
+            ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
+            ->get()
+            ->map(function ($item) {
+                $itemArray = [
+                    'id'                  => $item->w_id,
+                    'topic'               => $item->word_topic,
+                    'summary_description' => $item->ayat_summary_des,
+                    'verse_description'   => $item->quran_english,
+                    'inferance_flag'      => $item->inferance_flag,
+                    'source_table'        => 'word_topic',
+                ];
+                return $itemArray;
+            });
+
+        $querySearchFinalResults = $querySearchResults->merge($querySearchResults2)->paginate($this->sortingValue);
 
         return view('livewire.app.conduct-search.conduct-search-component', [
-            'querySearchResults' => $querySearchResults,
+            'querySearchResults' => $querySearchFinalResults,
             'main_menus'         => $main_menus,
         ])->layout('livewire.app.layouts.base');
     }

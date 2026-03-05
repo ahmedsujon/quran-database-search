@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('main_menu_id')->nullable();
+            $table->string('surah_ayat')->nullable();
             $table->longText('topic')->nullable();
             $table->longText('topic_arabic')->nullable();
             $table->longText('search_value')->nullable();
