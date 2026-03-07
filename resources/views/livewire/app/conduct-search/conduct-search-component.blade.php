@@ -31,6 +31,7 @@
             font-weight: 600;
         }
 
+
         .actions-cell .btn {
             width: 100%;
             max-width: 120px;
@@ -86,7 +87,7 @@
                 <!-- Search Bar -->
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="Search for a query..." aria-label="Search for a query" style="height: 40px;" wire:model.live="searchTerm" wire:keyup='resetPage' autofocus />
+                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="Search for a query..." aria-label="Search for a query" style="height: 40px;" wire:model.live="searchTerm" wire:keydown="clearSearchSource" wire:keyup="resetPage" autofocus />
                     </div>
                 </div>
 
@@ -121,7 +122,7 @@
                                 {{-- <pre>{{ json_encode($item, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}</pre> --}}
                                 <tr>
                                     <td scope="row" style="width: 15%;">
-                                        <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm('{{ $item['topic'] }}')">
+                                        <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm({{ json_encode($item['source_table'] === 'contents' ? $item['search_value'] ?? $item['topic'] : $item['topic']) }}, '{{ $item['source_table'] }}')">
                                             {{ $item['topic'] }}
                                         </button>
                                     </td>
@@ -132,11 +133,11 @@
                                             @if ($item['inferance_flag'])
                                                 <span class="inference-badge" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">Inferred</span>
                                             @endif
-                                            <button class="btn btn-sm btn-display-arabic" wire:click.prevent='showQuranArabic({{ $item['id'] }}, "{{ $item['source_table'] }}")' wire:loading.attr='disabled'>
-                                                <span wire:loading wire:target='showQuranArabic({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="spinner-border spinner-border-sm me-1 align-middle text-white" role="status" aria-hidden="true"></span>
-                                                <span wire:loading.remove wire:target='showQuranArabic({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="text-white">Display Arabic</span>
-                                            </button>
                                             @if ($item['source_table'] == 'word_topic')
+                                                <button class="btn btn-sm btn-display-arabic" wire:click.prevent='showQuranArabic({{ $item['id'] }}, "{{ $item['source_table'] }}")' wire:loading.attr='disabled'>
+                                                    <span wire:loading wire:target='showQuranArabic({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="spinner-border spinner-border-sm me-1 align-middle text-white" role="status" aria-hidden="true"></span>
+                                                    <span wire:loading.remove wire:target='showQuranArabic({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="text-white">Display Arabic</span>
+                                                </button>
                                                 <button class="btn btn-sm btn-read" wire:click.prevent='showAllHadiths({{ $item['id'] }}, "{{ $item['source_table'] }}")' wire:loading.attr='disabled'>
                                                     <span wire:loading wire:target='showAllHadiths({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="spinner-border spinner-border-sm me-1 align-middle text-white" role="status" aria-hidden="true"></span>
                                                     <span wire:loading.remove wire:target='showAllHadiths({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="text-white">Read Hadiths</span>

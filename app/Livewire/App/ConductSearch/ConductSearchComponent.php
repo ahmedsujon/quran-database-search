@@ -20,13 +20,21 @@ class ConductSearchComponent extends Component
 
     public $quran_arabic;
 
-    public $searchTerm = 'test';
+    public $searchTerm = '', $source_table;
 
-    public function updateSearchTerm($wordTopic)
+    /**
+     * When user manually types in search box - reset to default search (both tables).
+     */
+    public function clearSearchSource()
     {
-        $this->searchTerm = $wordTopic;
+        $this->source_table = null;
+    }
+
+    public function updateSearchTerm($searchValue, $source_table)
+    {
+        $this->searchTerm = $searchValue;
+        $this->source_table = ! empty($searchValue) ? $source_table : null;
         $this->resetPage();
-        $this->render();
     }
 
     public function showQuranArabic($id, $source_table)
@@ -65,34 +73,56 @@ class ConductSearchComponent extends Component
 
         $main_menus = MainMenu::all();
 
-        $querySearchResults = Content::where('topic', 'like', '%' . $this->searchTerm . '%')
-            ->get()
-            ->map(function ($item) {
-                $itemArray = [
-                    'id'                  => $item->id,
-                    'topic'               => $item->topic,
-                    'summary_description' => null,
-                    'verse_description'   => null,
-                    'inferance_flag'      => 0,
-                    'source_table'        => 'contents',
-                ];
-                return $itemArray;
-            });
-        $querySearchResults2 = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
-            ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english')
-            ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
-            ->get()
-            ->map(function ($item) {
-                $itemArray = [
-                    'id'                  => $item->w_id,
-                    'topic'               => $item->word_topic,
-                    'summary_description' => $item->ayat_summary_des,
-                    'verse_description'   => $item->quran_english,
-                    'inferance_flag'      => $item->inferance_flag,
-                    'source_table'        => 'word_topic',
-                ];
-                return $itemArray;
-            });
+        $querySearchResults = collect();
+        $querySearchResults2 = collect();
+
+        // 1. If source is 'contents' (clicked Content item): show ONLY word_topics using search_value
+        // 2. If source is 'word_topic' or null (default): search BOTH tables
+        if ($this->source_table === 'contents') {
+            $querySearchResults2 = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+                ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english')
+                ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'id'                  => $item->w_id,
+                        'topic'               => $item->word_topic,
+                        'summary_description' => $item->ayat_summary_des,
+                        'verse_description'   => $item->quran_english,
+                        'inferance_flag'      => $item->inferance_flag,
+                        'source_table'        => 'word_topic',
+                    ];
+                });
+        } else {
+            // Default: search both Content and WordTopic
+            $querySearchResults = Content::where('topic', 'like', '%' . $this->searchTerm . '%')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'id'                  => $item->id,
+                        'topic'               => $item->topic,
+                        'search_value'        => $item->search_value ?? $item->topic,
+                        'summary_description' => null,
+                        'verse_description'   => null,
+                        'inferance_flag'      => 0,
+                        'source_table'        => 'contents',
+                    ];
+                });
+            $querySearchResults2 = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+                ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_english')
+                ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'id'                  => $item->w_id,
+                        'topic'               => $item->word_topic,
+                        'summary_description' => $item->ayat_summary_des,
+                        'verse_description'   => $item->quran_english,
+                        'inferance_flag'      => $item->inferance_flag,
+                        'source_table'        => 'word_topic',
+                    ];
+                });
+        }
 
         $querySearchFinalResults = $querySearchResults->merge($querySearchResults2)->paginate($this->sortingValue);
 
