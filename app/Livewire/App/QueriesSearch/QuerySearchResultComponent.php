@@ -36,7 +36,7 @@ class QuerySearchResultComponent extends Component
                 ->where('id', $w_id)
                 ->first();
         }
-        $this->quran_arabic = $item->quran_arabic ?? 'No Arabic text available';
+        $this->quran_arabic = $item?->quran_arabic ?? 'No Arabic text available';
         $this->dispatch('showQuranArabicModal');
     }
 
