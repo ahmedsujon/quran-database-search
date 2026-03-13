@@ -48,7 +48,7 @@ class ArabicConductSearchComponent extends Component
     {
         $wordTopic = DB::table('word_topics')->where('id', $w_id)->first();
 
-        if (! $wordTopic || empty($wordTopic->hadit_reference)) {
+        if (!$wordTopic || empty($wordTopic->hadit_reference)) {
             return;
         }
         $this->hadiths = DB::table('hadiths')
@@ -69,11 +69,31 @@ class ArabicConductSearchComponent extends Component
         $main_menus = MainMenu::all();
 
         $querySearchResults = Content::where('topic_arabic', 'like', '%' . $this->searchTerm . '%')
-            ->orWhere('search_value', 'like', '%' . $this->searchTerm . '%')
-            ->paginate($this->sortingValue);
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id'                => $item->id,
+                    'topic'             => $item->topic_arabic,
+                    'search_value'      => $item->search_value ?? $item->topic_arabic,
+                    'verse_description' => null,
+                    'source_table'      => 'contents',
+                ];
+            });
+        $querySearchResults2 = Quran::select('id as w_id', 'quran_arabic')
+            ->where('quran_arabic', 'like', '%' . $this->searchTerm . '%')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id'                => $item->w_id,
+                    'topic'             => $item->quran_arabic,
+                    'verse_description' => $item->quran_arabic,
+                    'source_table'      => 'quran',
+                ];
+            });
+        $querySearchFinalResults = $querySearchResults->merge($querySearchResults2)->paginate($this->sortingValue);
 
         return view('livewire.app.conduct-search.arabic-conduct-search-component', [
-            'querySearchResults' => $querySearchResults,
+            'querySearchResults' => $querySearchFinalResults,
             'main_menus'         => $main_menus,
         ])->layout('livewire.app.layouts.base');
     }

@@ -106,16 +106,16 @@
                             @foreach ($querySearchResults as $item)
                                 <tr>
                                     <td scope="row" style="width: 15%;">
-                                        <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm('{{ $item->topic_arabic }}')">
-                                            {{ $item->topic_arabic }}
+                                        <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm('{{ $item['topic'] }}')">
+                                            {{ $item['topic'] }}
                                         </button>
                                     </td>
-                                    <td style="width: 45%;">{{ $item->quran_arabic }}</td>
+                                    <td style="width: 45%;">{{ $item['verse_description'] }}</td>
                                     <td class="text-center actions-cell" style="width: 12%;">
                                         <div class="actions-cell-inner">
                                             @if ($queryNumber == 1)
-                                                <button class="btn btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
-                                                    {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read Hadiths') !!}
+                                                <button class="btn btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item['id'] }})'>
+                                                    {!! loadingStateWithText('showAllHadiths(' . $item['id'] . ')', 'Read Hadiths') !!}
                                                 </button>
                                             @endif
                                         </div>
