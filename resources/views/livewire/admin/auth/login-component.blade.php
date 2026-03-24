@@ -85,13 +85,5 @@
 </div>
 
 @push('scripts')
-    <script>
-        window.addEventListener('login_success', event => {
-            setTimeout(() => {
-                '<?php echo session()->put('login_success', 'Login Successful'); ?>'
-
-                window.location.href = "{{ route('admin.dashboard') }}";
-            }, 500);
-        });
-    </script>
+    
 @endpush
