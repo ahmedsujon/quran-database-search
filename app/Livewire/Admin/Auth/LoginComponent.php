@@ -34,7 +34,8 @@ class LoginComponent extends Component
 
                 if(Auth::guard('admin')->attempt(['email' => $this->email, 'password' => $this->password], $remember)){
                     $this->login_status = 1;
-                    $this->dispatch('login_success');
+                    
+                    return redirect()->route('admin.dashboard');
                 } else {
                     session()->flash('error', 'Incorrect email or password');
                 }
