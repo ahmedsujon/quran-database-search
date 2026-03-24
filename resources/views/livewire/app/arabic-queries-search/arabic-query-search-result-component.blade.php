@@ -187,7 +187,7 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('showQuranArabicModal', () => {
                 $('#showQuranArabicModal').modal('show');
             });

@@ -173,13 +173,13 @@
 
     <script>
         window.addEventListener('showHadithsModal', event => {
-            $('#showHadithsModal').modal('show');
+            $('#hadithsModal').modal('show');
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('showQuranArabicModal', () => {
-                $('#showQuranArabicModal').modal('show');
+                $('#quranArabicModal').modal('show');
             });
         });
     </script>
