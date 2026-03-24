@@ -19,13 +19,21 @@ class ArabicConductSearchComponent extends Component
 
     public $quran_arabic;
 
-    public $searchTerm = '';
+    public $searchTerm = '', $wordTopic;
 
-    public function updateSearchTerm($wordTopic)
+    public function updateSearchTerm($searchValue, $wordTopic)
     {
-        $this->searchTerm = $wordTopic;
+        $this->searchTerm = $searchValue;
+        $this->wordTopic = $wordTopic;
+
         $this->resetPage();
-        $this->render();
+    }
+
+    public function updatedWordTopic()
+    {
+        $sValue = Content::where('topic_arabic', 'like', '%' . $this->wordTopic . '%')->value('search_value');
+
+        $this->updateSearchTerm($sValue, $this->wordTopic);
     }
 
     public function showQuranArabic($w_id)
@@ -47,15 +55,15 @@ class ArabicConductSearchComponent extends Component
     public function showAllHadiths($w_id)
     {
         $wordTopic = DB::table('word_topics')->where('id', $w_id)->first();
-
         if (!$wordTopic || empty($wordTopic->hadit_reference)) {
             return;
         }
         $this->hadiths = DB::table('hadiths')
-            ->select('hadith_english')
+            ->select('hadith_arabic')
             ->where('group_name', $wordTopic->hadit_reference)
             ->get();
-        $this->dispatch('showHadithsModal');
+
+        $this->js('$("#hadithsModal").modal("show");');
     }
 
     public $queryNumber = 1;
@@ -68,29 +76,39 @@ class ArabicConductSearchComponent extends Component
 
         $main_menus = MainMenu::all();
 
-        $querySearchResults = Content::where('topic_arabic', 'like', '%' . $this->searchTerm . '%')
+        $querySearchResults = Content::where('topic_arabic', 'like', '%' . $this->wordTopic . '%')
             ->get()
             ->map(function ($item) {
                 return [
                     'id'                => $item->id,
                     'topic'             => $item->topic_arabic,
-                    'search_value'      => $item->search_value ?? $item->topic_arabic,
+                    'search_value'      => $item->search_value ?? null,
                     'verse_description' => null,
                     'source_table'      => 'contents',
                 ];
             });
-        $querySearchResults2 = Quran::select('id as w_id', 'quran_arabic')
-            ->where('quran_arabic', 'like', '%' . $this->searchTerm . '%')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'id'                => $item->w_id,
-                    'topic'             => $item->quran_arabic,
-                    'verse_description' => $item->quran_arabic,
-                    'source_table'      => 'quran',
-                ];
-            });
-        $querySearchFinalResults = $querySearchResults->merge($querySearchResults2)->paginate($this->sortingValue);
+
+        if ($this->searchTerm) {
+
+            $querySearchFinalResults = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+                ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.arabic_normalize_word_without_harkat', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_arabic')
+                ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'id'                  => $item->w_id,
+                        'topic'               => $item->arabic_normalize_word_without_harkat,
+                        'search_value'        => $this->wordTopic,
+                        'verse_description'   => $item->quran_arabic,
+                        'inferance_flag'      => $item->inferance_flag,
+                        'source_table'        => 'word_topic',
+                    ];
+                });
+        } else {
+            $querySearchFinalResults = $querySearchResults;
+        }
+
+        $querySearchFinalResults = $querySearchFinalResults->paginate($this->sortingValue);
 
         return view('livewire.app.conduct-search.arabic-conduct-search-component', [
             'querySearchResults' => $querySearchFinalResults,

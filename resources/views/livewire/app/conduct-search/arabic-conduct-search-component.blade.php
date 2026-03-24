@@ -73,14 +73,14 @@
                 <!-- Search Bar -->
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="ابحث عن اي سؤال..." aria-label="ابحث عن اي سؤال" style="height: 40px;" wire:model.live="searchTerm" wire:keyup='resetPage' autofocus />
+                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="ابحث عن اي سؤال..." aria-label="ابحث عن اي سؤال" style="height: 40px;" wire:model.live="wordTopic" wire:keyup='resetPage' autofocus />
                     </div>
                 </div>
 
                 <!-- Loading State -->
                 <div class="row">
                     <div class="col-12 text-center">
-                        <div style="position: absolute; text-align: center;" wire:loading wire:target='searchTerm,previousPage,gotoPage,nextPage'>
+                        <div style="position: absolute; text-align: center;" wire:loading wire:target='wordTopic,previousPage,gotoPage,nextPage'>
                             <span class="bg-light" style="padding: 5px 15px; border-radius: 2px;">
                                 <span class="spinner-border spinner-border-xs align-middle" role="status" aria-hidden:true></span>
                                 Searching...
@@ -106,14 +106,14 @@
                             @foreach ($querySearchResults as $item)
                                 <tr>
                                     <td scope="row" style="width: 15%;">
-                                        <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm('{{ $item['topic'] }}')">
+                                        <button class="btn btn-link" style="text-decoration: none;" @if (!$searchTerm) wire:click.prevent='updateSearchTerm("{{ $item['search_value'] }}", "{{ $item['topic'] }}")' @endif>
                                             {{ $item['topic'] }}
                                         </button>
                                     </td>
                                     <td style="width: 45%;">{{ $item['verse_description'] }}</td>
                                     <td class="text-center actions-cell" style="width: 12%;">
                                         <div class="actions-cell-inner">
-                                            @if ($queryNumber == 1)
+                                            @if ($searchTerm)
                                                 <button class="btn btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item['id'] }})'>
                                                     {!! loadingStateWithText('showAllHadiths(' . $item['id'] . ')', 'Read Hadiths') !!}
                                                 </button>
@@ -135,42 +135,15 @@
         </div>
     </div>
 
-    <!-- Read Arabic Description -->
-    <div class="modal fade" id="showQuranArabicModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" wire:ignore.self>
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Quran Arabic Description</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-md-12 text-start hadith-border-bottom" style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
-                            <p>{{ $quran_arabic }}</p> <!-- Show Quran Arabic Text Dynamically -->
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
 
     <!-- Modal -->
-    <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="hadithsModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalLabel">Hadith Information
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body">
@@ -178,14 +151,14 @@
                         @foreach ($hadiths as $hadith)
                             <div class="row mb-3">
                                 <div class="col-md-12 text-start hadith-border-bottom" style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
-                                    <p>{{ $hadith->hadith_english }}</p>
+                                    <p>{{ $hadith->hadith_arabic }}</p>
                                 </div>
                             </div>
                         @endforeach
                     @endif
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
