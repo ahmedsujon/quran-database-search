@@ -126,8 +126,8 @@
                                             {{ $item['topic'] }}
                                         </button>
                                     </td>
-                                    <td style="width: 30%;">{{ $item['summary_description'] ?? '---' }}</td>
-                                    <td style="width: 45%;">{{ $item['verse_description'] ?? '---' }}</td>
+                                    <td style="width: 30%;">{{ $item['summary_description'] ?? '"Please select or click on the "Theme, Subject, Topic" column to see results' }}</td>
+                                    <td style="width: 45%;">{{ $item['verse_description'] ?? '"Please select or click on the "Theme, Subject, Topic" column to see results' }}</td>
                                     <td class="text-center actions-cell" style="width: 14%;">
                                         <div class="actions-cell-inner">
                                             @if ($item['inferance_flag'])
