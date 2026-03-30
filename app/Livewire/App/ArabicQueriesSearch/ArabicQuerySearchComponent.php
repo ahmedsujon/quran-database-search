@@ -19,7 +19,9 @@ class ArabicQuerySearchComponent extends Component
     {
         $data = Content::find($id);
 
-        session()->put('content_topic', $data->topic);
+        $topicLabel = $data->topic_arabic ?? $data->topic;
+        session()->put('content_topic', $topicLabel);
+
         return redirect()->route('app.ArabicQuerySearchResult', [
             'searchValue' => $data->search_value,
             'reporting' => $data->reporting,
@@ -28,9 +30,9 @@ class ArabicQuerySearchComponent extends Component
 
     public function render()
     {
-        $menu_name = request()->menu_name;
-        if ($menu_name) {
-            session(['menu_name' => $menu_name]);
+        $menuNameArabic = request()->menu_name_arabic;
+        if ($menuNameArabic) {
+            session(['menu_name_arabic' => $menuNameArabic]);
         }
 
         $searchValues = Content::where('main_menu_id', $this->mainMenu)->get();
