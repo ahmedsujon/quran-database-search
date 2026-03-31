@@ -126,8 +126,8 @@
                                             {{ $item['topic'] }}
                                         </button>
                                     </td>
-                                    <td style="width: 30%;">{{ $item['summary_description'] ?? '---' }}</td>
-                                    <td style="width: 45%;">{{ $item['verse_description'] ?? '---' }}</td>
+                                    <td style="width: 30%;">{{ $item['summary_description'] ?? '"Please select or click on the "Theme, Subject, Topic" column to see results' }}</td>
+                                    <td style="width: 45%;">{{ $item['verse_description'] ?? '"Please select or click on the "Theme, Subject, Topic" column to see results' }}</td>
                                     <td class="text-center actions-cell" style="width: 14%;">
                                         <div class="actions-cell-inner">
                                             @if ($item['inferance_flag'])
@@ -222,13 +222,13 @@
 
     <script>
         window.addEventListener('showHadithsModal', event => {
-            $('#showHadithsModal').modal('show');
+            $('#hadithsModal').modal('show');
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('showQuranArabicModal', () => {
-                $('#showQuranArabicModal').modal('show');
+                $('#quranArabicModal').modal('show');
             });
         });
     </script>

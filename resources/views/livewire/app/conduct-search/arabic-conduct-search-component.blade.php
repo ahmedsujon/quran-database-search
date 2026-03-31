@@ -39,9 +39,7 @@
 
     <div class="container-fluid mt-4" style="margin-top: 70px !important;">
         <div class="row">
-            <!-- Left Column: Main Menu (Scrollable) -->
             <div class="col-12 col-md-3 mb-3" style="max-height: 120vh; overflow-y: auto;">
-                <!-- Fixed Title at the top of the left column -->
                 <h4 class="mb-3 text-center" style="position: sticky; top: 0; background-color: #fff; z-index: 10; padding-top: 10px;">
                     اختر من ايات من القرآن الكريم
                 </h4>
@@ -58,9 +56,7 @@
                 @endforeach
             </div>
 
-            <!-- Right Column: Results and Search Bar -->
             <div class="col-12 col-md-9">
-                <!-- Back to Home Button and Title -->
                 <div class="row mb-3">
                     <div class="col-12 col-md-10 mb-2 mb-md-0">
                         <h4 class="text-center text-md-start">استكشف ايات القرآن الكريم والافكار - ابحث عن موضوع, موضوع او موضوع</h4>
@@ -173,13 +169,13 @@
 
     <script>
         window.addEventListener('showHadithsModal', event => {
-            $('#showHadithsModal').modal('show');
+            $('#hadithsModal').modal('show');
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('livewire:init', function() {
             Livewire.on('showQuranArabicModal', () => {
-                $('#showQuranArabicModal').modal('show');
+                $('#quranArabicModal').modal('show');
             });
         });
     </script>

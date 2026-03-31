@@ -23,6 +23,7 @@
 
     <!-- App Css-->
     <link href="{{ asset('assets/admin/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    @livewireStyles
 </head>
 
 <style>
@@ -141,6 +142,7 @@
 
     <!-- App js -->
     <script src="{{ asset('assets/admin/js/app.js') }}"></script>
+    @livewireScripts
 
     <script>
         window.addEventListener('success', event => {

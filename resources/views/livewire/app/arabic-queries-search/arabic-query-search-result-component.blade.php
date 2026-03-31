@@ -4,14 +4,30 @@
             border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
         }
 
-        .hadith-btn-style {
-            background: #008866;
-            border: none;
-            color: #fff;
+        .arabic-results-table {
+            --arabic-cell-min: 12rem;
+        }
+
+        .arabic-results-table .cell-word {
+            min-width: 7rem;
+            max-width: 14rem;
+            word-wrap: break-word;
+            overflow-wrap: anywhere;
+        }
+
+        .arabic-results-table .cell-verse {
+            min-width: var(--arabic-cell-min);
+            direction: rtl;
+            text-align: right;
+            font-size: clamp(1rem, 2.5vw, 1.15rem);
+            line-height: 1.7;
+            word-wrap: break-word;
+            overflow-wrap: anywhere;
+            hyphens: auto;
         }
 
         .actions-cell {
-            min-width: 140px;
+            min-width: 7rem;
             vertical-align: middle !important;
         }
 
@@ -37,68 +53,66 @@
             font-size: 0.8rem;
         }
 
-        .actions-cell .btn-display-arabic {
-            background: #00695c;
-            border: none;
-            color: #fff;
-        }
-
         .actions-cell .btn-read {
             background: #008866;
             border: none;
             color: #fff;
         }
+
+        .table-responsive.arabic-table-wrap {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 575.98px) {
+            .arabic-results-breadcrumb {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+                font-size: 0.9rem;
+            }
+        }
     </style>
-    <div class="container mt-4">
-        <nav aria-label="breadcrumb" class="mb-4">
-            <ol class="breadcrumb bg-light rounded shadow-sm px-4 py-3">
+    <div class="container mt-3 mt-md-4 px-2 px-sm-3">
+        <nav aria-label="breadcrumb" class="mb-3 mb-md-4">
+            <ol class="breadcrumb bg-light rounded shadow-sm px-3 py-2 arabic-results-breadcrumb flex-wrap">
                 <li class="breadcrumb-item">
                     <a href="{{ route('app.ArabicConductSearch') }}" class="text-decoration-none text-primary">
-                        <i class="bi bi-house-door-fill"></i> Main Menu
+                        <i class="bi bi-house-door-fill" aria-hidden="true"></i> Main Menu
                     </a>
                 </li>
                 @if (session('menu_name_arabic'))
                     <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page" title="{{ session('menu_name_arabic') }}">
-                        <a href="{{ url()->previous() }}" style="text-decoration: none; color: #008866">
+                        <a href="{{ url()->previous() }}" class="text-decoration-none" style="color: #008866">
                             {{ session('menu_name_arabic') }}
                         </a>
                     </li>
                 @endif
                 @if (session()->has('content_topic'))
-                    <li class="breadcrumb-item active text-dark fw-semibold " aria-current="page" title="{{ session('content_topic') }}">
+                    <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page" title="{{ session('content_topic') }}">
                         {{ session('content_topic') }}
                     </li>
                 @endif
             </ol>
         </nav>
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered mt-5">
-                <thead class="thead-dark">
+        <div class="table-responsive arabic-table-wrap border rounded">
+            <table class="table table-striped table-bordered mb-0 arabic-results-table">
+                <thead class="table-dark">
                     <tr>
-                        <th class="text-center" scope="col" style="width: 10%;">Word Or Category</th>
-                        <th scope="col" style="width: 40%;">Verse Description</th>
-                        <th class="text-center" scope="col" style="width: 20%;">Actions</th>
+                        <th scope="col">Verse (Arabic)</th>
+                        <th class="text-center" scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if ($final_results->count() > 0)
-                        @php
-                            $sl = $final_results->perPage() * $final_results->currentPage() - ($final_results->perPage() - 1);
-                        @endphp
                         @foreach ($final_results as $item)
                             <tr>
-                                <td scope="row" style="width: 10%;">{{ $item->word_topic }}</td>
-                                <td style="width: 50%;">{{ $item->quran_arabic }}</td>
-                                <td class="text-center actions-cell" style="width: 20%;">
+                                <td class="cell-verse" lang="ar">{{ $item->quran_arabic }}</td>
+                                <td class="text-center actions-cell">
                                     <div class="actions-cell-inner">
                                         @if ($item->inferance_flag)
                                             <span class="inference-badge" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">Inferred</span>
                                         @endif
-                                        {{-- <button class="btn btn-sm btn-display-arabic" wire:click.prevent="showQuranArabic({{ $item->w_id }})">
-                                            {!! loadingStateWithText('showQuranArabic(' . $item->w_id . ')', 'Display Arabic') !!}
-                                        </button> --}}
                                         @if ($this->reporting == 'Yes')
-                                            <button class="btn btn-sm btn-read" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
+                                            <button type="button" class="btn btn-sm btn-read" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
                                                 {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read Hadiths') !!}
                                             </button>
                                         @endif
@@ -108,97 +122,84 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="7" class="text-center pt-5 pb-5">No exact data available!</td>
+                            <td colspan="3" class="text-center py-5">No exact data available!</td>
                         </tr>
                     @endif
                 </tbody>
             </table>
         </div>
         <!-- Pagination -->
-        <nav aria-label="Page navigation example" class="mt-4">
-            {{ $final_results->links('livewire.app-pagination') }}
+        <nav aria-label="Results pagination" class="mt-3 mt-md-4 overflow-x-auto">
+            <div class="d-flex justify-content-center justify-content-md-start">
+                {{ $final_results->links('livewire.app-pagination') }}
+            </div>
         </nav>
     </div>
 
-    <!-- Read Arabic Description -->
-    <div class="modal fade" id="showQuranArabicModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" wire:ignore.self>
-        <div class="modal-dialog modal-lg" role="document">
+    <!-- Quran Arabic (reserved for showQuranArabic or future use) -->
+    <div class="modal fade" id="showQuranArabicModal" tabindex="-1" role="dialog" aria-labelledby="quranArabicModalTitle" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Quran Arabic Description</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="quranArabicModalTitle">Quran Arabic description</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row mb-3">
-                        <div class="col-md-12 text-start hadith-border-bottom" style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
-                            <p>{{ $quran_arabic }}</p> <!-- Show Quran Arabic Text Dynamically -->
+                        <div class="col-12 text-start hadith-border-bottom pb-3">
+                            <p class="mb-0" dir="rtl" lang="ar">{{ $quran_arabic }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <!-- Modal -->
-    <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+    <!-- Hadiths -->
+    <div class="modal fade" id="showHadithsModal" tabindex="-1" role="dialog" aria-labelledby="hadithsModalTitle" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Hadith Information
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="hadithsModalTitle">Hadith information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     @if ($hadiths)
                         @foreach ($hadiths as $hadith)
                             <div class="row mb-3">
-                                <div class="col-md-12 text-start hadith-border-bottom" style="border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);">
-                                    <p>{{ $hadith->hadith_english }}</p>
+                                <div class="col-12 text-start hadith-border-bottom pb-3">
+                                    <p class="mb-0">{{ $hadith->hadith_english }}</p>
                                 </div>
                             </div>
                         @endforeach
                     @endif
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @push('scripts')
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <script>
-        window.addEventListener('showHadithsModal', event => {
-            $('#showHadithsModal').modal('show');
+        window.addEventListener('showQuranArabicModal', function() {
+            var el = document.getElementById('showQuranArabicModal');
+            if (el && typeof bootstrap !== 'undefined') {
+                bootstrap.Modal.getOrCreateInstance(el).show();
+            }
         });
-    </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Livewire.on('showQuranArabicModal', () => {
-                $('#showQuranArabicModal').modal('show');
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
+        window.addEventListener('showHadithsModal', function() {
+            var el = document.getElementById('showHadithsModal');
+            if (el && typeof bootstrap !== 'undefined') {
+                bootstrap.Modal.getOrCreateInstance(el).show();
+            }
         });
     </script>
 @endpush
