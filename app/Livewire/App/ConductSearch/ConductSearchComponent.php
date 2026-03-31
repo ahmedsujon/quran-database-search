@@ -124,7 +124,10 @@ class ConductSearchComponent extends Component
                 });
         }
 
-        $querySearchFinalResults = $querySearchResults->merge($querySearchResults2)->paginate($this->sortingValue);
+        $querySearchFinalResults = $querySearchResults
+            ->toBase()
+            ->merge($querySearchResults2->toBase())
+            ->paginate($this->sortingValue);
 
         return view('livewire.app.conduct-search.conduct-search-component', [
             'querySearchResults' => $querySearchFinalResults,
