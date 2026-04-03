@@ -7,7 +7,7 @@
             </div>
 
             <div class="header-right">
-                <button class="search-btn">Conduct Us</button>
+                <button class="search-btn">Contact Us</button>
             </div>
         </div>
     </header>
