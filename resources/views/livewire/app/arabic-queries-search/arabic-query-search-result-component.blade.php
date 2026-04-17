@@ -98,7 +98,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">Verse (Arabic)</th>
-                        <th class="text-center" scope="col">Actions</th>
+                        <th class="text-center" scope="col">Inference Flag, Hadith, and Arabic Ayat View</th>
                     </tr>
                 </thead>
                 <tbody>

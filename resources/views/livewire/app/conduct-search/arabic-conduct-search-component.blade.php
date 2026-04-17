@@ -93,7 +93,7 @@
                                 <th class="text-center" scope="col" style="width: 10%;">Theme, Subject or Topic</th>
                                 <th scope="col" style="width: 45%;">Verse Description</th>
                                 <th class="text-center" scope="col" style="width: 12%;">
-                                    Actions
+                                    Inference Flag, Hadith, and Arabic Ayat View
                                     <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Inference: theme inferred from context. Use button to view Hadith."></i>
                                 </th>
                             </tr>

@@ -1,13 +1,13 @@
 <div>
     <header>
         <div class="header-content">
-            <div class="logo">
+            <a href="{{ route('app.home') }}" class="logo">
                 <div class="logo-icon"></div>
                 Know Your Quran
-            </div>
+            </a>
 
             <div class="header-right">
-                <button class="search-btn">Contact Us</button>
+                <a href="mailto:knowyourquran@gmail.com" class="search-btn">Contact Us</a>
             </div>
         </div>
     </header>

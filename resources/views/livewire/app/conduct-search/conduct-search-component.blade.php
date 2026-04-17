@@ -57,7 +57,7 @@
             <div class="col-12 col-md-3 mb-3" style="max-height: 120vh; overflow-y: auto;">
                 <!-- Fixed Title at the top of the left column -->
                 <h4 class="mb-3 text-center" style="position: sticky; top: 0; background-color: #fff; z-index: 10; padding-top: 10px;">
-                    Select from any of the Following 570 Canned Queries
+                    Select from any of the Following 578 Canned Queries
                 </h4>
 
                 <!-- Menu Items -->
@@ -112,7 +112,7 @@
                                 <th scope="col" style="width: 30%;">Summary Description</th>
                                 <th scope="col" style="width: 45%;">Verse Description</th>
                                 <th class="text-center" scope="col" style="width: 14%;">
-                                    Actions
+                                    Inference Flag, Hadith, and Arabic Ayat View
                                     <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Inference: theme/subject inferred from context. Use buttons to view Arabic or Hadith."></i>
                                 </th>
                             </tr>

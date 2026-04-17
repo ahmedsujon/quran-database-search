@@ -78,7 +78,7 @@
                         <th class="text-center" scope="col" style="width: 10%;">Word Or Category</th>
                         <th scope="col" style="width: 30%;">Summary Description</th>
                         <th scope="col" style="width: 40%;">Verse Description</th>
-                        <th class="text-center" scope="col" style="width: 20%;">Actions</th>
+                        <th class="text-center" scope="col" style="width: 20%;">Inference Flag, Hadith, and Arabic Ayat View</th>
                     </tr>
                 </thead>
                 <tbody>

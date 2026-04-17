@@ -140,11 +140,11 @@
 
                 <ul>
                     <li>Comprehensive search of English words, surfacing the context surrounding the verse as well as connected themes / narratives</li>
-                    <li>Over 570 pre-built queries that help bring a connected perspective throughout the entirety of the Quran</li>
+                    <li>Over580 pre-built queries that help bring a connected perspective throughout the entirety of the Quran</li>
                     <li>Further contextualization through the inclusion of relevant hadith, offering a holistic viewpoint and understanding of specific verses and terms</li>
                 </ul>
 
-                <p>Know Your Quran is different than other search tools because its 500 plus pre-built queries were handcrafted after careful examination/review of the Quran and Hadith, surfacing themes that are impossible to search for in a standard manner (e.g., Whom Allah loves, How to Receive Allah's Mercy, etc.)</p>
+                <p>Know Your Quran is different than other search tools because its 580 plus pre-built queries were handcrafted after careful examination/review of the Quran and Hadith, surfacing themes that are impossible to search for in a standard manner (e.g., Whom Allah loves, How to Receive Allah's Mercy, etc.)</p>
 
                 <p>Know Your Quran was created solely out of love and deference to our Lord and Creator. As we are simply human, we ask forgiveness for any mistakes that may be present in this database, despite thorough efforts to review. If you have any corrections, please email us at <strong><a href="mailto:Admin@knowyourquran.com">Admin@knowyourquran.com</a></strong>.</p>
 
@@ -159,7 +159,7 @@
 
                     <li>The database has been built, to the extent possible, to recognize synonymous words, or names, i.e., the Arabic word "Ureed" is often translated into desire, intend, want, or wish, and the search will recognize it.</li>
 
-                    <li>While the search engine provides the capability of doing individual search on theme or subject, we have included Over 570 hundreds of curated searches</li>
+                    <li>While the search engine provides the capability of doing individual search on theme or subject, we have included Over 580 hundreds of curated searches</li>
 
                     <li>Associated hadiths from the Sahih Sittah deemed Sahih or Hasan and related to the Quran topic is also provided. Please remember that the hadith list is not comprehensive, and it only lists key hadiths. Please consult Ulema for any questions.</li>
 
