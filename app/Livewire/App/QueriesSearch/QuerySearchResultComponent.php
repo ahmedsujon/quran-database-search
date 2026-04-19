@@ -22,7 +22,8 @@ class QuerySearchResultComponent extends Component
     public function mount()
     {
         $this->searchValue = request()->get('searchValue');
-        $this->reporting = request()->get('reporting');
+        // $this->reporting = request()->get('reporting');
+        $this->reporting = 'Yes';
     }
 
     public function showQuranArabic($w_id)
@@ -53,6 +54,7 @@ class QuerySearchResultComponent extends Component
         $wordTopic = DB::table('word_topics')->where('id', $w_id)->first();
 
         if (!$wordTopic || empty($wordTopic->hadit_reference)) {
+            $this->dispatch('error', ['message' => 'No hadith reference found']);
             return;
         }
         $this->hadiths = DB::table('hadiths')
