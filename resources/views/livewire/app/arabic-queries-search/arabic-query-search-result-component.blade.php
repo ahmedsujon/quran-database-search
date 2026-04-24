@@ -97,8 +97,10 @@
             <table class="table table-striped table-bordered mb-0 arabic-results-table">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">Verse (Arabic)</th>
-                        <th class="text-center" scope="col">Inference Flag, Hadith, and Arabic Ayat View</th>
+                        <th scope="col">الايات
+                        </th>
+                        <th class="text-center" scope="col">الاستنتاج اقرا الحديث
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,11 +111,16 @@
                                 <td class="text-center actions-cell">
                                     <div class="actions-cell-inner">
                                         @if ($item->inferance_flag)
-                                            <span class="inference-badge" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">Inferred</span>
+                                            <span class="inference-badge" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">الاستنتاج من خلال الاية
+                                            </span>
                                         @endif
                                         @if ($this->reporting == 'Yes')
                                             <button type="button" class="btn btn-sm btn-read" wire:click.prevent='showAllHadiths({{ $item->w_id }})'>
-                                                {!! loadingStateWithText('showAllHadiths(' . $item->w_id . ')', 'Read Hadiths') !!}
+                                                {!! loadingStateWithText(
+                                                    'showAllHadiths(' . $item->w_id . ')',
+                                                    'اقرا الحديث
+                                                ',
+                                                ) !!}
                                             </button>
                                         @endif
                                     </div>

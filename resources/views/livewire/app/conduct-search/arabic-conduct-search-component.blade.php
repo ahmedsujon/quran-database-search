@@ -59,7 +59,8 @@
             <div class="col-12 col-md-9">
                 <div class="row mb-3">
                     <div class="col-12 col-md-10 mb-2 mb-md-0">
-                        <h4 class="text-center text-md-start">استكشف ايات القرآن الكريم والافكار - ابحث عن موضوع, موضوع او موضوع</h4>
+                        <h4 class="text-center text-md-start">استكشف ايات القرآن الكريم والافكار - ابحث عن الموضوع او الفكرة  اوالعنوان
+                        </h4>
                     </div>
                     <div class="col-12 col-md-2 text-center text-md-end">
                         <a href="{{ route('app.home') }}" class="btn btn-secondary btn-sm" style="background-color: #008866;">Back To Home</a>
@@ -69,7 +70,7 @@
                 <!-- Search Bar -->
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="ابحث عن اي سؤال..." aria-label="ابحث عن اي سؤال" style="height: 40px;" wire:model.live="wordTopic" wire:keyup='resetPage' autofocus />
+                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" value="Coming soon" aria-label="Coming soon" style="height: 40px;" disabled />
                     </div>
                 </div>
 
@@ -90,10 +91,12 @@
                     <table class="table table-striped table-bordered mt-5">
                         <thead class="thead-dark">
                             <tr>
-                                <th class="text-center" scope="col" style="width: 10%;">Theme, Subject or Topic</th>
-                                <th scope="col" style="width: 45%;">Verse Description</th>
+                                <th class="text-center" scope="col" style="width: 10%;">الموضوع او الفكرة  اوالعنوان
+                                </th>
+                                <th scope="col" style="width: 45%;">الايات
+                                </th>
                                 <th class="text-center" scope="col" style="width: 12%;">
-                                    Inference Flag, Hadith, and Arabic Ayat View
+                                    الاستنتاج  اقرا الحديث
                                     <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Inference: theme inferred from context. Use button to view Hadith."></i>
                                 </th>
                             </tr>
@@ -111,7 +114,8 @@
                                         <div class="actions-cell-inner">
                                             @if ($searchTerm)
                                                 <button class="btn btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item['id'] }})'>
-                                                    {!! loadingStateWithText('showAllHadiths(' . $item['id'] . ')', 'Read Hadiths') !!}
+                                                    {!! loadingStateWithText('showAllHadiths(' . $item['id'] . ')', 'اقرا الحديث
+') !!}
                                                 </button>
                                             @endif
                                         </div>
