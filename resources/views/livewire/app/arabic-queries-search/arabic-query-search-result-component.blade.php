@@ -178,7 +178,7 @@
                         @foreach ($hadiths as $hadith)
                             <div class="row mb-3">
                                 <div class="col-12 text-start hadith-border-bottom pb-3">
-                                    <p class="mb-0">{{ $hadith->hadith_english }}</p>
+                                    <p class="mb-0">{{ $hadith->hadith_arabic }}</p>
                                 </div>
                             </div>
                         @endforeach
