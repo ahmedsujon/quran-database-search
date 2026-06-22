@@ -117,7 +117,8 @@
     <div class="container mt-4" style="margin-top: 70px !important;">
         <div class="row mb-3 align-items-start">
             <div class="col-12 col-lg-8 mb-3 mb-lg-0">
-                <h4 class="mb-1 text-center text-lg-start fw-semibold">اختر استعلاماً جاهزاً</h4>
+                <h4 class="mb-1 text-center text-lg-start fw-semibold">اختر موضوعاً جاهزاً
+                </h4>
                 @if (session('menu_name_arabic'))
                     <p class="text-muted small mb-0 text-center text-lg-start">{{ session('menu_name_arabic') }}</p>
                 @endif
@@ -151,10 +152,10 @@
 
         <div class="card query-list-card border-0">
             <div class="card-header bg-white py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
-                <span class="fw-semibold text-dark">اسم الاستعلام</span>
+                <span class="fw-semibold text-dark">موضوع البحث</span>
                 <span class="badge rounded-pill bg-light text-secondary border">
                     {{ $searchValues->count() }}
-                    {{ $searchValues->count() === 1 ? 'استعلام' : 'استعلامات' }}
+                    {{ $searchValues->count() === 1 ? 'استعلام' : 'موضوع' }}
                 </span>
             </div>
             @if ($searchValues->isEmpty())

@@ -94,7 +94,7 @@
                                 <td class="text-center actions-cell" style="width: 20%;">
                                     <div class="actions-cell-inner">
                                         @if ($item->inferance_flag)
-                                            <span class="inference-badge" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">Inferred</span>
+                                            <span class="inference-badge" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">Inferred from Current Verse or in Between Verses</span>
                                         @endif
                                         <button class="btn btn-sm btn-display-arabic" wire:click.prevent="showQuranArabic({{ $item->w_id }})">
                                             {!! loadingStateWithText('showQuranArabic(' . $item->w_id . ')', 'Display Arabic') !!}

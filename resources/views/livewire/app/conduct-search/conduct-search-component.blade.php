@@ -57,7 +57,7 @@
             <div class="col-12 col-md-3 mb-3" style="max-height: 120vh; overflow-y: auto;">
                 <!-- Fixed Title at the top of the left column -->
                 <h4 class="mb-3 text-center" style="position: sticky; top: 0; background-color: #fff; z-index: 10; padding-top: 10px;">
-                    Select from any of the Following 578 Canned Queries
+                    Select from any of the 580+ Queries from the 22 Menu Items Below. Specially See Menu Items 2-8, 10 and 14.
                 </h4>
 
                 <!-- Menu Items -->
@@ -126,12 +126,12 @@
                                             {{ $item['topic'] }}
                                         </button>
                                     </td>
-                                    <td style="width: 30%;">{{ $item['summary_description'] ?? '"Please select or click on the "Theme, Subject, Topic" column to see results' }}</td>
-                                    <td style="width: 45%;">{{ $item['verse_description'] ?? '"Please select or click on the "Theme, Subject, Topic" column to see results' }}</td>
+                                    <td style="width: 30%;">{{ $item['summary_description'] ?? 'This is a menu item, please click on the Theme, Subject, Topic column to see results' }}</td>
+                                    <td style="width: 45%;">{{ $item['verse_description'] ?? 'This is a menu item, please click on the Theme, Subject, Topic column to see results' }}</td>
                                     <td class="text-center actions-cell" style="width: 14%;">
                                         <div class="actions-cell-inner">
                                             @if ($item['inferance_flag'])
-                                                <span class="inference-badge" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">Inferred</span>
+                                                <span class="inference-badge" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">Inferred from Current Verse or in Between Verses</span>
                                             @endif
                                             @if ($item['source_table'] == 'word_topic')
                                                 <button class="btn btn-sm btn-display-arabic" wire:click.prevent='showQuranArabic({{ $item['id'] }}, "{{ $item['source_table'] }}")' wire:loading.attr='disabled'>

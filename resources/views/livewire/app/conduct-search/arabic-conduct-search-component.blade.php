@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-12 col-md-3 mb-3" style="max-height: 120vh; overflow-y: auto;">
                 <h4 class="mb-3 text-center" style="position: sticky; top: 0; background-color: #fff; z-index: 10; padding-top: 10px;">
-                    اختر من ايات من القرآن الكريم
+                    اختر من بين 580 قائمة  22  قائمة رئيسية (Menu) ادناه و بشكل خاص انطر عناصر القائمة 2-8 ,10 و14
                 </h4>
 
                 <!-- Menu Items -->
@@ -70,7 +70,7 @@
                 <!-- Search Bar -->
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" value="Coming soon" aria-label="Coming soon" style="height: 40px;" disabled />
+                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" value="Search for a query..." style="height: 40px;" />
                     </div>
                 </div>
 
@@ -96,8 +96,7 @@
                                 <th scope="col" style="width: 45%;">الايات
                                 </th>
                                 <th class="text-center" scope="col" style="width: 12%;">
-                                    الاستنتاج  اقرا الحديث
-                                    <i class="bi bi-info-circle ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Inference: theme inferred from context. Use button to view Hadith."></i>
+                                    استنتاج / اقرا الحديث
                                 </th>
                             </tr>
                         </thead>
