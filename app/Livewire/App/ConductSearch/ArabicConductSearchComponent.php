@@ -3,6 +3,7 @@
 namespace App\Livewire\App\ConductSearch;
 
 use App\Models\Content;
+use App\Models\Hadith;
 use App\Models\MainMenu;
 use App\Models\Quran;
 use App\Models\WordTopic;
@@ -19,54 +20,49 @@ class ArabicConductSearchComponent extends Component
 
     public $quran_arabic;
 
-    public $searchTerm = '', $wordTopic;
+    public $searchTerm = '', $source_table;
 
-    public function updateSearchTerm($searchValue, $wordTopic)
+    /**
+     * When user manually types in search box - reset to default search (both tables).
+     */
+    public function clearSearchSource()
+    {
+        $this->source_table = null;
+    }
+
+    public function updateSearchTerm($searchValue, $source_table)
     {
         $this->searchTerm = $searchValue;
-        $this->wordTopic = $wordTopic;
-
+        $this->source_table = ! empty($searchValue) ? $source_table : null;
         $this->resetPage();
     }
 
-    public function updatedWordTopic()
+    public function showQuranArabic($id, $source_table)
     {
-        $sValue = Content::where('topic_arabic', 'like', '%' . $this->wordTopic . '%')->value('search_value');
-
-        $this->updateSearchTerm($sValue, $this->wordTopic);
-    }
-
-    public function showQuranArabic($w_id)
-    {
-        if ($this->queryNumber == 1) {
-            $item = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
-                ->select('word_topics.id as w_id', 'qurans.quran_arabic')
-                ->where('word_topics.id', $w_id)
-                ->first();
+        if ($source_table == 'word_topic') {
+            $surahAyat = WordTopic::where('id', $id)->value('surah_ayat') ?? null;
         } else {
-            $item = Quran::select('id as q_id', 'quran_arabic')
-                ->where('id', $w_id)
-                ->first();
+            $surahAyat = Content::where('id', $id)->value('surah_ayat') ?? null;
         }
-        $this->quran_arabic = $item->quran_arabic ?? 'No Arabic text available';
-        $this->dispatch('showQuranArabicModal');
+
+        $quran = Quran::where('surah_ayat', $surahAyat)->value('quran_arabic') ?? null;
+
+        $this->quran_arabic = $quran ?? 'No Arabic text available';
+        $this->js('$("#quranArabicModal").modal("show");');
     }
 
-    public function showAllHadiths($w_id)
+    public function showAllHadiths($id, $source_table)
     {
-        $wordTopic = DB::table('word_topics')->where('id', $w_id)->first();
-        if (!$wordTopic || empty($wordTopic->hadit_reference)) {
-            return;
+        if ($source_table == 'word_topic') {
+            $haditReference = DB::table('word_topics')->where('id', $id)->value('hadit_reference') ?? null;
+        } else {
+            $haditReference = DB::table('contents')->where('id', $id)->value('hadit_reference') ?? null;
         }
-        $this->hadiths = DB::table('hadiths')
-            ->select('hadith_arabic')
-            ->where('group_name', $wordTopic->hadit_reference)
-            ->get();
 
+        $this->hadiths = Hadith::where('group_name', $haditReference)->get();
         $this->js('$("#hadithsModal").modal("show");');
     }
 
-    public $queryNumber = 1;
     public function render()
     {
         $menu_name = request()->menu_name;
@@ -76,21 +72,13 @@ class ArabicConductSearchComponent extends Component
 
         $main_menus = MainMenu::all();
 
-        $querySearchResults = Content::where('topic_arabic', 'like', '%' . $this->wordTopic . '%')
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'id'                => $item->id,
-                    'topic'             => $item->topic_arabic,
-                    'search_value'      => $item->search_value ?? null,
-                    'verse_description' => null,
-                    'source_table'      => 'contents',
-                ];
-            });
+        $querySearchResults = collect();
+        $querySearchResults2 = collect();
 
-        if ($this->searchTerm) {
-
-            $querySearchFinalResults = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+        // 1. If source is 'contents' (clicked Content item): show ONLY word_topics using search_value
+        // 2. If source is 'word_topic' or null (default): search BOTH tables
+        if ($this->source_table === 'contents') {
+            $querySearchResults2 = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
                 ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.arabic_normalize_word_without_harkat', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_arabic')
                 ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
                 ->get()
@@ -98,17 +86,49 @@ class ArabicConductSearchComponent extends Component
                     return [
                         'id'                  => $item->w_id,
                         'topic'               => $item->arabic_normalize_word_without_harkat,
-                        'search_value'        => $this->wordTopic,
+                        'search_value'        => $item->word_topic,
+                        'summary_description' => $item->ayat_summary_des,
                         'verse_description'   => $item->quran_arabic,
                         'inferance_flag'      => $item->inferance_flag,
                         'source_table'        => 'word_topic',
                     ];
                 });
         } else {
-            $querySearchFinalResults = $querySearchResults;
+            // Default: search both Content and WordTopic
+            $querySearchResults = Content::where('topic_arabic', 'like', '%' . $this->searchTerm . '%')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'id'                  => $item->id,
+                        'topic'               => $item->topic_arabic,
+                        'search_value'        => $item->search_value ?? $item->topic,
+                        'summary_description' => null,
+                        'verse_description'   => null,
+                        'inferance_flag'      => 0,
+                        'source_table'        => 'contents',
+                    ];
+                });
+            $querySearchResults2 = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
+                ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.arabic_normalize_word_without_harkat', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_arabic')
+                ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'id'                  => $item->w_id,
+                        'topic'               => $item->arabic_normalize_word_without_harkat,
+                        'search_value'        => $item->word_topic,
+                        'summary_description' => $item->ayat_summary_des,
+                        'verse_description'   => $item->quran_arabic,
+                        'inferance_flag'      => $item->inferance_flag,
+                        'source_table'        => 'word_topic',
+                    ];
+                });
         }
 
-        $querySearchFinalResults = $querySearchFinalResults->paginate($this->sortingValue);
+        $querySearchFinalResults = $querySearchResults
+            ->toBase()
+            ->merge($querySearchResults2->toBase())
+            ->paginate($this->sortingValue);
 
         return view('livewire.app.conduct-search.arabic-conduct-search-component', [
             'querySearchResults' => $querySearchFinalResults,

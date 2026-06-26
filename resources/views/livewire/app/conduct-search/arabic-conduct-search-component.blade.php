@@ -70,14 +70,14 @@
                 <!-- Search Bar -->
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" value="Search for a query..." style="height: 40px;" />
+                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="Search for a query..." aria-label="Search for a query" style="height: 40px;" wire:model.live="searchTerm" wire:keydown="clearSearchSource" autofocus />
                     </div>
                 </div>
 
                 <!-- Loading State -->
                 <div class="row">
                     <div class="col-12 text-center">
-                        <div style="position: absolute; text-align: center;" wire:loading wire:target='wordTopic,previousPage,gotoPage,nextPage'>
+                        <div style="position: absolute; text-align: center;" wire:loading wire:target='searchTerm,previousPage,gotoPage,nextPage'>
                             <span class="bg-light" style="padding: 5px 15px; border-radius: 2px;">
                                 <span class="spinner-border spinner-border-xs align-middle" role="status" aria-hidden:true></span>
                                 Searching...
@@ -87,7 +87,7 @@
                 </div>
 
                 <!-- Table -->
-                <div class="table-responsive">
+                <div class="table-responsive" wire:loading.class='opacity-75'>
                     <table class="table table-striped table-bordered mt-5">
                         <thead class="thead-dark">
                             <tr>
@@ -104,17 +104,20 @@
                             @foreach ($querySearchResults as $item)
                                 <tr>
                                     <td scope="row" style="width: 15%;">
-                                        <button class="btn btn-link" style="text-decoration: none;" @if (!$searchTerm) wire:click.prevent='updateSearchTerm("{{ $item['search_value'] }}", "{{ $item['topic'] }}")' @endif>
+                                        <button class="btn btn-link" style="text-decoration: none;" wire:click.prevent="updateSearchTerm({{ json_encode($item['source_table'] === 'contents' ? $item['search_value'] ?? $item['topic'] : $item['search_value'] ?? $item['topic']) }}, '{{ $item['source_table'] }}')">
                                             {{ $item['topic'] }}
                                         </button>
                                     </td>
-                                    <td style="width: 45%;">{{ $item['verse_description'] }}</td>
+                                    <td style="width: 45%;">{{ $item['verse_description'] ?? 'هنا القاءمة الرءيسية. المرجو الضغط على الموضوع او الفكرة  اوالعنوان في العمود  لرؤية النتائج' }}</td>
                                     <td class="text-center actions-cell" style="width: 12%;">
                                         <div class="actions-cell-inner">
-                                            @if ($searchTerm)
-                                                <button class="btn btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item['id'] }})'>
-                                                    {!! loadingStateWithText('showAllHadiths(' . $item['id'] . ')', 'اقرا الحديث
-') !!}
+                                            @if ($item['inferance_flag'])
+                                                <span class="inference-badge" title="The theme or subject was inferred based on the context of the current verse or from the theme of the previous or subsequent verses">الاستنتاج من خلال الاية</span>
+                                            @endif
+                                            @if ($item['source_table'] == 'word_topic')
+                                                <button class="btn btn-sm hadith-btn-style" wire:click.prevent='showAllHadiths({{ $item['id'] }}, "{{ $item['source_table'] }}")' wire:loading.attr='disabled'>
+                                                    <span wire:loading wire:target='showAllHadiths({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="spinner-border spinner-border-sm me-1 align-middle text-white" role="status" aria-hidden="true"></span>
+                                                    <span wire:loading.remove wire:target='showAllHadiths({{ $item['id'] }}, "{{ $item['source_table'] }}")' class="text-white">اقرا الحديث</span>
                                                 </button>
                                             @endif
                                         </div>
