@@ -80,7 +80,10 @@ class ArabicConductSearchComponent extends Component
         if ($this->source_table === 'contents') {
             $querySearchResults2 = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
                 ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.arabic_normalize_word_without_harkat', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_arabic')
-                ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
+                ->where(function($query) {
+                    $query->where('word_topics.arabic_normalize_word', 'like', '%' . $this->searchTerm . '%')
+                        ->orWhere('word_topics.arabic_normalize_word_without_harkat', 'like', '%' . $this->searchTerm . '%');
+                })
                 ->get()
                 ->map(function ($item) {
                     return [
@@ -110,7 +113,10 @@ class ArabicConductSearchComponent extends Component
                 });
             $querySearchResults2 = WordTopic::join('qurans', 'word_topics.surah_ayat', '=', 'qurans.surah_ayat')
                 ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.arabic_normalize_word_without_harkat', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_arabic')
-                ->where('word_topics.word_topic', 'like', '%' . $this->searchTerm . '%')
+                ->where(function($query) {
+                    $query->where('word_topics.arabic_normalize_word', 'like', '%' . $this->searchTerm . '%')
+                        ->orWhere('word_topics.arabic_normalize_word_without_harkat', 'like', '%' . $this->searchTerm . '%');
+                })
                 ->get()
                 ->map(function ($item) {
                     return [
