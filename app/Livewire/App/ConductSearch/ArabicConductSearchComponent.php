@@ -32,7 +32,9 @@ class ArabicConductSearchComponent extends Component
 
     public function updateSearchTerm($searchValue, $source_table)
     {
-        $this->searchTerm2 = $searchValue;
+        $mTableData = WordTopic::where('word_topic', $searchValue)->first();
+        $this->searchTerm = $mTableData ? $mTableData->arabic_normalize_word_without_harkat : $searchValue;
+
         $this->source_table = !empty($searchValue) ? $source_table : null;
         $this->resetPage();
     }
@@ -98,11 +100,7 @@ class ArabicConductSearchComponent extends Component
                 });
         } else {
             // Default: search both Content and WordTopic
-            $querySearchResults = Content::where(function ($query) {
-                $query->where('topic_arabic', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('search_value', 'like', '%' . $this->searchTerm2 . '%');
-            })
-                ->get()
+            $querySearchResults = Content::where('topic_arabic', 'like', '%' . $this->searchTerm . '%')->get()
                 ->map(function ($item) {
                     return [
                         'id'                  => $item->id,
@@ -118,8 +116,7 @@ class ArabicConductSearchComponent extends Component
                 ->select('word_topics.id as w_id', 'word_topics.word_topic', 'word_topics.arabic_normalize_word_without_harkat', 'word_topics.ayat_summary_des', 'word_topics.inferance_flag', 'qurans.quran_arabic')
                 ->where(function ($query) {
                     $query->where('word_topics.arabic_normalize_word', 'like', '%' . $this->searchTerm . '%')
-                        ->orWhere('word_topics.arabic_normalize_word_without_harkat', 'like', '%' . $this->searchTerm . '%')
-                        ->orWhere('word_topics.word_topic', 'like', '%' . $this->searchTerm2 . '%');
+                        ->orWhere('word_topics.arabic_normalize_word_without_harkat', 'like', '%' . $this->searchTerm . '%');
                 })
                 ->get()
                 ->map(function ($item) {
