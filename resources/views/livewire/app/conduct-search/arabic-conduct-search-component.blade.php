@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-12 col-md-3 mb-3" style="max-height: 120vh; overflow-y: auto;">
                 <h4 class="mb-3 text-center" style="position: sticky; top: 0; background-color: #fff; z-index: 10; padding-top: 10px;">
-                    اختر من بين 580 قائمة  22  قائمة رئيسية (Menu) ادناه و بشكل خاص انطر عناصر القائمة 2-8 ,10 و14
+                    اختر من بين 580 قائمة 22 قائمة رئيسية (Menu) ادناه و بشكل خاص انطر عناصر القائمة 2-8 ,10 و14
                 </h4>
 
                 <!-- Menu Items -->
@@ -59,7 +59,7 @@
             <div class="col-12 col-md-9">
                 <div class="row mb-3">
                     <div class="col-12 col-md-10 mb-2 mb-md-0">
-                        <h4 class="text-center text-md-start">استكشف ايات القرآن الكريم والافكار - ابحث عن الموضوع او الفكرة  اوالعنوان
+                        <h4 class="text-center text-md-start">استكشف ايات القرآن الكريم والافكار - ابحث عن الموضوع او الفكرة اوالعنوان
                         </h4>
                     </div>
                     <div class="col-12 col-md-2 text-center text-md-end">
@@ -70,7 +70,7 @@
                 <!-- Search Bar -->
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="Search for a query..." aria-label="Search for a query" style="height: 40px;" wire:model.live="searchTerm" wire:keydown="clearSearchSource" autofocus />
+                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="ادخل كلمة واحدة فقط للبحث   عن أي  موضوع" aria-label="Search for a query" style="height: 40px;" wire:model.live="searchTerm" wire:keydown="clearSearchSource" autofocus />
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@
                     <table class="table table-striped table-bordered mt-5">
                         <thead class="thead-dark">
                             <tr>
-                                <th class="text-center" scope="col" style="width: 10%;">الموضوع او الفكرة  اوالعنوان
+                                <th class="text-center" scope="col" style="width: 10%;">الموضوع او الفكرة اوالعنوان
                                 </th>
                                 <th scope="col" style="width: 45%;">الايات
                                 </th>

@@ -87,7 +87,7 @@
                 <!-- Search Bar -->
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="Search for a query..." aria-label="Search for a query" style="height: 40px;" wire:model.live="searchTerm" wire:keydown="clearSearchSource" wire:keyup="resetPage" autofocus />
+                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="Enter any Single Word or Subject to do a Search" aria-label="Search for a query" style="height: 40px;" wire:model.live="searchTerm" wire:keydown="clearSearchSource" wire:keyup="resetPage" autofocus />
                     </div>
                 </div>
 
