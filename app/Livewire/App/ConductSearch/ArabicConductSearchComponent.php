@@ -37,6 +37,15 @@ class ArabicConductSearchComponent extends Component
 
         $this->source_table = !empty($searchValue) ? $source_table : null;
         $this->resetPage();
+
+        $inputValue = '';
+        if ($source_table === 'contents') {
+            $inputValue = $mTableData->arabic_normalize_word_without_harkat;
+        } else {
+            $inputValue = $this->searchTerm;
+        }
+
+        $this->js('$("#searchQuery").val("' . $inputValue . '");');
     }
 
     public function showQuranArabic($id, $source_table)

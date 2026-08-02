@@ -70,7 +70,10 @@
                 <!-- Search Bar -->
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="ادخل كلمة واحدة فقط للبحث   عن أي  موضوع" aria-label="Search for a query" style="height: 40px;" wire:model.live="searchTerm" wire:keydown="clearSearchSource" autofocus />
+                        <input type="text" class="form-control form-control-lg shadow-sm border-2 rounded-pill px-4" id="searchQuery" placeholder="ادخل كلمة واحدة فقط للبحث   عن أي  موضوع" aria-label="Search for a query" style="height: 40px;" onchange="
+                            @this.set('searchTerm', this.value);
+                            @this.clearSearchSource();
+                        " autofocus />
                     </div>
                 </div>
 
